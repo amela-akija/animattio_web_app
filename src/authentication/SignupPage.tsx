@@ -17,13 +17,7 @@ function SignupPage() {
       {tablet && <h1 className="signup-title-tablet">Sign up</h1>}
 
       <div className="signup-input-container">
-        <TextField
-          id="name"
-          label="Name"
-          variant="filled"
-          name="name"
-          className="signup-input"
-        />
+        <TextField id="name" label="Name" variant="filled" name="name" className="signup-input" />
       </div>
 
       <div className="signup-input-container">
@@ -66,19 +60,13 @@ function SignupPage() {
         />
       </div>
       <div className="signup-button-container">
-
         <button className="signup-button">
-
           <text className="signup-text-button"> Sign up</text>
-
         </button>
       </div>
       <div className="signup-button-container">
-
         <button className="signin-button" onClick={goToLogin}>
-
           <text className="signup-small-text-button"> Already have an account? Sign in</text>
-
         </button>
       </div>
     </div>

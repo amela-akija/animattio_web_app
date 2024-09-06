@@ -37,19 +37,14 @@ function LoginPage() {
         />
       </div>
       <div className="login-button-container">
-
         <button className="login-button">
-
           <text className="login-text-button"> Sign in</text>
-
         </button>
       </div>
       <div className="login-button-container">
-
         <button className="registration-button" onClick={goToSignup}>
-
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <text className="login-small-text-button"> Don't have an account yet? Sign up</text>
-
         </button>
       </div>
     </div>
