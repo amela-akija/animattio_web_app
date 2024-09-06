@@ -1,0 +1,234 @@
+.login-container {
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.login-title-laptop {
+    font-family: 'Karla', sans-serif;
+    padding-bottom: 3%;
+    font-size: 10vh;
+    color: #2A470C;
+    text-shadow: #2A350D 1px 1px 4px;
+}
+
+@media (min-width: 1025px) {
+    .input-container {
+        width: 40%;
+        padding-top: 1%;
+        padding-bottom: 1%;
+        padding-left: 8%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .input-container {
+        width: 70%;
+        padding-top: 1%;
+        padding-bottom: 8%;
+        padding-left: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .input-container {
+        width: 70%;
+        padding-top: 1%;
+        padding-bottom: 5%;
+        padding-left: 12%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+}
+
+.login-title-mobile {
+    padding-bottom: 10%;
+    font-family: 'Karla', sans-serif;
+    font-size: 5vh;
+    color: #2A470C;
+    text-shadow: #2A350D 1px 1px 2px;
+
+}
+
+.login-title-tablet {
+    padding-bottom: 15%;
+    font-family: 'Karla', sans-serif;
+    font-size: 7vh;
+    color: #2A470C;
+    text-shadow: #2A350D 1px 1px 3px;
+
+}
+
+.login-input {
+    height: 50%;
+    width: 80%;
+    font-size: large;
+    border-radius: 10px;
+    border: 1px #FBE3BE;
+    background-color: #FBE3BE;
+    color: #2A470C;
+}
+
+
+
+@media (min-width: 1025px) {
+    .button-container {
+        padding-top: 3%;
+        padding-bottom: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .button-container {
+        padding-top: 3%;
+        padding-bottom: 25%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .button-container {
+        padding-top: 3%;
+        padding-bottom: 35%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+}
+
+
+
+@media (min-width: 1025px) {
+    .login-button{
+        width: 10%;
+        background-color: #2A470C;
+        color: #FFFBEE;
+        border-radius: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-button{
+        width: 45%;
+        background-color: #2A470C;
+        color: #FFFBEE;
+        border-radius: 10px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .registration-button{
+        width: 60%;
+        background-color: #FFFBEE;
+        color: #2A470C;
+        border-radius: 10px;
+        border:none;
+    }
+}
+
+@media (min-width: 1025px) {
+    .registration-button{
+        width: 60%;
+        background-color: #FFFBEE;
+        color: #2A470C;
+        border-radius: 10px;
+        border:none;
+    }
+}
+
+@media (max-width: 480px) {
+    .registration-button{
+        width: 80%;
+        background-color: #FFFBEE;
+        color: #2A470C;
+        border-radius: 10px;
+        border:none;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .login-button{
+        width: 30%;
+        background-color: #2A470C;
+        color: #FFFBEE;
+        border-radius: 10px;
+    }
+}
+
+@media (min-width: 1025px) {
+    .small-text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 3vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .small-text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 2vh;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .small-text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 2vh;
+    }
+}
+
+
+
+
+
+
+
+
+@media (min-width: 1025px) {
+    .text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 5vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 4vh;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 4vh;
+    }
+}
+
+
+
