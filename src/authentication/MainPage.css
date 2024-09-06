@@ -37,10 +37,10 @@ body {
 
 .login-button-laptop {
     margin-top: 28%;
-    margin-left: 44%;
+    margin-left: 45%;
     position: absolute;
     width: 10%;
-    height: 5%;
+    height: 7%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
@@ -50,10 +50,10 @@ body {
 
 .login-button-mobile {
     margin-top: 70%;
-    margin-left: 36%;
+    margin-left: 30%;
     position: absolute;
-    width: 30%;
-    height: 5%;
+    width: 40%;
+    height: 7%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
@@ -66,7 +66,7 @@ body {
     margin-left: 36%;
     position: absolute;
     width: 30%;
-    height: 5%;
+    height: 7%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
@@ -74,17 +74,33 @@ body {
 
 }
 
-.text-button {
-    font-family: 'Karla', sans-serif;
-    font-size: 3vh;
+@media (min-width: 1025px) {
+    .text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 3vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 0.5vh;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 3vh;
+    }
 }
 
 .signup-button-laptop {
     margin-top: 32%;
-    margin-left: 44%;
+    margin-left: 45%;
     position: absolute;
     width: 10%;
-    height: 5%;
+    height: 7%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
@@ -93,10 +109,10 @@ body {
 
 .signup-button-mobile {
     margin-top: 85%;
-    margin-left: 36%;
+    margin-left: 30%;
     position: absolute;
-    width: 30%;
-    height: 5%;
+    width: 40%;
+    height: 7%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
@@ -108,7 +124,7 @@ body {
     margin-left: 36%;
     position: absolute;
     width: 30%;
-    height: 5%;
+    height: 7%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
