@@ -1,0 +1,42 @@
+/* Navbar Styles */
+.navbar {
+    background-color: #2a470c;
+    color: #FFFBEE;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.navbar-logo {
+    cursor: pointer;
+    margin-left: 10%;
+}
+
+.navbar-menu-icon {
+    cursor: pointer;
+}
+
+
+.navbar-cross-icon {
+    cursor: pointer;
+    margin-right: 10%;
+
+}
+
+.bm-menu {
+    background: #2a470c;
+    font-size: 1.15em;
+}
+
+.menu-item {
+    padding: 0.5em;
+    color: #FFFBEE;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.menu-item:hover {
+    color: #F9E5A2;
+    background-color: #2A350D;
+}
