@@ -16,7 +16,7 @@ function LoginPage() {
       {mobile && <h1 className="login-title-mobile">Login Page</h1>}
       {tablet && <h1 className="login-title-tablet">Login Page</h1>}
 
-      <div className="input-container">
+      <div className="login-input-container">
         <TextField
           id="login"
           label="Username"
@@ -26,7 +26,7 @@ function LoginPage() {
         />
       </div>
 
-      <div className="input-container">
+      <div className="login-input-container">
         <TextField
           id="password"
           label="Password"
@@ -36,19 +36,19 @@ function LoginPage() {
           className="login-input"
         />
       </div>
-      <div className="button-container">
+      <div className="login-button-container">
 
         <button className="login-button">
 
-          <text className="text-button"> Sign in</text>
+          <text className="login-text-button"> Sign in</text>
 
         </button>
       </div>
-      <div className="button-container">
+      <div className="login-button-container">
 
         <button className="registration-button" onClick={goToSignup}>
 
-          <text className="small-text-button"> Don't have an account yet? Sign up</text>
+          <text className="login-small-text-button"> Don't have an account yet? Sign up</text>
 
         </button>
       </div>

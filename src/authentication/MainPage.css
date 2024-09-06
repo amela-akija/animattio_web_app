@@ -35,12 +35,12 @@ body {
 
 }
 
-.login-button-laptop {
+.main-login-button-laptop {
     margin-top: 28%;
     margin-left: 45%;
     position: absolute;
     width: 10%;
-    height: 7%;
+    height: 6%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
@@ -48,12 +48,12 @@ body {
 
 }
 
-.login-button-mobile {
+.main-login-button-mobile {
     margin-top: 70%;
     margin-left: 30%;
     position: absolute;
     width: 40%;
-    height: 7%;
+    height: 6%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
@@ -61,12 +61,12 @@ body {
 
 }
 
-.login-button-tablet {
+.main-login-button-tablet {
     margin-top: 70%;
     margin-left: 36%;
     position: absolute;
     width: 30%;
-    height: 7%;
+    height: 6%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
@@ -75,56 +75,56 @@ body {
 }
 
 @media (min-width: 1025px) {
-    .text-button {
+    .main-text-button {
         font-family: 'Karla', sans-serif;
-        font-size: 3vh;
+        font-size: 4vh;
     }
 }
 
 @media (max-width: 480px) {
-    .text-button {
-        font-family: 'Karla', sans-serif;
-        font-size: 0.5vh;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .text-button {
+    .main-text-button {
         font-family: 'Karla', sans-serif;
         font-size: 3vh;
     }
 }
 
-.signup-button-laptop {
+@media (min-width: 480px) and (max-width: 1024px) {
+    .main-text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 3vh;
+    }
+}
+
+.main-signup-button-laptop {
     margin-top: 32%;
     margin-left: 45%;
     position: absolute;
     width: 10%;
-    height: 7%;
+    height: 6%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
 
 }
 
-.signup-button-mobile {
+.main-signup-button-mobile {
     margin-top: 85%;
     margin-left: 30%;
     position: absolute;
     width: 40%;
-    height: 7%;
+    height: 6%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;
 
 }
 
-.signup-button-tablet {
+.main-signup-button-tablet {
     margin-top: 85%;
     margin-left: 36%;
     position: absolute;
     width: 30%;
-    height: 7%;
+    height: 6%;
     border-radius: 5px;
     background-color: #2A470C;
     color: #FFFBEE;

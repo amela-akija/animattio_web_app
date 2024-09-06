@@ -1,4 +1,4 @@
-.login-container {
+.signup-container {
     flex-direction: column;
     display: flex;
     align-items: center;
@@ -6,18 +6,18 @@
     height: 100%;
 }
 
-.login-title-laptop {
+.signup-title-laptop {
     font-family: 'Karla', sans-serif;
-    padding-bottom: 3%;
-    font-size: 10vh;
+    padding-bottom: 0%;
+    font-size: 8vh;
     color: #2A470C;
     text-shadow: #2A350D 1px 1px 4px;
 }
 
 @media (min-width: 1025px) {
-    .login-input-container {
+    .signup-input-container {
         width: 40%;
-        padding-top: 1%;
+        padding-top: 0.5%;
         padding-bottom: 1%;
         padding-left: 16%;
         display: flex;
@@ -28,11 +28,11 @@
 }
 
 @media (max-width: 480px) {
-    .login-input-container {
+    .signup-input-container {
         width: 100%;
         padding-top: 1%;
-        padding-bottom: 8%;
-        padding-left: 41.5%;
+        padding-bottom: 1%;
+        padding-left: 40%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -41,11 +41,11 @@
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .login-input-container {
+    .signup-input-container {
         width: 70%;
         padding-top: 1%;
         padding-bottom: 2%;
-        padding-left: 28%;
+        padding-left: 30%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -53,8 +53,8 @@
     }
 }
 
-.login-title-mobile {
-    padding-bottom: 10%;
+.signup-title-mobile {
+    padding-bottom: 1%;
     font-family: 'Karla', sans-serif;
     font-size: 5vh;
     color: #2A470C;
@@ -62,8 +62,8 @@
 
 }
 
-.login-title-tablet {
-    padding-bottom: 15%;
+.signup-title-tablet {
+    padding-bottom: 2%;
     font-family: 'Karla', sans-serif;
     font-size: 7vh;
     color: #2A470C;
@@ -71,8 +71,8 @@
 
 }
 
-.login-input {
-    height: 50%;
+.signup-input {
+    height: 10%;
     width: 60%;
     font-size: large;
     border-radius: 10px;
@@ -83,9 +83,9 @@
 
 
 @media (min-width: 1025px) {
-    .login-button-container {
-        padding-top: 1%;
-        padding-bottom: 1%;
+    .signup-button-container {
+        padding-top: 0.5%;
+        padding-bottom: 0.5%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -96,9 +96,9 @@
 }
 
 @media (max-width: 480px) {
-    .login-button-container {
+    .signup-button-container {
         padding-top: 1%;
-        padding-bottom: 35%;
+        padding-bottom: 5%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -109,9 +109,10 @@
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .login-button-container {
+    .signup-button-container {
         padding-top: 1%;
-        padding-bottom: 50%;
+        padding-left: 2%;
+        padding-bottom: 40%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -123,7 +124,7 @@
 
 
 @media (min-width: 1025px) {
-    .login-button {
+    .signup-button {
         width: 24%;
         background-color: #2A470C;
         color: #FFFBEE;
@@ -132,7 +133,7 @@
 }
 
 @media (max-width: 480px) {
-    .login-button {
+    .signup-button {
         width: 61%;
         background-color: #2A470C;
         color: #FFFBEE;
@@ -141,8 +142,8 @@
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .login-button {
-        width: 42%;
+    .signup-button {
+        width: 42.5%;
         background-color: #2A470C;
         color: #FFFBEE;
         border-radius: 10px;
@@ -150,7 +151,7 @@
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .registration-button {
+    .signin-button {
         width: 60%;
         background-color: #FFFBEE;
         color: #2A470C;
@@ -160,7 +161,7 @@
 }
 
 @media (min-width: 1025px) {
-    .registration-button {
+    .signin-button {
         width: 60%;
         background-color: #FFFBEE;
         color: #2A470C;
@@ -170,7 +171,7 @@
 }
 
 @media (max-width: 480px) {
-    .registration-button {
+    .signin-button {
         width: 80%;
         background-color: #FFFBEE;
         color: #2A470C;
@@ -181,21 +182,21 @@
 
 
 @media (min-width: 1025px) {
-    .login-small-text-button {
+    .signup-small-text-button {
         font-family: 'Karla', sans-serif;
         font-size: 3vh;
     }
 }
 
 @media (max-width: 480px) {
-    .login-small-text-button {
+    .signup-small-text-button {
         font-family: 'Karla', sans-serif;
         font-size: 2vh;
     }
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .login-small-text-button {
+    .signup-small-text-button {
         font-family: 'Karla', sans-serif;
         font-size: 2vh;
     }
@@ -203,21 +204,21 @@
 
 
 @media (min-width: 1025px) {
-    .login-text-button {
+    .signup-text-button {
         font-family: 'Karla', sans-serif;
-        font-size: 4vh;
+        font-size: 3.5vh;
     }
 }
 
 @media (max-width: 480px) {
-    .login-text-button {
+    .signup-text-button {
         font-family: 'Karla', sans-serif;
-        font-size: 4vh;
+        font-size: 3.5vh;
     }
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .login-text-button {
+    .signup-text-button {
         font-family: 'Karla', sans-serif;
         font-size: 2.5vh;
     }
