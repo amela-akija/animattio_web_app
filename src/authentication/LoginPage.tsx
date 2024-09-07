@@ -10,6 +10,9 @@ function LoginPage() {
   const goToSignup = () => {
     navigate('/signup');
   };
+  const goToUserAccount = () => {
+    navigate('/user-account');
+  };
   return (
     <div className="login-container">
       {laptop && <h1 className="login-title-laptop">Login Page</h1>}
@@ -37,7 +40,7 @@ function LoginPage() {
         />
       </div>
       <div className="login-button-container">
-        <button className="login-button">
+        <button className="login-button" onClick={goToUserAccount}>
           <text className="login-text-button"> Sign in</text>
         </button>
       </div>

@@ -1,0 +1,81 @@
+@media (min-width: 1025px) {
+    .game-details {
+        color: #FFFBEE;
+        text-align: left;
+        width: 100%;
+        font-size: 3vh;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-details {
+        color: #FFFBEE;
+        text-align: left;
+        width: 100%;
+        font-size: 1.2vh;
+
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .game-details {
+        color: #FFFBEE;
+        text-align: left;
+        width: 100%;
+        font-size: 1.5vh;
+
+    }
+}
+
+@media (min-width: 1025px) {
+    .game-container {
+        padding: 3% 2%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        background-color: #2A470C;
+        height: auto;
+        width: fit-content;
+        border-radius: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-container {
+        padding: 1%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        background-color: #2A470C;
+        height: auto;
+        width: fit-content;
+        border-radius: 15px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .game-container {
+        padding: 3% 2%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        background-color: #2A470C;
+        height: auto;
+        width: fit-content;
+        border-radius: 15px;
+    }
+}
+
+.see-more-button {
+    background-color: #2A470C;
+    color: #FFFBEE;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5vh;
+    font-family: 'Karla', sans-serif;
+    align-self: end;
+
+}

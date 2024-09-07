@@ -5,6 +5,7 @@ import MainPage from './authentication/MainPage';
 import Navbar from './ui-components/Navbar';
 import LoginPage from './authentication/LoginPage';
 import SignupPage from './authentication/SignupPage';
+import MainUserPage from './user/MainUserPage';
 function App() {
   return (
     <Router>
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/user-account" element={<MainUserPage />} />
       </Routes>
     </Router>
   );

@@ -60,7 +60,7 @@ function SignupPage() {
         />
       </div>
       <div className="signup-button-container">
-        <button className="signup-button">
+        <button className="signup-button" onClick={goToLogin}>
           <text className="signup-text-button"> Sign up</text>
         </button>
       </div>
