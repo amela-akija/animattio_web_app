@@ -15,7 +15,8 @@
 .add-patient-mobile {
     font-family: 'Karla', sans-serif;
     padding-bottom: 3%;
-    font-size: 4vh;
+    font-size: 2vh;
+    padding-left: 10%;
     color: #2A470C;
     text-shadow: #2A350D 1px 1px 4px;
 }
@@ -40,8 +41,9 @@
 
 .add-patient-dot-mobile {
     font-family: 'Karla', sans-serif;
-    padding-bottom: 10%;
-    font-size: 4vh;
+    padding-bottom: 3%;
+    padding-left: 10%;
+    font-size: 2vh;
     color: #FFFBEE;
     text-shadow: #FFFBEE 1px 1px 4px;
 }
@@ -119,7 +121,6 @@
     .add-patient-third-column {
         width: 33%;
         float: left;
-        padding-top: 40%;
 
     }
 }
@@ -180,7 +181,7 @@
         width: 100%;
         padding-top: 1%;
         padding-bottom: 8%;
-        padding-left: 41%;
+        padding-left: 5%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -262,7 +263,7 @@
         width: 100%;
         padding-top: 1%;
         padding-bottom: 8%;
-        padding-left: 41%;
+        padding-left: 2%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;

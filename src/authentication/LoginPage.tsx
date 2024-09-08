@@ -23,7 +23,7 @@ function LoginPage() {
         <TextField
           id="login"
           label="Username"
-          variant="filled"
+          variant="standard"
           name="login"
           className="login-input"
         />
@@ -35,7 +35,7 @@ function LoginPage() {
           label="Password"
           type="password"
           name="password"
-          variant="filled"
+          variant="standard"
           className="login-input"
         />
       </div>

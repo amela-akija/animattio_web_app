@@ -7,6 +7,7 @@ import LoginPage from './authentication/LoginPage';
 import SignupPage from './authentication/SignupPage';
 import MainUserPage from './user/account/MainUserPage';
 import AddPatientPage from './user/account/AddPatientPage';
+import SeePatientsPage from './user/account/PatientsListPage';
 function App() {
   return (
     <Router>
@@ -17,6 +18,8 @@ function App() {
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/user-account" element={<MainUserPage />} />
         <Route path="/add-patient" element={<AddPatientPage />} />
+        <Route path="/see-patients" element={<SeePatientsPage />} />
+
 
       </Routes>
     </Router>

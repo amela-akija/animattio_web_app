@@ -17,14 +17,14 @@ function SignupPage() {
       {tablet && <h1 className="signup-title-tablet">Sign up</h1>}
 
       <div className="signup-input-container">
-        <TextField id="name" label="Name" variant="filled" name="name" className="signup-input" />
+        <TextField id="name" label="Name" variant="standard" name="name" className="signup-input" />
       </div>
 
       <div className="signup-input-container">
         <TextField
           id="lastName"
           label="Last name"
-          variant="filled"
+          variant="standard"
           name="lastName"
           className="signup-input"
         />
@@ -33,7 +33,7 @@ function SignupPage() {
         <TextField
           id="email"
           label="Email address"
-          variant="filled"
+          variant="standard"
           name="email"
           className="signup-input"
         />
@@ -45,7 +45,7 @@ function SignupPage() {
           label="Password"
           type="password"
           name="password"
-          variant="filled"
+          variant="standard"
           className="signup-input"
         />
       </div>
@@ -55,7 +55,7 @@ function SignupPage() {
           label="Repeat password"
           type="password"
           name="passwordRepeat"
-          variant="filled"
+          variant="standard"
           className="signup-input"
         />
       </div>

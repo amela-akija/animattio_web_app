@@ -83,6 +83,11 @@
 
 }
 
+.login-input .MuiInputLabel-root {
+    padding-left: 10px;
+}
+
+
 
 @media (min-width: 1025px) {
     .login-button-container {

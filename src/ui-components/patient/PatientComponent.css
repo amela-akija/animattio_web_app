@@ -1,26 +1,26 @@
 @media (min-width: 1025px) {
-    .game-details {
+    .patient-details {
         color: #FFFBEE;
         text-align: left;
         width: 100%;
         font-size: 2vh;
         font-family: 'Karla', sans-serif;
+
     }
 }
 
 @media (max-width: 480px) {
-    .game-details {
+    .patient-details {
         color: #FFFBEE;
         text-align: left;
         width: 100%;
         font-size: 1.1vh;
         font-family: 'Karla', sans-serif;
-
     }
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .game-details {
+    .patient-details {
         color: #FFFBEE;
         text-align: left;
         width: 100%;
@@ -31,38 +31,38 @@
 }
 
 @media (min-width: 1025px) {
-    .test-container {
-        padding: 3% 2%;
+    .patient-container {
+        padding: 1% 2%;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
         background-color: #2A470C;
-        margin-bottom: 5%;
+        margin-bottom: 2%;
         height: auto;
-        width: fit-content;
+        width: 90%;
         border-radius: 15px;
     }
 }
 
 @media (max-width: 480px) {
-    .test-container {
-        padding: 3% 2%;
+    .patient-container {
+        padding: 2% 2%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         background-color: #2A470C;
-        margin-bottom: 10%;
+        margin-bottom: 5%;
         height: auto;
-        width: fit-content;
+        width: 100%;
         border-radius: 15px;
     }
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .test-container {
-        padding: 3% 5%;
+    .patient-container {
+        padding: 1% 2%;
         display: flex;
         margin-bottom: 5%;
         flex-direction: column;
@@ -70,12 +70,12 @@
         justify-content: center;
         background-color: #2A470C;
         height: auto;
-        width: fit-content;
+        width: 100%;
         border-radius: 15px;
     }
 }
 
-.see-more-button {
+.see-profile-button {
     background-color: #2A470C;
     color: #FFFBEE;
     border: none;
@@ -86,6 +86,6 @@
 
 }
 
-.test-list {
-    padding: 2%;
+.patient-list {
+    padding: 5% 0%;
 }
