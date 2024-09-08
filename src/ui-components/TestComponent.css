@@ -3,7 +3,7 @@
         color: #FFFBEE;
         text-align: left;
         width: 100%;
-        font-size: 3vh;
+        font-size: 2vh;
     }
 }
 
@@ -12,7 +12,7 @@
         color: #FFFBEE;
         text-align: left;
         width: 100%;
-        font-size: 1.2vh;
+        font-size: 1.1vh;
 
     }
 }
@@ -28,13 +28,14 @@
 }
 
 @media (min-width: 1025px) {
-    .game-container {
+    .test-container {
         padding: 3% 2%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         background-color: #2A470C;
+        margin-bottom: 5%;
         height: auto;
         width: fit-content;
         border-radius: 15px;
@@ -42,13 +43,14 @@
 }
 
 @media (max-width: 480px) {
-    .game-container {
-        padding: 1%;
+    .test-container {
+        padding: 3% 2%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         background-color: #2A470C;
+        margin-bottom: 10%;
         height: auto;
         width: fit-content;
         border-radius: 15px;
@@ -56,9 +58,10 @@
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .game-container {
-        padding: 3% 2%;
+    .test-container {
+        padding: 3% 5%;
         display: flex;
+        margin-bottom: 5%;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
@@ -78,4 +81,8 @@
     font-family: 'Karla', sans-serif;
     align-self: end;
 
+}
+
+.test-list{
+    padding: 2%;
 }
