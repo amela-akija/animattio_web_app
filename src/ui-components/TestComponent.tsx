@@ -6,13 +6,7 @@ interface tests {
   test: Test;
 }
 
-// interface TestDetailsProps {
-//   testData: test;
-// }
-
 const TestComponent: React.FC<tests> = ({ test }) => {
-  // const { id, mode, timestamp } = testData;
-
   const formattedDate = new Date(test.timestamp).toLocaleString();
 
   return (
