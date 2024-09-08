@@ -1,7 +1,8 @@
 import React from 'react';
 import './MainUserPage.css';
-import useResponsive from '../ui-components/useResponsive';
-import TestsList from '../ui-components/TestListComponent';
+import useResponsive from '../../ui-components/useResponsive';
+import TestsList from '../../ui-components/test/TestListComponent';
+import { useNavigate } from 'react-router-dom';
 
 const tests = [
   {
@@ -17,12 +18,15 @@ const tests = [
 ];
 function MainUserPage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
-
+  const navigate = useNavigate();
+  const goToAddPatient = () => {
+    navigate('/add-patient');
+  };
   return (
     <div className="user-account-container">
       <div className="user-account-first-column">
         <div className="user-button-container">
-          <button className="add-button">
+          <button className="add-button" onClick={goToAddPatient}>
             <text className="user-text-button"> Add patient</text>
           </button>
         </div>

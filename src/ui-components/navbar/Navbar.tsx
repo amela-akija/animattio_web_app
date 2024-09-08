@@ -1,9 +1,9 @@
 import React from 'react';
 import './Navbar.css';
-import logo from '../assets/logo-web-navbar.png';
+import logo from '../../assets/logo-web-navbar.png';
 import { slide as Menu } from 'react-burger-menu';
-import menu from '../assets/menu-icon.png'
-import useResponsive from './useResponsive';
+import menu from '../../assets/menu-icon.png'
+import useResponsive from '../useResponsive';
 
 const Navbar = () => {
   const {isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
@@ -17,7 +17,7 @@ const Navbar = () => {
   }
   return (
     <nav className="navbar">
-      <a href="/">
+      <a href="/public">
         <img src={logo} alt="logo" className="navbar-logo" />
       </a>
       <Menu
