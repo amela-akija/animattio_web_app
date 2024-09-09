@@ -1,6 +1,6 @@
 .add-patient-container {
-    width: 100%;
-    overflow: auto;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .add-patient-laptop {
@@ -23,7 +23,7 @@
 
 .add-patient-tablet {
     font-family: 'Karla', sans-serif;
-    padding-bottom: 20%;
+    padding-bottom: 10%;
     padding-left: 10%;
     font-size: 5vh;
     color: #2A470C;
@@ -50,89 +50,52 @@
 
 .add-patient-dot-tablet {
     font-family: 'Karla', sans-serif;
-    padding-bottom: 20%;
+    padding-bottom: 10%;
     padding-left: 10%;
     font-size: 5vh;
     color: #FFFBEE;
     text-shadow: #FFFBEE 1px 1px 4px;
 }
 
-@media (min-width: 1025px) {
-    .add-patient-first-column {
-        width: 33%;
-        float: left;
-
-    }
+.add-patient-first-column {
+    flex: 1 1 100%;
+    order: 1;
 }
 
-@media (max-width: 480px) {
-    .add-patient-first-column {
-        width: 33%;
-        float: left;
+.add-patient-second-column {
+    flex: 1 1 100%;
+    order: 2;
+}
 
+.add-patient-third-column {
+    flex: 1 1 100%;
+    order: 3;
+}
+
+@media (min-width: 1025px) {
+    .add-patient-first-column,
+    .add-patient-second-column,
+    .add-patient-third-column {
+        flex: 1 1 33%;
     }
 }
 
 @media (min-width: 480px) and (max-width: 1024px) {
-    .add-patient-first-column {
-        width: 33%;
-        float: left;
-
-    }
-}
-
-
-@media (min-width: 1025px) {
-    .add-patient-second-column {
-        width: 33%;
-        float: right;
-
-
+    .add-patient-first-column,
+    .add-patient-second-column,
+    .add-patient-third-column {
+        flex: 1 1 100%;
     }
 }
 
 @media (max-width: 480px) {
-    .add-patient-second-column {
-        width: 33%;
-        float: left;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .add-patient-second-column {
-        width: 33%;
-        float: left;
-        padding-bottom: 40%;
-
-    }
-}
-
-
-@media (min-width: 1025px) {
+    .add-patient-first-column,
+    .add-patient-second-column,
     .add-patient-third-column {
-        width: 33%;
-        float: right;
-
-
+        flex: 1 1 100%;
     }
 }
 
-@media (max-width: 480px) {
-    .add-patient-third-column {
-        width: 33%;
-        float: left;
-
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .add-patient-third-column {
-        width: 33%;
-        float: left;
-        padding-left: 1%;
-
-    }
-}
 
 .add-patient-input {
     height: 50%;
@@ -191,9 +154,9 @@
 
 @media (min-width: 480px) and (max-width: 1024px) {
     .add-patient-input-container {
-        width: 100%;
+        width: 90%;
         padding-top: 1%;
-        padding-bottom: 8%;
+        padding-bottom: 7%;
         padding-left: 10%;
         display: flex;
         flex-direction: column;
@@ -205,7 +168,7 @@
 .info-dropdown {
     height: 100%;
     width: 100%;
-    font-size: math;
+    font-size: medium;
     padding: 2%;
     border-radius: 10px;
     border: 1px #FBE3BE;
@@ -244,6 +207,7 @@
 
 .checkbox {
     color: #2a470c;
+    padding-left: 10%;
 }
 
 @media (min-width: 1025px) {
@@ -263,7 +227,7 @@
         width: 100%;
         padding-top: 1%;
         padding-bottom: 8%;
-        padding-left: 2%;
+        padding-left: 5%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -273,10 +237,10 @@
 
 @media (min-width: 480px) and (max-width: 1024px) {
     .add-patient-additional-input-container {
-        width: 100%;
+        width: 90%;
         padding-top: 1%;
         padding-bottom: 8%;
-        padding-left: 5%;
+        padding-left: 10%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -334,20 +298,17 @@
 
 @media (min-width: 1025px) {
     .save-button-container {
-        padding-top: 1%;
         padding-bottom: 1%;
+        padding-top: 10%;
         display: flex;
-        flex-direction: column;
-        align-items: center;
         justify-content: center;
-        height: 100%;
         width: 100%;
     }
 }
 
 @media (max-width: 480px) {
     .save-button-container {
-        padding-top: 60%;
+        padding-top: 10%;
         padding-bottom: 35%;
         display: flex;
         flex-direction: column;
@@ -360,7 +321,7 @@
 
 @media (min-width: 480px) and (max-width: 1024px) {
     .save-button-container {
-        padding-bottom: 50%;
+        padding-top: 5%;
         display: flex;
         flex-direction: column;
         align-items: center;

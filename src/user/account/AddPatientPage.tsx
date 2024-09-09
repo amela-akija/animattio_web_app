@@ -60,8 +60,6 @@ function AddPatientPage() {
 
       <div className="add-patient-second-column">
         {laptop && <h1 className="add-patient-dot-laptop">add patient</h1>}
-        {mobile && <h1 className="add-patient-dot-mobile">add patient</h1>}
-        {tablet && <h1 className="add-patient-dot-tablet">add patient</h1>}
 
         <div className="add-patient-input-container">
           <TextField
@@ -131,16 +129,16 @@ function AddPatientPage() {
             />
           </div>
         )}
-        <div className="save-button-container">
-          <button className="save-patient-button">
-            <text className="save-text-button"> Add</text>
-          </button>
-        </div>
+        {laptop && (
+          <div className="save-button-container">
+            <button className="save-patient-button">
+              <text className="save-text-button"> Add</text>
+            </button>
+          </div>
+        )}
       </div>
       <div className="add-patient-third-column">
         {laptop && <h1 className="add-patient-dot-laptop">add patient</h1>}
-        {mobile && <h1 className="add-patient-dot-mobile">add patient</h1>}
-        {tablet && <h1 className="add-patient-dot-tablet">add patient</h1>}
         <label className="checkbox">
           <input type="checkbox" checked={checked} onClick={handleCheckboxChange} />
           pharmacological treatment
@@ -154,6 +152,20 @@ function AddPatientPage() {
               name="medication"
               className="add-patient-additional-input"
             />
+          </div>
+        )}
+        {mobile && (
+          <div className="save-button-container">
+            <button className="save-patient-button">
+              <text className="save-text-button"> Add</text>
+            </button>
+          </div>
+        )}
+        {tablet && (
+          <div className="save-button-container">
+            <button className="save-patient-button">
+              <text className="save-text-button"> Add</text>
+            </button>
           </div>
         )}
       </div>
