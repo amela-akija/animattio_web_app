@@ -432,7 +432,7 @@
 
 @media (min-width: 480px) and (max-width: 1024px) {
     .patient-small-text-button {
-        width: 90%;
+        width: 95%;
         font-family: 'Karla', sans-serif;
         font-size: 1.3vh;
         color: #2a470c;
