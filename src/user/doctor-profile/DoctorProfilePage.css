@@ -74,6 +74,45 @@
     width: 100%;
 }
 
+
+@media (min-width: 1025px) {
+    .note-button-container {
+        padding-top: 2%;
+        padding-bottom: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .note-button-container {
+        padding-top: 2%;
+        padding-bottom: 5%;
+        margin-left: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .note-button-container {
+        padding-top: 5%;
+        padding-bottom: 5%;
+        margin-left: 5%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        width: 100%;
+    }
+}
+
 @media (min-width: 1025px) {
     .dr-text-button {
         font-family: 'Karla', sans-serif;
@@ -100,7 +139,7 @@
 
 @media (min-width: 1025px) {
     .dr-button {
-        width: 35%;
+        width: 50%;
         height: 15%;
         border: none;
         border-bottom-right-radius: 15px;
@@ -145,7 +184,7 @@
 
 @media (min-width: 1025px) {
     .input-label {
-        padding: 1vh 2vh;
+        padding: 1vh 1.5vh;
         width: 30%;
         border-top-left-radius: 10px;
         border-bottom-left-radius: 10px;
@@ -262,8 +301,8 @@
 @media (min-width: 1025px) {
     .notes-input-container {
         width: 80%;
-        height: 100%;
-        margin-top: 15%;
+        height: 45%;
+        margin-top: 8%;
         border-radius: 10px;
         background-color: #2a470c;
         display: flex;

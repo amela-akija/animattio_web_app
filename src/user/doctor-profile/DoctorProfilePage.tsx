@@ -1,7 +1,30 @@
 import React, { useState } from 'react';
 import './DoctorProfilePage.css';
 import useResponsive from '../../ui-components/useResponsive';
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
+import NotesList from '../../ui-components/note/NoteListComponent';
+import SaveIcon from '@mui/icons-material/Save';
+const notes = [
+  {
+    title: 'First Note',
+    date: '2024-09-10',
+    patient: 'John Doe'
+  },
+  {
+    title: 'Second Note',
+    date: '2024-09-11',
+    patient: null
+  },
+  {
+    title: 'Third Note',
+    date: '2024-09-12'
+  },
+  {
+    title: 'Fourth Note',
+    date: '2024-09-13',
+    patient: 'Jane Smith'
+  }
+];
 
 function DoctorProfilePage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
@@ -42,6 +65,7 @@ function DoctorProfilePage() {
             <text className="dr-text-button">Notes:</text>
           </button>
         </div>
+        {notesClicked && <NotesList notes={notes}></NotesList>}
       </div>
       <div className="doctor-profile-second-column">
         {infoClicked && (
@@ -124,6 +148,16 @@ function DoctorProfilePage() {
                 }}
                 placeholder="Start typing..."></TextField>
             </div>
+          </div>
+        )}
+        {notesClicked && (
+          <div className="note-button-container">
+            <Button
+              variant="contained"
+              endIcon={<SaveIcon />}
+              style={{ backgroundColor: '#2a470c' }}>
+              Save
+            </Button>
           </div>
         )}
       </div>

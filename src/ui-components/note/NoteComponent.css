@@ -1,0 +1,94 @@
+@media (min-width: 1025px) {
+    .note-details {
+        color: #FFFBEE;
+        text-align: left;
+        width: 100%;
+        font-size: 2.5vh;
+        font-family: 'Karla', sans-serif;
+
+    }
+}
+
+@media (max-width: 480px) {
+    .note-details {
+        color: #FFFBEE;
+        text-align: left;
+        width: 100%;
+        font-size: 1.1vh;
+        font-family: 'Karla', sans-serif;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .note-details {
+        color: #FFFBEE;
+        text-align: left;
+        width: 100%;
+        font-size: 1.5vh;
+        font-family: 'Karla', sans-serif;
+
+    }
+}
+
+@media (min-width: 1025px) {
+    .note-container {
+        padding: 0.5% 2%;
+        display: flex;
+        margin-left: 5%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #2A470C;
+        margin-bottom: 2%;
+        height: auto;
+        width: 35%;
+        border-radius: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .note-container {
+        padding: 2% 2%;
+        display: flex;
+        margin-left:2%;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        background-color: #2A470C;
+        margin-bottom: 5%;
+        height: auto;
+        width: 90%;
+        border-radius: 15px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .note-container {
+        padding: 1% 2%;
+        display: flex;
+        margin-bottom: 5%;
+        margin-left:5%;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        background-color: #2A470C;
+        height: auto;
+        width: 75%;
+        border-radius: 15px;
+    }
+}
+
+.see-profile-button {
+    background-color: #2A470C;
+    color: #FFFBEE;
+    border: none;
+    font-weight: bold;
+    font-size: 1.5vh;
+    font-family: 'Karla', sans-serif;
+    align-self: end;
+
+}
+
+.note-list {
+    padding: 5% 0%;
+}
