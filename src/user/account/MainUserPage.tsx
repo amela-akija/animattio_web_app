@@ -25,6 +25,9 @@ function MainUserPage() {
   const goToSeePatients = () => {
     navigate('/see-patients');
   };
+  const goToDoctorProfile = () => {
+    navigate('/doctor-profile');
+  };
   return (
     <div className="user-account-container">
       <div className="user-account-first-column">
@@ -39,7 +42,7 @@ function MainUserPage() {
           </button>
         </div>
         <div className="user-button-container">
-          <button className="profile-button">
+          <button className="profile-button" onClick={goToDoctorProfile}>
             <text className="user-text-button"> Profile</text>
           </button>
         </div>

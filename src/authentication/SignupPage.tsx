@@ -31,6 +31,15 @@ function SignupPage() {
       </div>
       <div className="signup-input-container">
         <TextField
+          id="pwz"
+          label="PWZ"
+          variant="standard"
+          name="pwz"
+          className="signup-input"
+        />
+      </div>
+      <div className="signup-input-container">
+        <TextField
           id="email"
           label="Email address"
           variant="standard"
