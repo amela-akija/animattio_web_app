@@ -9,6 +9,7 @@ import MainUserPage from './user/account/MainUserPage';
 import AddPatientPage from './user/account/AddPatientPage';
 import SeePatientsPage from './user/account/PatientsListPage';
 import DoctorProfilePage from './user/doctor-profile/DoctorProfilePage';
+import PatientProfilePage from './user/patient-profile/PatientProfilePage';
 function App() {
   return (
     <Router>
@@ -21,6 +22,7 @@ function App() {
         <Route path="/add-patient" element={<AddPatientPage />} />
         <Route path="/see-patients" element={<SeePatientsPage />} />
         <Route path="/doctor-profile" element={<DoctorProfilePage />} />
+        <Route path="/patient-profile" element={<PatientProfilePage />} />
 
 
 
