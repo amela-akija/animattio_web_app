@@ -26,6 +26,9 @@ function SignupPage() {
           label="Last name"
           variant="standard"
           name="lastName"
+          InputProps={{
+            disableUnderline: true
+          }}
           className="signup-input"
         />
       </div>
@@ -35,6 +38,9 @@ function SignupPage() {
           label="PWZ"
           variant="standard"
           name="pwz"
+          InputProps={{
+            disableUnderline: true
+          }}
           className="signup-input"
         />
       </div>
@@ -44,6 +50,9 @@ function SignupPage() {
           label="Email address"
           variant="standard"
           name="email"
+          InputProps={{
+            disableUnderline: true
+          }}
           className="signup-input"
         />
       </div>
@@ -55,6 +64,9 @@ function SignupPage() {
           type="password"
           name="password"
           variant="standard"
+          InputProps={{
+            disableUnderline: true
+          }}
           className="signup-input"
         />
       </div>
@@ -65,6 +77,9 @@ function SignupPage() {
           type="password"
           name="passwordRepeat"
           variant="standard"
+          InputProps={{
+            disableUnderline: true
+          }}
           className="signup-input"
         />
       </div>

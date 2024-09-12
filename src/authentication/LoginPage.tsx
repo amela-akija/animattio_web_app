@@ -25,6 +25,9 @@ function LoginPage() {
           label="Username"
           variant="standard"
           name="login"
+          InputProps={{
+            disableUnderline: true
+          }}
           className="login-input"
         />
       </div>
@@ -36,6 +39,9 @@ function LoginPage() {
           type="password"
           name="password"
           variant="standard"
+          InputProps={{
+            disableUnderline: true
+          }}
           className="login-input"
         />
       </div>
