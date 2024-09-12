@@ -71,27 +71,19 @@ const EndDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () =
 );
 function PatientProfilePage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
+
   const [selectedOption, setSelectedOption] = useState('');
+  const [activeButton, setActiveButton] = useState<'info' | 'notes' | 'stats' | 'result'>('info');
+
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
   };
-  const [infoClicked, setInfoClicked] = useState(false);
-  const [notesClicked, setNotesClicked] = useState(false);
-  const [statsClicked, setStatsClicked] = useState(true);
-  const [resultClicked, setResultClicked] = useState(false);
 
-  const handleInfoClick = () => {
-    setInfoClicked(!infoClicked);
+  const handleButtonClick = (button: 'info' | 'notes' | 'stats' | 'result') => {
+    setActiveButton(button);
   };
-  const handleNotesClick = () => {
-    setNotesClicked(!notesClicked);
-  };
-  const handleStatsClick = () => {
-    setStatsClicked(!statsClicked);
-  };
-  const handleResultClick = () => {
-    setResultClicked(!resultClicked);
-  };
+
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   return (
     <div className="patient-profile-container">
@@ -102,9 +94,9 @@ function PatientProfilePage() {
         <div className="patient-button-container">
           <button
             className="patient-button"
-            onClick={handleInfoClick}
+            onClick={() => handleButtonClick('info')}
             style={{
-              backgroundColor: infoClicked ? '#FFC267' : '#FBE3BE'
+              backgroundColor: activeButton === 'info' ? '#FFC267' : '#FBE3BE'
             }}>
             <text className="patient-text-button">Patient's information:</text>
           </button>
@@ -113,19 +105,19 @@ function PatientProfilePage() {
         <div className="patient-button-container">
           <button
             className="patient-button"
-            onClick={handleResultClick}
+            onClick={() => handleButtonClick('result')}
             style={{
-              backgroundColor: resultClicked ? '#FFC267' : '#FBE3BE'
+              backgroundColor: activeButton === 'result' ? '#FFC267' : '#FBE3BE'
             }}>
             <text className="patient-text-button">Results:</text>
           </button>
         </div>
         <div className="patient-button-container">
           <button
+            onClick={() => handleButtonClick('stats')}
             className="patient-button"
-            onClick={handleStatsClick}
             style={{
-              backgroundColor: statsClicked ? '#FFC267' : '#FBE3BE'
+              backgroundColor: activeButton === 'stats' ? '#FFC267' : '#FBE3BE'
             }}>
             <text className="patient-text-button">Statistics:</text>
           </button>
@@ -133,18 +125,18 @@ function PatientProfilePage() {
         <div className="patient-button-container">
           <button
             className="patient-button"
-            onClick={handleNotesClick}
+            onClick={() => handleButtonClick('notes')}
             style={{
-              backgroundColor: notesClicked ? '#FFC267' : '#FBE3BE'
+              backgroundColor: activeButton === 'notes' ? '#FFC267' : '#FBE3BE'
             }}>
             <text className="patient-text-button">Notes:</text>
           </button>
         </div>
-        {notesClicked && <NotesList notes={notes}></NotesList>}
-        {resultClicked && <div className="space"></div>}
-        {resultClicked && <TestsList tests={tests} />}
+        {activeButton === 'notes' && <NotesList notes={notes}></NotesList>}
+        {activeButton === 'result' && <div className="space"></div>}
+        {activeButton === 'result' && <TestsList tests={tests} />}
 
-        {statsClicked && (
+        {activeButton === 'stats' && (
           <div className="stats-dropdown-container">
             <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
               {' '}
@@ -163,7 +155,7 @@ function PatientProfilePage() {
             </label>
           </div>
         )}
-        {statsClicked && (
+        {activeButton === 'stats' && (
           <div className="stats-dropdown-container">
             <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
               {' '}
@@ -190,7 +182,7 @@ function PatientProfilePage() {
       {/**/}
       {/**/}
       <div className="patient-profile-second-column">
-        {infoClicked && (
+        {activeButton === 'info' && (
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">
               <label htmlFor="name" className="patient-input-label">
@@ -296,7 +288,7 @@ function PatientProfilePage() {
                 onChange={handleSelectChange}
                 className="patient-info-dropdown">
                 <option value="" disabled>
-                  Please select an option
+                  Please select an option if contact information changed
                 </option>
                 <option value="phone">Phone number</option>
                 <option value="email">E-mail address</option>
@@ -335,8 +327,8 @@ function PatientProfilePage() {
             </div>
           </div>
         )}
-        {resultClicked && <div className="big-space"></div>}
-        {resultClicked && (
+        {activeButton === 'result' && <div className="big-space"></div>}
+        {activeButton === 'result' && (
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">
               <label htmlFor="date" className="patient-input-label">
@@ -378,7 +370,7 @@ function PatientProfilePage() {
           </div>
         )}
 
-        {notesClicked && (
+        {activeButton === 'notes' && (
           <div className="patient-notes-input-container">
             <div className="patient-notes-typing-input-container">
               <TextField
@@ -395,7 +387,7 @@ function PatientProfilePage() {
             </div>
           </div>
         )}
-        {notesClicked && (
+        {activeButton === 'notes' && (
           <div className="patient-note-button-container">
             <Button
               variant="contained"
@@ -405,7 +397,7 @@ function PatientProfilePage() {
             </Button>
           </div>
         )}
-        {statsClicked && (
+        {activeButton === 'stats' && (
           <div className="dates">
             <DatePicker
               selected={selectedDate}
