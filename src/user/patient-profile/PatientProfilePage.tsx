@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { forwardRef, useState } from 'react';
 import './PatientProfilePage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import { Button, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
 import NotesList from '../../ui-components/note/NoteListComponent';
+import TestsList from '../../ui-components/test/TestListComponent';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 const notes = [
   {
     title: 'First Note',
@@ -26,6 +29,46 @@ const notes = [
   }
 ];
 
+const tests = [
+  {
+    id: 'pIqWxP87HaZjuosGDgIk1nw0x2W2',
+    mode: 'mode2',
+    timestamp: 'September 2, 2024 at 8:51:18 PM UTC+2'
+  },
+  {
+    id: 'pIqWxP87HaZjuosGDgIk1nw0x2W2',
+    mode: 'mode2',
+    timestamp: 'September 2, 2024 at 8:51:18 PM UTC+2'
+  }
+];
+const StartDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
+  ({ value, onClick }, ref) => (
+    <div className="arrow-wrapper" onClick={onClick}>
+      <input
+        ref={ref}
+        value={value}
+        readOnly
+        className="calendar-input"
+        placeholder="Select a start date"
+      />
+      <div className="arrow">&#9662;</div>
+    </div>
+  )
+);
+const EndDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
+  ({ value, onClick }, ref) => (
+    <div className="arrow-wrapper" onClick={onClick}>
+      <input
+        ref={ref}
+        value={value}
+        readOnly
+        className="calendar-input"
+        placeholder="Select an end date"
+      />
+      <div className="arrow">&#9662;</div>
+    </div>
+  )
+);
 function PatientProfilePage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const [selectedOption, setSelectedOption] = useState('');
@@ -34,8 +77,8 @@ function PatientProfilePage() {
   };
   const [infoClicked, setInfoClicked] = useState(false);
   const [notesClicked, setNotesClicked] = useState(false);
-  const [statsClicked, setStatsClicked] = useState(false);
-  const [resultClicked, setResultClicked] = useState(true);
+  const [statsClicked, setStatsClicked] = useState(true);
+  const [resultClicked, setResultClicked] = useState(false);
 
   const handleInfoClick = () => {
     setInfoClicked(!infoClicked);
@@ -48,9 +91,8 @@ function PatientProfilePage() {
   };
   const handleResultClick = () => {
     setResultClicked(!resultClicked);
-
   };
-  
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   return (
     <div className="patient-profile-container">
       <div className="patient-profile-first-column">
@@ -99,6 +141,49 @@ function PatientProfilePage() {
           </button>
         </div>
         {notesClicked && <NotesList notes={notes}></NotesList>}
+        {resultClicked && <div className="space"></div>}
+        {resultClicked && <TestsList tests={tests} />}
+
+        {statsClicked && (
+          <div className="stats-dropdown-container">
+            <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
+              {' '}
+              Game mode:
+              <select
+                id="gamemode"
+                value={selectedOption}
+                onChange={handleSelectChange}
+                className="stats-dropdown">
+                <option value="" disabled>
+                  Please select a game mode
+                </option>
+                <option value="mode1">Mode 1</option>
+                <option value="mode2">Mode 2</option>
+              </select>
+            </label>
+          </div>
+        )}
+        {statsClicked && (
+          <div className="stats-dropdown-container">
+            <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
+              {' '}
+              Parameter:
+              <select
+                id="parameter"
+                value={selectedOption}
+                onChange={handleSelectChange}
+                className="stats-dropdown">
+                <option value="" disabled>
+                  Please select a parameter
+                </option>
+                <option value="omissionParameter">Omission error</option>
+                <option value="comissionParameter">Comission error</option>
+                <option value="hitRateParameter">Hit rate</option>
+                <option value="reactionParameter">Reaction time</option>
+              </select>
+            </label>
+          </div>
+        )}
       </div>
 
       {/*column 2*/}
@@ -257,14 +342,14 @@ function PatientProfilePage() {
               <label htmlFor="date" className="patient-input-label">
                 Date:
               </label>
-              <input id="dateOfGame" name="dateOfGame" className="info-input" />
+              <input id="dateOfGame" name="dateOfGame" className="info-input" readOnly />
             </div>
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="mode" className="patient-input-label">
                 Game mode:
               </label>
-              <input id="mode" name="mode" className="info-input" />
+              <input id="mode" name="mode" className="info-input" readOnly />
             </div>
             <div className="space"></div>
 
@@ -272,7 +357,7 @@ function PatientProfilePage() {
               <label htmlFor="omission" className="patient-input-label">
                 Omission error:
               </label>
-              <input id="omission" name="omission" className="info-input" />
+              <input id="omission" name="omission" className="info-input" readOnly />
             </div>
 
             <div className="space"></div>
@@ -280,7 +365,7 @@ function PatientProfilePage() {
               <label htmlFor="comission" className="patient-input-label">
                 Comission error:
               </label>
-              <input id="comission" name="comission" className="info-input" />
+              <input id="comission" name="comission" className="info-input" readOnly />
             </div>
 
             <div className="space"></div>
@@ -288,7 +373,7 @@ function PatientProfilePage() {
               <label htmlFor="reactionTime" className="patient-input-label">
                 Reaction time:
               </label>
-              <input id="reactionTime" name="reactionTime" className="info-input" />
+              <input id="reactionTime" name="reactionTime" className="info-input" readOnly />
             </div>
           </div>
         )}
@@ -318,6 +403,34 @@ function PatientProfilePage() {
               style={{ backgroundColor: '#2a470c' }}>
               Save
             </Button>
+          </div>
+        )}
+        {statsClicked && (
+          <div className="dates">
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date: Date | null) => setSelectedDate(date)}
+              dateFormat="yyyy/MM/dd"
+              customInput={
+                <StartDateInput
+                  onClick={() => {}}
+                  value={selectedDate ? selectedDate.toDateString() : ''}
+                />
+              }
+              calendarClassName="calendar"
+            />
+            <DatePicker
+              selected={selectedDate}
+              onChange={(date: Date | null) => setSelectedDate(date)}
+              dateFormat="yyyy/MM/dd"
+              customInput={
+                <EndDateInput
+                  onClick={() => {}}
+                  value={selectedDate ? selectedDate.toDateString() : ''}
+                />
+              }
+              calendarClassName="calendar"
+            />
           </div>
         )}
       </div>
