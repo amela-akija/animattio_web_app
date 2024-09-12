@@ -136,6 +136,10 @@
     padding-bottom: 5%;
 }
 
+.big-space {
+    padding-top: 10%;
+}
+
 .patient-input-wrapper {
     width: 95%;
     background-color: #2a470c;
@@ -264,7 +268,7 @@
 @media (min-width: 1025px) {
     .patient-notes-input-container {
         width: 80%;
-        height: 90%;
+        height: 40%;
         margin-top: 8%;
         border-radius: 10px;
         background-color: #2a470c;

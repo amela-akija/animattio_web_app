@@ -3,10 +3,28 @@ import './PatientProfilePage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import { Button, TextField } from '@mui/material';
 import SaveIcon from '@mui/icons-material/Save';
-// import { Button, TextField } from '@mui/material';
-// import NotesList from '../../ui-components/note/NoteListComponent';
-// import SaveIcon from '@mui/icons-material/Save';
-
+import NotesList from '../../ui-components/note/NoteListComponent';
+const notes = [
+  {
+    title: 'First Note',
+    date: '2024-09-10',
+    patient: 'John Doe'
+  },
+  {
+    title: 'Second Note',
+    date: '2024-09-11',
+    patient: null
+  },
+  {
+    title: 'Third Note',
+    date: '2024-09-12'
+  },
+  {
+    title: 'Fourth Note',
+    date: '2024-09-13',
+    patient: 'Jane Smith'
+  }
+];
 
 function PatientProfilePage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
@@ -15,9 +33,9 @@ function PatientProfilePage() {
     setSelectedOption(event.target.value);
   };
   const [infoClicked, setInfoClicked] = useState(false);
-  const [notesClicked, setNotesClicked] = useState(true);
+  const [notesClicked, setNotesClicked] = useState(false);
   const [statsClicked, setStatsClicked] = useState(false);
-  const [resultClicked, setResultClicked] = useState(false);
+  const [resultClicked, setResultClicked] = useState(true);
 
   const handleInfoClick = () => {
     setInfoClicked(!infoClicked);
@@ -80,9 +98,12 @@ function PatientProfilePage() {
             <text className="patient-text-button">Notes:</text>
           </button>
         </div>
+        {notesClicked && <NotesList notes={notes}></NotesList>}
       </div>
 
       {/*column 2*/}
+      {/**/}
+      {/**/}
       <div className="patient-profile-second-column">
         {infoClicked && (
           <div className="patient-info-input-container">
@@ -181,12 +202,14 @@ function PatientProfilePage() {
             </div>
             <div className="space"></div>
 
-            <label className="patient-small-text-button" style={{color:'#FFFBEE'}}>
+            <label className="patient-small-text-button" style={{ color: '#FFFBEE' }}>
               {' '}
               Parent contact information
-
-              <select id="contact-method"  value={selectedOption}
-                      onChange={handleSelectChange} className="patient-info-dropdown">
+              <select
+                id="contact-method"
+                value={selectedOption}
+                onChange={handleSelectChange}
+                className="patient-info-dropdown">
                 <option value="" disabled>
                   Please select an option
                 </option>
@@ -227,6 +250,49 @@ function PatientProfilePage() {
             </div>
           </div>
         )}
+        {resultClicked && <div className="big-space"></div>}
+        {resultClicked && (
+          <div className="patient-info-input-container">
+            <div className="patient-input-wrapper">
+              <label htmlFor="date" className="patient-input-label">
+                Date:
+              </label>
+              <input id="dateOfGame" name="dateOfGame" className="info-input" />
+            </div>
+            <div className="space"></div>
+            <div className="patient-input-wrapper">
+              <label htmlFor="mode" className="patient-input-label">
+                Game mode:
+              </label>
+              <input id="mode" name="mode" className="info-input" />
+            </div>
+            <div className="space"></div>
+
+            <div className="patient-input-wrapper">
+              <label htmlFor="omission" className="patient-input-label">
+                Omission error:
+              </label>
+              <input id="omission" name="omission" className="info-input" />
+            </div>
+
+            <div className="space"></div>
+            <div className="patient-input-wrapper">
+              <label htmlFor="comission" className="patient-input-label">
+                Comission error:
+              </label>
+              <input id="comission" name="comission" className="info-input" />
+            </div>
+
+            <div className="space"></div>
+            <div className="patient-input-wrapper">
+              <label htmlFor="reactionTime" className="patient-input-label">
+                Reaction time:
+              </label>
+              <input id="reactionTime" name="reactionTime" className="info-input" />
+            </div>
+          </div>
+        )}
+
         {notesClicked && (
           <div className="patient-notes-input-container">
             <div className="patient-notes-typing-input-container">
