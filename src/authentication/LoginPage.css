@@ -13,6 +13,10 @@
     color: #2A470C;
     text-shadow: #2A350D 1px 1px 4px;
 }
+.login_label{
+    color: #2A470C;
+    margin-left: 1%;
+}
 
 @media (min-width: 1025px) {
     .login-input-container {

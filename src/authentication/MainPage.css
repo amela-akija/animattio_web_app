@@ -37,9 +37,9 @@ body {
 
 .main-login-button-laptop {
     margin-top: 28%;
-    margin-left: 45%;
+    margin-left: 41%;
     position: absolute;
-    width: 10%;
+    width: 20%;
     height: 6%;
     border-radius: 5px;
     background-color: #2A470C;
@@ -97,9 +97,9 @@ body {
 
 .main-signup-button-laptop {
     margin-top: 32%;
-    margin-left: 45%;
+    margin-left: 41%;
     position: absolute;
-    width: 10%;
+    width: 20%;
     height: 6%;
     border-radius: 5px;
     background-color: #2A470C;

@@ -2,6 +2,7 @@
     background-color: #2a470c;
     color: #FFFBEE;
     display: flex;
+    padding-right: 1%;
     justify-content: space-between;
     align-items: center;
 }
@@ -27,6 +28,8 @@
     cursor: pointer;
     scale: 50%;
 }
+
+
 
 
 

@@ -70,6 +70,11 @@
     text-shadow: #2A350D 1px 1px 3px;
 
 }
+.signup_label{
+    color: #2A470C;
+    margin-left: 1%;
+}
+
 
 .signup-input {
     height: 10%;

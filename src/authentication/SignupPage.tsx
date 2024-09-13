@@ -3,8 +3,10 @@ import useResponsive from '../ui-components/useResponsive';
 import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
 import { TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 function SignupPage() {
+  const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const navigate = useNavigate();
   const goToLogin = () => {
@@ -12,18 +14,27 @@ function SignupPage() {
   };
   return (
     <div className="signup-container">
-      {laptop && <h1 className="signup-title-laptop">Sign up</h1>}
-      {mobile && <h1 className="signup-title-mobile">Sign up</h1>}
-      {tablet && <h1 className="signup-title-tablet">Sign up</h1>}
+      {laptop && <h1 className="signup-title-laptop">{t('signup_page')}</h1>}
+      {mobile && <h1 className="signup-title-mobile">{t('signup_page')}</h1>}
+      {tablet && <h1 className="signup-title-tablet">{t('signup_page')}</h1>}
 
       <div className="signup-input-container">
-        <TextField id="name" label="Name" variant="standard" name="name" className="signup-input" />
+        <label className="signup_label"> {t('name')}</label>
+        <TextField
+          id="name"
+          variant="standard"
+          name="name"
+          InputProps={{
+            disableUnderline: true
+          }}
+          className="signup-input"
+        />
       </div>
 
       <div className="signup-input-container">
+        <label className="signup_label"> {t('last_name')}</label>
         <TextField
           id="lastName"
-          label="Last name"
           variant="standard"
           name="lastName"
           InputProps={{
@@ -33,9 +44,9 @@ function SignupPage() {
         />
       </div>
       <div className="signup-input-container">
+        <label className="signup_label"> {t('pwz')}</label>
         <TextField
           id="pwz"
-          label="PWZ"
           variant="standard"
           name="pwz"
           InputProps={{
@@ -45,9 +56,9 @@ function SignupPage() {
         />
       </div>
       <div className="signup-input-container">
+        <label className="signup_label"> {t('email')}</label>
         <TextField
           id="email"
-          label="Email address"
           variant="standard"
           name="email"
           InputProps={{
@@ -58,9 +69,9 @@ function SignupPage() {
       </div>
 
       <div className="signup-input-container">
+        <label className="signup_label"> {t('password')}</label>
         <TextField
           id="password"
-          label="Password"
           type="password"
           name="password"
           variant="standard"
@@ -71,9 +82,9 @@ function SignupPage() {
         />
       </div>
       <div className="signup-input-container">
+        <label className="signup_label"> {t('repeat_password')}</label>
         <TextField
           id="passwordRepeat"
-          label="Repeat password"
           type="password"
           name="passwordRepeat"
           variant="standard"
@@ -85,12 +96,12 @@ function SignupPage() {
       </div>
       <div className="signup-button-container">
         <button className="signup-button" onClick={goToLogin}>
-          <text className="signup-text-button"> Sign up</text>
+          <text className="signup-text-button">{t("sign_up")}</text>
         </button>
       </div>
       <div className="signup-button-container">
         <button className="signin-button" onClick={goToLogin}>
-          <text className="signup-small-text-button"> Already have an account? Sign in</text>
+          <text className="signup-small-text-button">{t("message_signup")}</text>
         </button>
       </div>
     </div>

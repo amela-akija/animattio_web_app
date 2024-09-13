@@ -3,8 +3,10 @@ import logo from '../assets/logo-web.png';
 import './MainPage.css';
 import { useNavigate } from 'react-router-dom';
 import useResponsive from '../ui-components/useResponsive';
+import { useTranslation } from "react-i18next";
 
 function MainPage() {
+  const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const navigate = useNavigate();
   const goToLogin = () => {
@@ -17,12 +19,12 @@ function MainPage() {
     <div>
       {laptop && (
         <button onClick={() => goToLogin()} className="main-login-button-laptop">
-          <text className="main-text-button">Sign in</text>
+          <text className="main-text-button">{t("sign_in")}</text>
         </button>
       )}
       {laptop && (
         <button onClick={() => goToSignup()} className="main-signup-button-laptop">
-          <text className="main-text-button">Sign up</text>
+          <text className="main-text-button">{t("sign_up")}</text>
         </button>
       )}
       {laptop && <img src={logo} alt="logo" className="logo-laptop" />}
