@@ -6,63 +6,6 @@
     align-items: center;
 }
 
-.bm-burger-button {
-    position: absolute;
-    width: 3%;
-    height: 4%;
-    right: 1%;
-    top: 2%;
-}
-
-@media (max-width: 480px) {
-    .bm-burger-button {
-        width: 6%;
-        height: 3%;
-        right: 4%;
-        top: 1%;
-        padding-top: 4.5%;
-
-
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .bm-burger-button {
-        width: 6%;
-        height: 3%;
-        right: 1.5%;
-        top: 1%;
-        padding-top: 0.25%;
-    }
-}
-
-/* Laptop devices (1025px and up) */
-@media (min-width: 1025px) {
-    .bm-burger-button {
-        width: 3%;
-        height: 4%;
-        right: 1%;
-        top: 2%;
-    }
-}
-
-.bm-burger-bars {
-    background: #2A470C;
-}
-
-.bm-burger-bars-hover {
-    background: #F9E5A2;
-}
-
-.bm-cross-button {
-    right: 1%;
-    top: 2%;
-}
-
-.bm-cross {
-    background: #F9E5A2;
-}
-
 
 .navbar-logo {
     cursor: pointer;
@@ -73,36 +16,19 @@
     cursor: pointer;
     scale: 50%;
 }
+
 .navbar-menu-icon-mobile {
     cursor: pointer;
     scale: 110%;
     padding-top: 2%;
 }
+
 .navbar-menu-icon-tablet {
     cursor: pointer;
     scale: 50%;
 }
 
 
-.bm-menu {
-    padding-top: 1em;
-    background: #2a470c;
-    font-size: 1.5em;
-}
-
-.menu-item {
-    padding-top: 1em;
-    padding-bottom: 0.2em;
-    padding-left: 0.5em;
-    color: #FFFBEE;
-    text-decoration: none;
-    box-shadow: #282c34 3px 3px 3px;
-}
-
-.menu-item:hover {
-    color: #F9E5A2;
-    background-color: #2A350D;
-}
 
 
 
