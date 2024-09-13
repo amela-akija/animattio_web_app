@@ -22,7 +22,7 @@ function LoginPage() {
       {tablet && <h1 className="login-title-tablet">{t('login_page')}</h1>}
 
       <div className="login-input-container">
-        <label className="login_label"> {t('email')}</label>
+        <label className="login_label"> {t('email')}:</label>
         <TextField
           id="email"
           variant="standard"
@@ -35,7 +35,7 @@ function LoginPage() {
       </div>
 
       <div className="login-input-container">
-        <label className="login_label"> {t('password')}</label>
+        <label className="login_label"> {t('password')}:</label>
 
         <TextField
           id="password"

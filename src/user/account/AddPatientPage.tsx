@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import useResponsive from '../../ui-components/useResponsive';
 import './AddPatientPage.css';
 import { TextField } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 function AddPatientPage() {
+  const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const [checked, setChecked] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -16,42 +18,56 @@ function AddPatientPage() {
   return (
     <div className="add-patient-container">
       <div className="add-patient-first-column">
-        {laptop && <h1 className="add-patient-laptop">Add patient:</h1>}
-        {mobile && <h1 className="add-patient-mobile">Add patient:</h1>}
-        {tablet && <h1 className="add-patient-tablet">Add patient:</h1>}
+        {laptop && <h1 className="add-patient-laptop">{t('add_patient')}</h1>}
+        {mobile && <h1 className="add-patient-mobile">{t('add_patient')}</h1>}
+        {tablet && <h1 className="add-patient-tablet">{t('add_patient')}</h1>}
 
         <div className="add-patient-input-container">
+          <label className="add_label"> {t('name')}:</label>
           <TextField
             id="name"
-            label="Name"
             variant="standard"
             name="name"
             className="add-patient-input"
+            InputProps={{
+              disableUnderline: true
+            }}
           />
         </div>
         <div className="add-patient-input-container">
+          <label className="add_label"> {t('last_name')}:</label>
+
           <TextField
             id="lastNname"
-            label="Last name"
             variant="standard"
+            InputProps={{
+              disableUnderline: true
+            }}
             name="lastName"
             className="add-patient-input"
           />
         </div>
         <div className="add-patient-input-container">
+          <label className="add_label"> PESEL:</label>
+
           <TextField
             id="pesel"
-            label="PESEL"
             variant="standard"
+            InputProps={{
+              disableUnderline: true
+            }}
             name="pesel"
             className="add-patient-input"
           />
         </div>
         <div className="add-patient-input-container">
+          <label className="add_label"> {t('date_of_birth')}:</label>
           <TextField
             id="dateOfBirth"
-            label="Date of Birth"
             variant="standard"
+            InputProps={{
+              disableUnderline: true
+            }}
             name="dateOfBirth"
             className="add-patient-input"
           />
@@ -62,28 +78,37 @@ function AddPatientPage() {
         {laptop && <h1 className="add-patient-dot-laptop">add patient</h1>}
 
         <div className="add-patient-input-container">
+          <label className="add_label"> {t('seizure')}:</label>
           <TextField
             id="seizure"
-            label="First seizure - age"
             variant="standard"
+            InputProps={{
+              disableUnderline: true
+            }}
             name="seizure"
             className="add-patient-input"
           />
         </div>
         <div className="add-patient-input-container">
+          <label className="add_label"> {t('freq')}:</label>
           <TextField
             id="freq"
-            label="Seizure frequency"
             variant="standard"
+            InputProps={{
+              disableUnderline: true
+            }}
             name="freq"
             className="add-patient-input"
           />
         </div>
         <div className="add-patient-input-container">
+          <label className="add_label"> {t('additional_info')}:</label>
           <TextField
             id="info"
-            label=" Additional information"
             variant="standard"
+            InputProps={{
+              disableUnderline: true
+            }}
             name="info"
             className="add-patient-input"
           />
@@ -92,25 +117,28 @@ function AddPatientPage() {
         <div className="add-patient-input-container">
           <label className="info-small-text-button">
             {' '}
-            Parent contact information
+            {t("parent_contact_info")}
             <select
               id="contact-method"
               value={selectedOption}
               onChange={handleSelectChange}
               className="info-dropdown">
               <option value="" disabled>
-                Please select an option
+                {t("option")}
               </option>
-              <option value="phone">Phone number</option>
-              <option value="email">E-mail address</option>
+              <option value="phone">{t("phone")}</option>
+              <option value="email">{t("email")}</option>
             </select>
           </label>
         </div>
         {selectedOption === 'phone' && (
           <div className="add-patient-input-container">
+            <label className="add_label"> {t('contact_info')}:</label>
             <TextField
               id="contact"
-              label="Contact information"
+              InputProps={{
+                disableUnderline: true
+              }}
               variant="standard"
               name="contact"
               className="add-patient-input"
@@ -120,11 +148,14 @@ function AddPatientPage() {
 
         {selectedOption === 'email' && (
           <div className="add-patient-input-container">
+            <label className="add_label"> {t('contact_info')}:</label>
             <TextField
               id="contact"
-              label="Contact information"
               variant="standard"
               name="contact"
+              InputProps={{
+                disableUnderline: true
+              }}
               className="add-patient-input"
             />
           </div>
@@ -141,13 +172,16 @@ function AddPatientPage() {
         {laptop && <h1 className="add-patient-dot-laptop">add patient</h1>}
         <label className="checkbox">
           <input type="checkbox" checked={checked} onClick={handleCheckboxChange} />
-          pharmacological treatment
+          {t("pharmacological")}
         </label>
         {checked && (
           <div className="add-patient-additional-input-container">
+            <label className="add_label"> {t('meds')}:</label>
             <TextField
               id="medication"
-              label="Medication description"
+              InputProps={{
+                disableUnderline: true
+              }}
               variant="standard"
               name="medication"
               className="add-patient-additional-input"

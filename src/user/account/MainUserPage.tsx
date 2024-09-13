@@ -3,6 +3,7 @@ import './MainUserPage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import TestsList from '../../ui-components/test/TestListComponent';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const tests = [
   {
@@ -17,6 +18,7 @@ const tests = [
   }
 ];
 function MainUserPage() {
+  const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const navigate = useNavigate();
   const goToAddPatient = () => {
@@ -33,28 +35,27 @@ function MainUserPage() {
       <div className="user-account-first-column">
         <div className="user-button-container">
           <button className="add-button" onClick={goToAddPatient}>
-            <text className="user-text-button"> Add patient</text>
+            <text className="user-text-button">{t('add_patient')}</text>
           </button>
         </div>
         <div className="user-button-container">
           <button className="list-button" onClick={goToSeePatients}>
-            <text className="user-text-button"> See patients</text>
+            <text className="user-text-button"> {t('see_patients')}</text>
           </button>
         </div>
         <div className="user-button-container">
           <button className="profile-button" onClick={goToDoctorProfile}>
-            <text className="user-text-button"> Profile</text>
+            <text className="user-text-button"> {t("profile")}</text>
           </button>
         </div>
       </div>
       <div className="user-account-second-column">
         <div className="user-column-container">
-          {laptop && <text className="user-result-laptop"> New results:</text>}
-          {mobile && <text className="user-result-mobile"> New results:</text>}
-          {tablet && <text className="user-result-tablet"> New results:</text>}
+          {laptop && <text className="user-result-laptop"> {t("new_results")}</text>}
+          {mobile && <text className="user-result-mobile">  {t("new_results")}</text>}
+          {tablet && <text className="user-result-tablet">  {t("new_results")}</text>}
           <div className="game-container">
-            <TestsList tests={tests}/>
-            
+            <TestsList tests={tests} />
           </div>
         </div>
       </div>

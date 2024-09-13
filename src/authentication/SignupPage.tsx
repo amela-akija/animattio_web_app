@@ -19,7 +19,7 @@ function SignupPage() {
       {tablet && <h1 className="signup-title-tablet">{t('signup_page')}</h1>}
 
       <div className="signup-input-container">
-        <label className="signup_label"> {t('name')}</label>
+        <label className="signup_label"> {t('name')}:</label>
         <TextField
           id="name"
           variant="standard"
@@ -32,7 +32,7 @@ function SignupPage() {
       </div>
 
       <div className="signup-input-container">
-        <label className="signup_label"> {t('last_name')}</label>
+        <label className="signup_label"> {t('last_name')}:</label>
         <TextField
           id="lastName"
           variant="standard"
@@ -44,7 +44,7 @@ function SignupPage() {
         />
       </div>
       <div className="signup-input-container">
-        <label className="signup_label"> {t('pwz')}</label>
+        <label className="signup_label"> {t('pwz')}:</label>
         <TextField
           id="pwz"
           variant="standard"
@@ -56,7 +56,7 @@ function SignupPage() {
         />
       </div>
       <div className="signup-input-container">
-        <label className="signup_label"> {t('email')}</label>
+        <label className="signup_label"> {t('email')}:</label>
         <TextField
           id="email"
           variant="standard"
@@ -69,7 +69,7 @@ function SignupPage() {
       </div>
 
       <div className="signup-input-container">
-        <label className="signup_label"> {t('password')}</label>
+        <label className="signup_label"> {t('password')}:</label>
         <TextField
           id="password"
           type="password"
@@ -82,7 +82,7 @@ function SignupPage() {
         />
       </div>
       <div className="signup-input-container">
-        <label className="signup_label"> {t('repeat_password')}</label>
+        <label className="signup_label"> {t('repeat_password')}:</label>
         <TextField
           id="passwordRepeat"
           type="password"
