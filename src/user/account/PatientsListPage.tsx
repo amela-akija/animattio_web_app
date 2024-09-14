@@ -2,6 +2,7 @@ import React from 'react';
 import './PatientsListPage.css';
 // import useResponsive from '../../ui-components/useResponsive';
 import PatientsList from '../../ui-components/patient/PatientsListComponent';
+import { useTranslation } from 'react-i18next';
 
 const patientsMockList = [
   {
@@ -30,15 +31,16 @@ const patientsMockList = [
   }
 ];
 function SeePatientsPage() {
+  const { t } = useTranslation();
   return (
     <div className="patients-list-container">
       <div className="searchContainer">
-        <input type="text" className="searchInput" placeholder="Search..." />
+        <input type="text" className="searchInput" placeholder={t('search')} />
         <select className="searchType">
-          <option value="">All</option>
-          <option value="email">E-mail</option>
+          <option value="">{t("all")}</option>
+          <option value="email">{t("email")}</option>
           <option value="pesel">PESEL</option>
-          <option value="lastName">Last name</option>
+          <option value="lastName">{t("last_name")}</option>
         </select>
       </div>
       <div className="patients-container">

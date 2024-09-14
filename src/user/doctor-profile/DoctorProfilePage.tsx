@@ -4,6 +4,7 @@ import useResponsive from '../../ui-components/useResponsive';
 import { Button, TextField } from '@mui/material';
 import NotesList from '../../ui-components/note/NoteListComponent';
 import SaveIcon from '@mui/icons-material/Save';
+import { useTranslation } from 'react-i18next';
 const notes = [
   {
     title: 'First Note',
@@ -38,12 +39,13 @@ function DoctorProfilePage() {
     setNotesClicked(!notesClicked);
     setInfoClicked(!infoClicked);
   };
+  const { t } = useTranslation();
   return (
     <div className="doctor-profile-container">
       <div className="doctor-profile-first-column">
-        {laptop && <h1 className="doctor-profile-laptop">Doctor's profile:</h1>}
-        {mobile && <h1 className="doctor-profile-mobile">Doctor's profile:</h1>}
-        {tablet && <h1 className="doctor-profile-tablet">Doctor's profile:</h1>}
+        {laptop && <h1 className="doctor-profile-laptop">{t('doctor_profile')}:</h1>}
+        {mobile && <h1 className="doctor-profile-mobile">{t('doctor_profile')}:</h1>}
+        {tablet && <h1 className="doctor-profile-tablet">{t('doctor_profile')}:</h1>}
         <div className="dr-button-container">
           <button
             className="dr-button"
@@ -51,7 +53,7 @@ function DoctorProfilePage() {
             style={{
               backgroundColor: infoClicked ? '#FFC267' : '#FBE3BE'
             }}>
-            <text className="dr-text-button">Doctor's information:</text>
+            <text className="dr-text-button">{t('doctor_info')}:</text>
           </button>
         </div>
 
@@ -62,7 +64,7 @@ function DoctorProfilePage() {
             style={{
               backgroundColor: notesClicked ? '#FFC267' : '#FBE3BE'
             }}>
-            <text className="dr-text-button">Notes:</text>
+            <text className="dr-text-button">{t('notes')}:</text>
           </button>
         </div>
         {notesClicked && <NotesList notes={notes}></NotesList>}
@@ -72,7 +74,7 @@ function DoctorProfilePage() {
           <div className="info-input-container">
             <div className="input-wrapper">
               <label htmlFor="name" className="input-label">
-                Name:
+                {t('name')}:
               </label>
               <TextField
                 id="name"
@@ -87,7 +89,7 @@ function DoctorProfilePage() {
             <div className="space"></div>
             <div className="input-wrapper">
               <label htmlFor="lastName" className="input-label">
-                Last name:
+                {t('last_name')}:
               </label>
               <TextField
                 id="lastNname"
@@ -119,7 +121,7 @@ function DoctorProfilePage() {
             <div className="space"></div>
             <div className="input-wrapper">
               <label htmlFor="dateOfBirth" className="input-label">
-                Date of birth:
+                {t('date_of_birth')}:
               </label>
               <TextField
                 id="dateOfBirth"
@@ -146,7 +148,7 @@ function DoctorProfilePage() {
                 InputProps={{
                   disableUnderline: true
                 }}
-                placeholder="Start typing..."></TextField>
+                placeholder={t('start_typing')}></TextField>
             </div>
           </div>
         )}
@@ -156,7 +158,7 @@ function DoctorProfilePage() {
               variant="contained"
               endIcon={<SaveIcon />}
               style={{ backgroundColor: '#2a470c' }}>
-              Save
+              {t("save")}
             </Button>
           </div>
         )}

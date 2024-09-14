@@ -7,6 +7,7 @@ import NotesList from '../../ui-components/note/NoteListComponent';
 import TestsList from '../../ui-components/test/TestListComponent';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import { useTranslation } from 'react-i18next';
 const notes = [
   {
     title: 'First Note',
@@ -42,34 +43,44 @@ const tests = [
   }
 ];
 const StartDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
-  ({ value, onClick }, ref) => (
-    <div className="arrow-wrapper" onClick={onClick}>
-      <input
-        ref={ref}
-        value={value}
-        readOnly
-        className="calendar-input"
-        placeholder="Select a start date"
-      />
-      <div className="arrow">&#9662;</div>
-    </div>
-  )
+  ({ value, onClick }, ref) => {
+    const { t } = useTranslation();
+
+    return (
+      <div className="arrow-wrapper" onClick={onClick}>
+        <input
+          ref={ref}
+          value={value}
+          readOnly
+          className="calendar-input"
+          placeholder={t("start_date")}
+        />
+        <div className="arrow">&#9662;</div>
+      </div>
+    );
+  }
 );
 const EndDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
-  ({ value, onClick }, ref) => (
-    <div className="arrow-wrapper" onClick={onClick}>
-      <input
-        ref={ref}
-        value={value}
-        readOnly
-        className="calendar-input"
-        placeholder="Select an end date"
-      />
-      <div className="arrow">&#9662;</div>
-    </div>
-  )
+  ({ value, onClick }, ref) => {
+    const { t } = useTranslation();
+
+    return (
+      <div className="arrow-wrapper" onClick={onClick}>
+        <input
+          ref={ref}
+          value={value}
+          readOnly
+          className="calendar-input"
+          placeholder={t("end_date")}
+        />
+        <div className="arrow">&#9662;</div>
+      </div>
+    );
+  }
 );
+
 function PatientProfilePage() {
+  const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
 
   const [selectedOption, setSelectedOption] = useState('');
@@ -88,9 +99,9 @@ function PatientProfilePage() {
   return (
     <div className="patient-profile-container">
       <div className="patient-profile-first-column">
-        {laptop && <h1 className="patient-profile-laptop">Patient's profile:</h1>}
-        {mobile && <h1 className="patient-profile-mobile">Patient's profile:</h1>}
-        {tablet && <h1 className="patient-profile-tablet">Patient's profile:</h1>}
+        {laptop && <h1 className="patient-profile-laptop">{t('patient_profile')}:</h1>}
+        {mobile && <h1 className="patient-profile-mobile">{t('patient_profile')}:</h1>}
+        {tablet && <h1 className="patient-profile-tablet">{t('patient_profile')}:</h1>}
         <div className="patient-button-container">
           <button
             className="patient-button"
@@ -98,7 +109,7 @@ function PatientProfilePage() {
             style={{
               backgroundColor: activeButton === 'info' ? '#FFC267' : '#FBE3BE'
             }}>
-            <text className="patient-text-button">Patient's information:</text>
+            <text className="patient-text-button">{t('patient_info')}:</text>
           </button>
         </div>
 
@@ -109,7 +120,7 @@ function PatientProfilePage() {
             style={{
               backgroundColor: activeButton === 'result' ? '#FFC267' : '#FBE3BE'
             }}>
-            <text className="patient-text-button">Results:</text>
+            <text className="patient-text-button">{t('results')}:</text>
           </button>
         </div>
         <div className="patient-button-container">
@@ -119,7 +130,7 @@ function PatientProfilePage() {
             style={{
               backgroundColor: activeButton === 'stats' ? '#FFC267' : '#FBE3BE'
             }}>
-            <text className="patient-text-button">Statistics:</text>
+            <text className="patient-text-button">{t('stats')}:</text>
           </button>
         </div>
         <div className="patient-button-container">
@@ -129,7 +140,7 @@ function PatientProfilePage() {
             style={{
               backgroundColor: activeButton === 'notes' ? '#FFC267' : '#FBE3BE'
             }}>
-            <text className="patient-text-button">Notes:</text>
+            <text className="patient-text-button">{t('notes')}:</text>
           </button>
         </div>
         {activeButton === 'notes' && <NotesList notes={notes}></NotesList>}
@@ -140,17 +151,17 @@ function PatientProfilePage() {
           <div className="stats-dropdown-container">
             <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
               {' '}
-              Game mode:
+              {t('game_mode')}:
               <select
                 id="gamemode"
                 value={selectedOption}
                 onChange={handleSelectChange}
                 className="stats-dropdown">
                 <option value="" disabled>
-                  Please select a game mode
+                  {t('message_game')}
                 </option>
-                <option value="mode1">Mode 1</option>
-                <option value="mode2">Mode 2</option>
+                <option value="mode1">{t('mode1')}</option>
+                <option value="mode2">{t('mode2')}</option>
               </select>
             </label>
           </div>
@@ -159,19 +170,19 @@ function PatientProfilePage() {
           <div className="stats-dropdown-container">
             <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
               {' '}
-              Parameter:
+              {t('parameter')}:
               <select
                 id="parameter"
                 value={selectedOption}
                 onChange={handleSelectChange}
                 className="stats-dropdown">
                 <option value="" disabled>
-                  Please select a parameter
+                  {t('message_parameter')}
                 </option>
-                <option value="omissionParameter">Omission error</option>
-                <option value="comissionParameter">Comission error</option>
-                <option value="hitRateParameter">Hit rate</option>
-                <option value="reactionParameter">Reaction time</option>
+                <option value="omissionParameter">{t('Omission')}</option>
+                <option value="comissionParameter">{t('Comission')}</option>
+                <option value="hitRateParameter">{t('Hit_rate')}</option>
+                <option value="reactionParameter">{t('Reaction_time')}</option>
               </select>
             </label>
           </div>
@@ -186,7 +197,7 @@ function PatientProfilePage() {
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">
               <label htmlFor="name" className="patient-input-label">
-                Name:
+                {t('name')}:
               </label>
               <TextField
                 id="name"
@@ -201,7 +212,7 @@ function PatientProfilePage() {
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="lastName" className="patient-input-label">
-                Last name:
+                {t('last_name')}:
               </label>
               <TextField
                 id="lastNname"
@@ -233,7 +244,7 @@ function PatientProfilePage() {
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="dateOfBirth" className="patient-input-label">
-                Date of birth:
+                {t('date_of_birth')}:
               </label>
               <TextField
                 id="dateOfBirth"
@@ -249,7 +260,7 @@ function PatientProfilePage() {
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="age" className="patient-input-label">
-                First seizure - age:
+                {t('seizure')}:
               </label>
               <TextField
                 id="age"
@@ -265,7 +276,7 @@ function PatientProfilePage() {
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="freq" className="patient-input-label">
-                Seizure frequency:
+                {t('freq')}:
               </label>
               <TextField
                 id="freq"
@@ -281,23 +292,23 @@ function PatientProfilePage() {
 
             <label className="patient-small-text-button" style={{ color: '#FFFBEE' }}>
               {' '}
-              Parent contact information
+              {t('parent_contact_info')}
               <select
                 id="contact-method"
                 value={selectedOption}
                 onChange={handleSelectChange}
                 className="patient-info-dropdown">
                 <option value="" disabled>
-                  Please select an option if contact information changed
+                  {t('message_contact')}
                 </option>
-                <option value="phone">Phone number</option>
-                <option value="email">E-mail address</option>
+                <option value="phone">{t('phone')}</option>
+                <option value="email">{t('email')}</option>
               </select>
             </label>
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="contact" className="patient-input-label">
-                Contact information:
+                {t('contact_info')}:
               </label>
               <TextField
                 id="contact"
@@ -313,7 +324,7 @@ function PatientProfilePage() {
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="additional" className="patient-input-label">
-                Additional information:
+                {t('additional_info')}:
               </label>
               <TextField
                 id="additional"
@@ -332,14 +343,14 @@ function PatientProfilePage() {
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">
               <label htmlFor="date" className="patient-input-label">
-                Date:
+                {t('date')}:
               </label>
               <input id="dateOfGame" name="dateOfGame" className="info-input" readOnly />
             </div>
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="mode" className="patient-input-label">
-                Game mode:
+                {t('game_mode')}:
               </label>
               <input id="mode" name="mode" className="info-input" readOnly />
             </div>
@@ -347,7 +358,7 @@ function PatientProfilePage() {
 
             <div className="patient-input-wrapper">
               <label htmlFor="omission" className="patient-input-label">
-                Omission error:
+                {t('omission')}:
               </label>
               <input id="omission" name="omission" className="info-input" readOnly />
             </div>
@@ -355,7 +366,7 @@ function PatientProfilePage() {
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="comission" className="patient-input-label">
-                Comission error:
+                {t('comission')}:
               </label>
               <input id="comission" name="comission" className="info-input" readOnly />
             </div>
@@ -363,7 +374,7 @@ function PatientProfilePage() {
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="reactionTime" className="patient-input-label">
-                Reaction time:
+                {t('reaction_time')}:
               </label>
               <input id="reactionTime" name="reactionTime" className="info-input" readOnly />
             </div>
@@ -383,7 +394,7 @@ function PatientProfilePage() {
                 InputProps={{
                   disableUnderline: true
                 }}
-                placeholder="Start typing..."></TextField>
+                placeholder={t('start_typing')}></TextField>
             </div>
           </div>
         )}
@@ -393,7 +404,7 @@ function PatientProfilePage() {
               variant="contained"
               endIcon={<SaveIcon />}
               style={{ backgroundColor: '#2a470c' }}>
-              Save
+              {t("save")}
             </Button>
           </div>
         )}
