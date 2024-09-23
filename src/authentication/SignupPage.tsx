@@ -28,27 +28,27 @@ function SignupPage() {
   const signUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name || !lastName || !pwz || !email || !password || !repeatPassword) {
-      alert('All fields must be filled.');
+      alert(t('all_fields'));
       return;
     }
     if (password !== repeatPassword) {
-      alert('Passwords do not match.');
+      alert(t('password_match'));
       return;
     }
     if (password.length < 8) {
-      alert('Password must be at least 8 characters long.');
+      alert(t('password_length'));
       return;
     }
     const hasUpperCase = /[A-Z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
 
     if (!hasUpperCase) {
-      alert('Password must contain at least one uppercase letter.');
+      alert(t('password_capital'));
       return;
     }
 
     if (!hasNumber) {
-      alert('Password must contain at least one number.');
+      alert(t('password_number'));
       return;
     }
 
@@ -56,7 +56,7 @@ function SignupPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
       const uid = userCredential.user.uid;
-      await addDoctor(name, lastName, pwz, email, uid);
+      await addDoctor(name, lastName, 'doctor',pwz, email, uid);
       navigate('/login');
     } catch (error) {
       console.log(error);

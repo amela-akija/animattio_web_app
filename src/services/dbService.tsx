@@ -1,7 +1,7 @@
 import { firestore } from '../firebaseConfig';
 import { doc, setDoc } from 'firebase/firestore';
 
-export async function addDoctor(name: string, lastName: string, pwz: string, email: string, uid: string) {
+export async function addDoctor(name: string, lastName: string, role: string, pwz: string, email: string, uid: string) {
   try {
     const doctorRef = doc(firestore, 'doctors', uid);
 
@@ -10,6 +10,7 @@ export async function addDoctor(name: string, lastName: string, pwz: string, ema
       lastName: lastName,
       pwz: pwz,
       email: email,
+      role: role,
     };
 
     await setDoc(doctorRef, newDoctor);
