@@ -3,6 +3,9 @@ import './Sidebar.css';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import {Button } from '@mui/material';
+import { auth } from '../../firebaseConfig';
+import { signOut } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
   const {t, i18n } = useTranslation();
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
@@ -11,6 +14,7 @@ const Sidebar = () => {
     localStorage.setItem('language', language);
   }, [i18n, language]);
 
+  const navigate = useNavigate();
   const toggleLanguage = () => {
     const newLanguage = language === 'pl' ? 'en' : 'pl';
     setLanguage(newLanguage);
@@ -19,6 +23,16 @@ const Sidebar = () => {
   const { pathname } = useLocation();
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
+  };
+
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+      console.log("User signed out successfully");
+      navigate('/login');
+    } catch (error) {
+      console.error("Error signing out: ", error);
+    }
   };
 
   const getMenuItems = () => {
@@ -72,7 +86,7 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/logout">{t("log_out")}</a>
+              <a href="/login" onClick={logOut}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -86,7 +100,7 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/logout">{t("log_out")}</a>
+              <a href="/login" onClick={logOut}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -100,7 +114,7 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/logout">{t("log_out")}</a>
+              <a href="/login" onClick={logOut}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -114,7 +128,7 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/logout">{t("log_out")}</a>
+              <a href="/login" onClick={logOut}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -128,7 +142,7 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/logout">{t("log_out")}</a>
+              <a href="/login" onClick={logOut}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
