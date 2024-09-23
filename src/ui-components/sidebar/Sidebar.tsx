@@ -5,9 +5,10 @@ import { useTranslation } from 'react-i18next';
 import {Button } from '@mui/material';
 const Sidebar = () => {
   const {t, i18n } = useTranslation();
-  const [language, setLanguage] = useState('en');
+  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
   useEffect(() => {
     i18n.changeLanguage(language);
+    localStorage.setItem('language', language);
   }, [i18n, language]);
 
   const toggleLanguage = () => {

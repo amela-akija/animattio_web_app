@@ -19,36 +19,36 @@ function MainPage() {
     <div>
       {laptop && (
         <button onClick={() => goToLogin()} className="main-login-button-laptop">
-          <text className="main-text-button">{t("sign_in")}</text>
+          <text className="main-text-button">{t('sign_in')}</text>
         </button>
       )}
       {laptop && (
         <button onClick={() => goToSignup()} className="main-signup-button-laptop">
-          <text className="main-text-button">{t("sign_up")}</text>
+          <text className="main-text-button">{t('sign_up')}</text>
         </button>
       )}
       {laptop && <img src={logo} alt="logo" className="logo-laptop" />}
 
       {mobile && (
         <button onClick={() => goToLogin()} className="main-login-button-mobile">
-          <text className="main-text-button">Sign in</text>
+          <text className="main-text-button">{t('sign_in')}</text>
         </button>
       )}
       {mobile && (
         <button onClick={() => goToSignup()} className="main-signup-button-mobile">
-          <text className="main-text-button">Sign up</text>
+          <text className="main-text-button">{t('sign_up')}</text>
         </button>
       )}
       {mobile && <img src={logo} alt="logo" className="logo-mobile" />}
 
       {tablet && (
         <button onClick={() => goToLogin()} className="main-login-button-tablet">
-          <text className="main-text-button">Sign in</text>
+          <text className="main-text-button">{t('sign_in')}</text>
         </button>
       )}
       {tablet && (
         <button onClick={() => goToSignup()} className="main-signup-button-tablet">
-          <text className="main-text-button">Sign up</text>
+          <text className="main-text-button">{t('sign_up')}</text>
         </button>
       )}
       {tablet && <img src={logo} alt="logo" className="logo-tablet" />}

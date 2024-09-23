@@ -10,9 +10,12 @@ import AddPatientPage from './user/account/AddPatientPage';
 import SeePatientsPage from './user/account/PatientsListPage';
 import DoctorProfilePage from './user/doctor-profile/DoctorProfilePage';
 import PatientProfilePage from './user/patient-profile/PatientProfilePage';
+import { I18nextProvider } from 'react-i18next';
+import i18n from 'i18next';
 function App() {
   return (
     <Router>
+      <I18nextProvider i18n={i18n}>
       <Navbar />
       <Routes>
         <Route path="/" element={<MainPage />} />
@@ -27,6 +30,7 @@ function App() {
 
 
       </Routes>
+      </I18nextProvider>
     </Router>
   );
 }
