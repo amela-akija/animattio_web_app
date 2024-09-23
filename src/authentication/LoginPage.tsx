@@ -4,8 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 import { TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { auth } from '../firebaseConfig';
+import { auth, firestore } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+
 
 
 
@@ -19,14 +21,33 @@ function LoginPage() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const signIn = (e: React.FormEvent)=>{
+  const signIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password).then((userCredential)=>{console.log(userCredential);
-      navigate('/user-account');
-    }).catch((error)=>{console.log(error)});
-    // navigate('/user-account');
+    try {
+      const doctorCredentials = await signInWithEmailAndPassword(auth, email, password);
+      const user = doctorCredentials.user;
 
-  }
+      const doctor = doc(firestore, 'doctors', user.uid);
+      const doctorSnapshot = await getDoc(doctor);
+
+      if (doctorSnapshot.exists()) {
+        const doctorData = doctorSnapshot.data();
+
+        if (doctorData?.role === 'doctor') {
+          console.log(t('doctor_login'));
+          navigate('/user-account');
+        } else {
+          console.log('Access denied');
+          await auth.signOut();
+          alert(t('access_denied'));
+        }
+      } else {
+        console.log('No document');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
   return (
     <div className="login-container">
       {laptop && <h1 className="login-title-laptop">{t('login_page')}</h1>}
