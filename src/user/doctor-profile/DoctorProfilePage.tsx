@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './DoctorProfilePage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import { Button, TextField } from '@mui/material';
 import NotesList from '../../ui-components/note/NoteListComponent';
 import SaveIcon from '@mui/icons-material/Save';
 import { useTranslation } from 'react-i18next';
+import { getFirestore, doc, getDoc, updateDoc  } from 'firebase/firestore';
+import BorderColorIcon from '@mui/icons-material/BorderColor';
+import Doctor from './Doctor';
+
 const notes = [
   {
     title: 'First Note',
@@ -40,6 +44,59 @@ function DoctorProfilePage() {
     setInfoClicked(!infoClicked);
   };
   const { t } = useTranslation();
+
+  const [doctorData, setDoctorData] = useState<Doctor | null>(null);
+  const [editedData, setEditedData] = useState<Doctor | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const uid = localStorage.getItem('id');
+      if (uid) {
+        const db = getFirestore();
+        const dr = doc(db, "doctors", uid);
+        const doctor = await getDoc(dr);
+
+        if (doctor.exists()) {
+          const fetchedData = doctor.data() as Doctor;
+          setDoctorData(fetchedData);
+          setEditedData(fetchedData);
+        } else {
+          console.log("No document found");
+        }
+      } else {
+        console.log("User not logged in");
+      }
+    };
+
+    fetchData();
+  }, []);
+  const handleEditChanges = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (editedData) {
+      setEditedData({
+        ...editedData,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+
+  const onSave = async () => {
+    const uid = localStorage.getItem('id');
+    if (uid && editedData) {
+      const db = getFirestore();
+      const dr = doc(db, "doctors", uid);
+
+      try {
+        const updatedData:Partial<Doctor> = { ...editedData };
+
+        await updateDoc(dr, updatedData);
+        setDoctorData(editedData);
+        alert(t('data_update'))
+      } catch (error) {
+        console.error("Error while updating: ", error);
+      }
+    }
+  };
+
   return (
     <div className="doctor-profile-container">
       <div className="doctor-profile-first-column">
@@ -79,7 +136,9 @@ function DoctorProfilePage() {
               <TextField
                 id="name"
                 variant="standard"
+                onChange={handleEditChanges}
                 name="name"
+                value={editedData?.name || t('no_data')}
                 className="info-input"
                 InputProps={{
                   disableUnderline: true
@@ -94,7 +153,9 @@ function DoctorProfilePage() {
               <TextField
                 id="lastNname"
                 variant="standard"
+                onChange={handleEditChanges}
                 name="lastName"
+                value={editedData?.lastName || t('no_data')}
                 className="info-input"
                 InputProps={{
                   disableUnderline: true
@@ -111,6 +172,8 @@ function DoctorProfilePage() {
                 id="pwz"
                 variant="standard"
                 name="pwz"
+                onChange={handleEditChanges}
+                value={editedData?.pwz || t('no_data')}
                 className="info-input"
                 InputProps={{
                   disableUnderline: true
@@ -128,6 +191,25 @@ function DoctorProfilePage() {
                 variant="standard"
                 name="dateOfBirth"
                 className="info-input"
+                onChange={handleEditChanges}
+                value={doctorData?.dateOfBirth || t('no_data')}
+                InputProps={{
+                  disableUnderline: true
+                }}
+              />
+            </div>
+            <div className="space"></div>
+            <div className="input-wrapper">
+              <label htmlFor="email" className="input-label">
+                {t('email')}:
+              </label>
+              <TextField
+                id="email"
+                variant="standard"
+                name="email"
+                onChange={handleEditChanges}
+                className="info-input"
+                value={doctorData?.email || t('no_data')}
                 InputProps={{
                   disableUnderline: true
                 }}
@@ -152,13 +234,25 @@ function DoctorProfilePage() {
             </div>
           </div>
         )}
-        {notesClicked && (
-          <div className="note-button-container">
+        {infoClicked && (
+          <div className="space"></div>
+        )}
+        {infoClicked && (
+          <Button
+          variant="contained"
+          endIcon={<BorderColorIcon />}
+          onClick={onSave}
+        style={{ backgroundColor: '#2a470c' }}>
+        {t('save')}
+      </Button>
+      )}
+      {notesClicked && (
+        <div className="note-button-container">
             <Button
               variant="contained"
               endIcon={<SaveIcon />}
               style={{ backgroundColor: '#2a470c' }}>
-              {t("save")}
+              {t('save')}
             </Button>
           </div>
         )}

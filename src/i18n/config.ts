@@ -85,6 +85,9 @@ i18n
           password_length: "Password must be at least 8 characters long.",
           password_capital:"Password must contain at least one uppercase letter.",
           password_number:"Password must contain at least one number.",
+          change: "Edit",
+          no_data: "No data provided",
+          data_update: "Data updated successfully"
         },
       },
       pl: {
@@ -159,6 +162,10 @@ i18n
           password_length: "Hasło musi zawierać przynajmniej 8 znaków.",
           password_capital:"Hasło musi zawierać przynajmniej jedną wielką literę.",
           password_number:"Hasło musi zawierać przynajmniej 1 liczbę.",
+          change: "Edytuj",
+          no_data: "Brak danych",
+          data_update: "Dane zaaktualizowano pomyślnie",
+
         },
       },
     },
