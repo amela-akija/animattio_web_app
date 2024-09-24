@@ -177,7 +177,9 @@
 .input-wrapper {
     width: 90%;
     background-color: #2a470c;
+    color: #2a470c;
     display: flex;
+    font-family: 'Karla', sans-serif;
     align-items: stretch;
     justify-content: center;
 }

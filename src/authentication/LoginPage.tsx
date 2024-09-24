@@ -34,6 +34,7 @@ function LoginPage() {
         const doctorData = doctorSnapshot.data();
 
         if (doctorData?.role === 'doctor') {
+          localStorage.setItem('id', doctor.id);
           console.log(t('doctor_login'));
           navigate('/user-account');
         } else {
