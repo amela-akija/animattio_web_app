@@ -93,6 +93,10 @@ i18n
           close: "Close",
           message_note:"Note added successfully",
           add_note:"Add note",
+          add_title:"Add title",
+          see_note: "See details",
+          content:"content",
+
 
         },
       },
@@ -176,6 +180,9 @@ i18n
           close: "Zamknij",
           message_note:"Pomyślnie dodano notatkę",
           add_note:"Dodaj notatkę",
+          add_title:"Dodaj tytuł",
+          see_note: "Zobacz szczegóły",
+          content:"treść",
 
         },
       },

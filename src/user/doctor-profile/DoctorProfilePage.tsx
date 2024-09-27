@@ -11,28 +11,6 @@ import Doctor from './Doctor';
 import { addNote, updateNoteWithContent, updateNoteWithTitle } from '../../services/dbService';
 import { getAuth } from 'firebase/auth';
 
-// const notes = [
-//   {
-//     title: 'First Note',
-//     date: '2024-09-10',
-//     patient: 'John Doe'
-//   },
-//   {
-//     title: 'Second Note',
-//     date: '2024-09-11',
-//     patient: null
-//   },
-//   {
-//     title: 'Third Note',
-//     date: '2024-09-12'
-//   },
-//   {
-//     title: 'Fourth Note',
-//     date: '2024-09-13',
-//     patient: 'Jane Smith'
-//   }
-// ];
-
 function DoctorProfilePage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const [infoClicked, setInfoClicked] = useState(true);

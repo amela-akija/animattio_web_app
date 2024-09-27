@@ -22,6 +22,9 @@ const NoteComponent: React.FC<notes> = ({ note }) => {
       <p className="note-details">
         <strong>{t('patient_id')}:</strong> {note.patient}
       </p>
+      <p className="note-details">
+        <strong>{t('content')}:</strong> {note.note}
+      </p>
     </div>
   );
 };
