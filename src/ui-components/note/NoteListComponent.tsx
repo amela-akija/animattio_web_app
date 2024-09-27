@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './NoteComponent.css';
-import Note from './Note';
 import NoteComponent from './NoteComponent';
+import { fetchNotes } from './getNotes';
+import Note from './Note';
 
-interface Notes {
-  notes: Note[];
-}
 
-const NotesList: React.FC<Notes> = ({ notes }) => {
+const NotesList: React.FC = () => {
+  const [notes, setNotes] = useState<Note[]>([]);
+
+  useEffect(() => {
+    const loadNotes = async () => {
+      const fetchedNotes = await fetchNotes();
+      setNotes(fetchedNotes);
+    };
+
+    loadNotes();
+  }, []);
+
   return (
     <div className="note-list">
-      {notes.map((note) => (
-        <NoteComponent key={note.title} note={note} />
-      ))}
+      {notes.length > 0 ? (
+        notes.map((note) => (
+          <NoteComponent key={note.id} note={note} />
+        ))
+      ) : (
+        <p>No notes available</p>
+      )}
     </div>
   );
 };

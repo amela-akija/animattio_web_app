@@ -143,7 +143,7 @@ function PatientProfilePage() {
             <text className="patient-text-button">{t('notes')}:</text>
           </button>
         </div>
-        {activeButton === 'notes' && <NotesList notes={notes}></NotesList>}
+        {/*{activeButton === 'notes' && <NotesList notes={notes}></NotesList>}*/}
         {activeButton === 'result' && <div className="space"></div>}
         {activeButton === 'result' && <TestsList tests={tests} />}
 
