@@ -5,12 +5,11 @@ import { Button, TextField } from '@mui/material';
 import NotesList from '../../ui-components/note/NoteListComponent';
 import SaveIcon from '@mui/icons-material/Save';
 import { useTranslation } from 'react-i18next';
-import { getFirestore, doc, getDoc, updateDoc  } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Doctor from './Doctor';
-import { addNote } from '../../services/dbService';
-import { getAuth } from "firebase/auth";
-
+import { addNote, updateNoteWithContent, updateNoteWithTitle } from '../../services/dbService';
+import { getAuth } from 'firebase/auth';
 
 const notes = [
   {
@@ -51,29 +50,38 @@ function DoctorProfilePage() {
     setChangeCredentials(true);
   };
 
-
-
   const [notesClicked, setNotesClicked] = useState(false);
-  const [note, setNote] = useState('');
+  const [note] = useState('');
+
+  const [title, setTitle] = useState('');
+
+  const handleTitleUpdate = async () => {
+    await updateNoteWithTitle(title);
+    setTitle('');
+  };
+
+  const [content, setContent] = useState('');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleContentUpdate = async () => {
+    await updateNoteWithContent(content);
+    setContent('');
+  };
 
   const [showWindow, setShowWindow] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-
 
   const handleOpenWindow = async (e: React.FormEvent) => {
     e.preventDefault();
     setShowWindow(true);
     const uid = localStorage.getItem('id');
-    console.log("uid: ", uid);
+    console.log('uid: ', uid);
 
-    await addNote('no title yet', 'no patient', uid,note);
-
-
+    await addNote('no title yet', 'no patient', uid, note);
+    await updateNoteWithContent(content);
+    setContent('');
   };
 
   const handleCloseWindow = () => {
     setShowWindow(false);
-    setInputValue('');
   };
 
   const handleInfoClick = () => {
@@ -95,7 +103,7 @@ function DoctorProfilePage() {
       const uid = localStorage.getItem('id');
       if (uid) {
         const db = getFirestore();
-        const dr = doc(db, "doctors", uid);
+        const dr = doc(db, 'doctors', uid);
         const doctor = await getDoc(dr);
 
         if (doctor.exists()) {
@@ -103,10 +111,10 @@ function DoctorProfilePage() {
           setDoctorData(fetchedData);
           setEditedData(fetchedData);
         } else {
-          console.log("No document found");
+          console.log('No document found');
         }
       } else {
-        console.log("User not logged in");
+        console.log('User not logged in');
       }
     };
 
@@ -116,26 +124,25 @@ function DoctorProfilePage() {
     if (editedData) {
       setEditedData({
         ...editedData,
-        [e.target.name]: e.target.value,
+        [e.target.name]: e.target.value
       });
     }
   };
-
 
   const onSave = async () => {
     const uid = localStorage.getItem('id');
     if (uid && editedData) {
       const db = getFirestore();
-      const dr = doc(db, "doctors", uid);
+      const dr = doc(db, 'doctors', uid);
 
       try {
-        const updatedData:Partial<Doctor> = { ...editedData };
+        const updatedData: Partial<Doctor> = { ...editedData };
 
         await updateDoc(dr, updatedData);
         setDoctorData(editedData);
-        alert(t('data_update'))
+        alert(t('data_update'));
       } catch (error) {
-        console.error("Error while updating: ", error);
+        console.error('Error while updating: ', error);
       }
     }
   };
@@ -143,20 +150,14 @@ function DoctorProfilePage() {
   const [newEmail, setNewEmail] = useState('');
 
   const auth = getAuth();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const user = auth.currentUser;
-
-  const reauthenticateUser = async () => {
-
-  };
-
-
-  const handleUpdateEmail = async () => {
-
-  };
-
-  const handleUpdatePassword = async () => {
-
-  };
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const reauthenticateUser = async () => {};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleUpdateEmail = async () => {};
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleUpdatePassword = async () => {};
 
   return (
     <div className="doctor-profile-container">
@@ -282,7 +283,8 @@ function DoctorProfilePage() {
                     name="email"
                     className="info-input2"
                     value={newEmail}
-                    onChange={(e) => setNewEmail(e.target.value)}                    InputProps={{
+                    onChange={(e) => setNewEmail(e.target.value)}
+                    InputProps={{
                       disableUnderline: true
                     }}
                   />
@@ -306,8 +308,12 @@ function DoctorProfilePage() {
                   />
                 </div>
                 <br />
-                <button onClick={handleCloseChanges} className="window-button">{t('close')}</button>
-                <button onClick={handleCloseChanges} className="window-button">{t('save')}</button>
+                <button onClick={handleCloseChanges} className="window-button">
+                  {t('close')}
+                </button>
+                <button onClick={handleCloseChanges} className="window-button">
+                  {t('save')}
+                </button>
               </div>
             )}
           </div>
@@ -322,10 +328,9 @@ function DoctorProfilePage() {
                 rows={15}
                 maxRows={15}
                 variant="standard"
-                value={inputValue}
+                value={content}
                 onChange={(e) => {
-                  setNote(e.target.value);
-                  setInputValue(e.target.value);
+                  setContent(e.target.value);
                 }}
                 InputProps={{
                   disableUnderline: true
@@ -355,31 +360,49 @@ function DoctorProfilePage() {
         )}
         {notesClicked && (
           <div className="note-button-container">
+            {showWindow && (
+              <div className="credentials-container">
+                <h2 className="dr-text">{t('add_title')}</h2>
+                <div className="space"></div>
+
+                <div className="space"></div>
+                <div className="input-wrapper2">
+                  <label htmlFor="title" className="input-label2">
+                    {t('title')}:
+                  </label>
+                  <TextField
+                    id="title"
+                    variant="standard"
+                    name="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    className="info-input2"
+                    InputProps={{
+                      disableUnderline: true
+                    }}
+                  />
+                </div>
+                <br />
+                <button onClick={handleCloseWindow} className="window-button">
+                  {t('close')}
+                </button>
+                <button onClick={async () => {
+                  await handleTitleUpdate();
+                  alert(t('message_note'));
+                }} className="window-button">
+                  {t('save')}
+                </button>
+              </div>
+            )}
             <Button
               variant="contained"
               endIcon={<SaveIcon />}
-              onClick={handleOpenWindow}
-              style={{ backgroundColor: '#2a470c' }}>
+              style={{ backgroundColor: '#2a470c' }}
+              onClick={async (e) => {
+                await handleOpenWindow(e);
+              }}>
               {t('save')}
             </Button>
-          </div>
-        )}
-        {showWindow && (
-          <div
-            style={{
-              display: showWindow ? 'block' : 'none',
-              position: 'fixed',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              padding: '20px',
-              backgroundColor: 'white',
-              boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
-            }}>
-            <h2> coś</h2>
-            <input type="text" placeholder="Enter some text..." />
-            <br />
-            <button onClick={handleCloseWindow}>Close</button>
           </div>
         )}
       </div>
