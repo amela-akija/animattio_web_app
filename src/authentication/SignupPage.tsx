@@ -56,7 +56,7 @@ function SignupPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
       const uid = userCredential.user.uid;
-      await addDoctor(name, lastName, 'doctor',pwz, email, uid);
+      await addDoctor(name, lastName, 'doctor',pwz, email, '', uid);
       navigate('/login');
     } catch (error) {
       console.log(error);

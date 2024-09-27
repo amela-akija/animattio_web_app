@@ -8,6 +8,9 @@ import { useTranslation } from 'react-i18next';
 import { getFirestore, doc, getDoc, updateDoc  } from 'firebase/firestore';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Doctor from './Doctor';
+import { addNote } from '../../services/dbService';
+import { getAuth } from "firebase/auth";
+
 
 const notes = [
   {
@@ -34,7 +37,45 @@ const notes = [
 function DoctorProfilePage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const [infoClicked, setInfoClicked] = useState(true);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [inputValue2, setInputValue2] = useState('');
+
+  const [changeCredentials, setChangeCredentials] = useState(false);
+
+  const handleCloseChanges = () => {
+    setChangeCredentials(false);
+    setInputValue2('');
+  };
+
+  const handleChangeCredentials = () => {
+    setChangeCredentials(true);
+  };
+
+
+
   const [notesClicked, setNotesClicked] = useState(false);
+  const [note, setNote] = useState('');
+
+  const [showWindow, setShowWindow] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+
+  const handleOpenWindow = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowWindow(true);
+    const uid = localStorage.getItem('id');
+    console.log("uid: ", uid);
+
+    await addNote('no title yet', 'no patient', uid,note);
+
+
+  };
+
+  const handleCloseWindow = () => {
+    setShowWindow(false);
+    setInputValue('');
+  };
+
   const handleInfoClick = () => {
     setInfoClicked(!infoClicked);
     setNotesClicked(!notesClicked);
@@ -45,6 +86,7 @@ function DoctorProfilePage() {
   };
   const { t } = useTranslation();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [doctorData, setDoctorData] = useState<Doctor | null>(null);
   const [editedData, setEditedData] = useState<Doctor | null>(null);
 
@@ -79,6 +121,7 @@ function DoctorProfilePage() {
     }
   };
 
+
   const onSave = async () => {
     const uid = localStorage.getItem('id');
     if (uid && editedData) {
@@ -95,6 +138,24 @@ function DoctorProfilePage() {
         console.error("Error while updating: ", error);
       }
     }
+  };
+
+  const [newEmail, setNewEmail] = useState('');
+
+  const auth = getAuth();
+  const user = auth.currentUser;
+
+  const reauthenticateUser = async () => {
+
+  };
+
+
+  const handleUpdateEmail = async () => {
+
+  };
+
+  const handleUpdatePassword = async () => {
+
   };
 
   return (
@@ -128,6 +189,15 @@ function DoctorProfilePage() {
       </div>
       <div className="doctor-profile-second-column">
         {infoClicked && (
+          <div className="dr-button-container">
+            <text className="dr-text">
+              {t('message_changes')} <strong> {t('save')}</strong>.<br />
+              {t('message_credential')} <strong> {t('change')}</strong>
+            </text>
+          </div>
+        )}
+
+        {infoClicked && (
           <div className="info-input-container">
             <div className="input-wrapper">
               <label htmlFor="name" className="input-label">
@@ -138,7 +208,7 @@ function DoctorProfilePage() {
                 variant="standard"
                 onChange={handleEditChanges}
                 name="name"
-                value={editedData?.name || t('no_data')}
+                value={editedData?.name || ''}
                 className="info-input"
                 InputProps={{
                   disableUnderline: true
@@ -155,7 +225,7 @@ function DoctorProfilePage() {
                 variant="standard"
                 onChange={handleEditChanges}
                 name="lastName"
-                value={editedData?.lastName || t('no_data')}
+                value={editedData?.lastName || ''}
                 className="info-input"
                 InputProps={{
                   disableUnderline: true
@@ -173,7 +243,7 @@ function DoctorProfilePage() {
                 variant="standard"
                 name="pwz"
                 onChange={handleEditChanges}
-                value={editedData?.pwz || t('no_data')}
+                value={editedData?.pwz || ''}
                 className="info-input"
                 InputProps={{
                   disableUnderline: true
@@ -192,29 +262,54 @@ function DoctorProfilePage() {
                 name="dateOfBirth"
                 className="info-input"
                 onChange={handleEditChanges}
-                value={doctorData?.dateOfBirth || t('no_data')}
+                value={editedData?.dateOfBirth || ''}
                 InputProps={{
                   disableUnderline: true
                 }}
               />
             </div>
-            <div className="space"></div>
-            <div className="input-wrapper">
-              <label htmlFor="email" className="input-label">
-                {t('email')}:
-              </label>
-              <TextField
-                id="email"
-                variant="standard"
-                name="email"
-                onChange={handleEditChanges}
-                className="info-input"
-                value={doctorData?.email || t('no_data')}
-                InputProps={{
-                  disableUnderline: true
-                }}
-              />
-            </div>
+            {changeCredentials && (
+              <div className="credentials-container">
+                <h2 className="dr-text">{t('change')}</h2>
+                <div className="space"></div>
+                <div className="input-wrapper2">
+                  <label htmlFor="email" className="input-label2">
+                    {t('email')}:
+                  </label>
+                  <TextField
+                    id="email"
+                    variant="standard"
+                    name="email"
+                    className="info-input2"
+                    value={newEmail}
+                    onChange={(e) => setNewEmail(e.target.value)}                    InputProps={{
+                      disableUnderline: true
+                    }}
+                  />
+                </div>
+                <div className="space"></div>
+                <div className="input-wrapper2">
+                  <label htmlFor="password" className="input-label2">
+                    {t('password')}:
+                  </label>
+                  <TextField
+                    id="password"
+                    variant="standard"
+                    type="password"
+                    name="password"
+                    // value={newEmail}
+                    // onChange={(e) => setNewEmail(e.target.value)}
+                    className="info-input2"
+                    InputProps={{
+                      disableUnderline: true
+                    }}
+                  />
+                </div>
+                <br />
+                <button onClick={handleCloseChanges} className="window-button">{t('close')}</button>
+                <button onClick={handleCloseChanges} className="window-button">{t('save')}</button>
+              </div>
+            )}
           </div>
         )}
         {notesClicked && (
@@ -227,6 +322,11 @@ function DoctorProfilePage() {
                 rows={15}
                 maxRows={15}
                 variant="standard"
+                value={inputValue}
+                onChange={(e) => {
+                  setNote(e.target.value);
+                  setInputValue(e.target.value);
+                }}
                 InputProps={{
                   disableUnderline: true
                 }}
@@ -234,26 +334,52 @@ function DoctorProfilePage() {
             </div>
           </div>
         )}
+        {infoClicked && <div className="space"></div>}
         {infoClicked && (
-          <div className="space"></div>
-        )}
-        {infoClicked && (
-          <Button
-          variant="contained"
-          endIcon={<BorderColorIcon />}
-          onClick={onSave}
-        style={{ backgroundColor: '#2a470c' }}>
-        {t('save')}
-      </Button>
-      )}
-      {notesClicked && (
-        <div className="note-button-container">
+          <div className="info-button-container">
             <Button
               variant="contained"
-              endIcon={<SaveIcon />}
+              endIcon={<BorderColorIcon />}
+              onClick={onSave}
               style={{ backgroundColor: '#2a470c' }}>
               {t('save')}
             </Button>
+            <Button
+              variant="contained"
+              endIcon={<BorderColorIcon />}
+              onClick={handleChangeCredentials}
+              style={{ backgroundColor: '#2a470c' }}>
+              {t('change')}
+            </Button>
+          </div>
+        )}
+        {notesClicked && (
+          <div className="note-button-container">
+            <Button
+              variant="contained"
+              endIcon={<SaveIcon />}
+              onClick={handleOpenWindow}
+              style={{ backgroundColor: '#2a470c' }}>
+              {t('save')}
+            </Button>
+          </div>
+        )}
+        {showWindow && (
+          <div
+            style={{
+              display: showWindow ? 'block' : 'none',
+              position: 'fixed',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(-50%, -50%)',
+              padding: '20px',
+              backgroundColor: 'white',
+              boxShadow: '0 4px 8px rgba(0,0,0,0.1)'
+            }}>
+            <h2> coś</h2>
+            <input type="text" placeholder="Enter some text..." />
+            <br />
+            <button onClick={handleCloseWindow}>Close</button>
           </div>
         )}
       </div>
