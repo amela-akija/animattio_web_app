@@ -53,11 +53,11 @@ export async function updateNoteWithTitle(
   title: string,
 ){
   try {
-    const notesCollectionRef = collection(firestore, 'notes');
-    const latestNoteQuery = query(notesCollectionRef, orderBy('createdAt', 'desc'), limit(1));
-    const querySnapshot = await getDocs(latestNoteQuery);
-    if (!querySnapshot.empty) {
-      const latestNoteDoc = querySnapshot.docs[0];
+    const notes = collection(firestore, 'notes');
+    const newNote = query(notes, orderBy('createdAt', 'desc'), limit(1));
+    const note = await getDocs(newNote);
+    if (!note.empty) {
+      const latestNoteDoc = note.docs[0];
       const docId = latestNoteDoc.id;
 
       await updateDoc(doc(firestore, 'notes', docId), {
@@ -78,11 +78,11 @@ export async function updateNoteWithContent(
   note: string,
 ){
   try {
-    const notesCollectionRef = collection(firestore, 'notes');
-    const latestNoteQuery = query(notesCollectionRef, orderBy('createdAt', 'desc'), limit(1));
-    const querySnapshot = await getDocs(latestNoteQuery);
-    if (!querySnapshot.empty) {
-      const latestNoteDoc = querySnapshot.docs[0];
+    const notes = collection(firestore, 'notes');
+    const newNote = query(notes, orderBy('createdAt', 'desc'), limit(1));
+    const note = await getDocs(newNote);
+    if (!note.empty) {
+      const latestNoteDoc = note.docs[0];
       const docId = latestNoteDoc.id;
 
       await updateDoc(doc(firestore, 'notes', docId), {
