@@ -17,7 +17,7 @@ const NoteComponent: React.FC<notes> = ({ note }) => {
       </p>
 
       <p className="note-details">
-        <strong>{t("date")}:</strong> {note.date}
+        <strong>{t("date")}:</strong> {note.createdAt}
       </p>
       <p className="note-details">
         <strong>{t('patient_id')}:</strong> {note.patient}

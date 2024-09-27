@@ -1,7 +1,8 @@
 interface Note {
-
+  id: string;
   title: string;
-  date: string;
-  patient?: string | null;
+  note: string;
+  patient: string;
+  createdAt: string;
 }
 export default Note;
