@@ -44,6 +44,7 @@ function LoginPage() {
         }
       } else {
         console.log('No document');
+        alert(t('access_denied'));
       }
     } catch (error) {
       console.error('Error:', error);
