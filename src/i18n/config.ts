@@ -91,6 +91,9 @@ i18n
           message_changes: "To change personal data, fill the fields and click",
           message_credential: "To change login data click",
           close: "Close",
+          message_note:"Note added successfully",
+          add_note:"Add note",
+
         },
       },
       pl: {
@@ -171,6 +174,8 @@ i18n
           message_changes: "Aby zmienić dane osobiste, wprowadź nowe dane i kliknij",
           message_credential: "Aby zmienić dane logowania kliknij",
           close: "Zamknij",
+          message_note:"Pomyślnie dodano notatkę",
+          add_note:"Dodaj notatkę",
 
         },
       },

@@ -1,5 +1,7 @@
 import { firestore } from '../firebaseConfig';
-import { collection, doc, setDoc } from 'firebase/firestore';
+import { collection, query,setDoc, orderBy, limit, getDocs, doc, updateDoc } from 'firebase/firestore';
+
+
 
 export async function addDoctor(name: string, lastName: string, role: string, pwz: string, email: string, dateOfBirth: string, uid: string) {
   try {
@@ -45,4 +47,54 @@ export async function addNote(
   } catch (error) {
     console.error('Error adding note: ', error);
   }
+}
+
+export async function updateNoteWithTitle(
+  title: string,
+){
+  try {
+    const notesCollectionRef = collection(firestore, 'notes');
+    const latestNoteQuery = query(notesCollectionRef, orderBy('createdAt', 'desc'), limit(1));
+    const querySnapshot = await getDocs(latestNoteQuery);
+    if (!querySnapshot.empty) {
+      const latestNoteDoc = querySnapshot.docs[0];
+      const docId = latestNoteDoc.id;
+
+      await updateDoc(doc(firestore, 'notes', docId), {
+        title: title,
+      });
+
+      console.log('Note updated successfully');
+
+    } else {
+      console.log('No notes found to update');
+    }
+  } catch (error) {
+    console.error('Error updating note:', error);
+  }
+
+}
+export async function updateNoteWithContent(
+  note: string,
+){
+  try {
+    const notesCollectionRef = collection(firestore, 'notes');
+    const latestNoteQuery = query(notesCollectionRef, orderBy('createdAt', 'desc'), limit(1));
+    const querySnapshot = await getDocs(latestNoteQuery);
+    if (!querySnapshot.empty) {
+      const latestNoteDoc = querySnapshot.docs[0];
+      const docId = latestNoteDoc.id;
+
+      await updateDoc(doc(firestore, 'notes', docId), {
+        note: note,
+      });
+
+      console.log('Note updated successfully');
+    } else {
+      console.log('No notes found to update');
+    }
+  } catch (error) {
+    console.error('Error updating note:', error);
+  }
+
 }
