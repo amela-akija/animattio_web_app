@@ -1,4 +1,4 @@
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 import { firestore } from '../../firebaseConfig';
 import Note from './Note';
 
@@ -6,8 +6,10 @@ import Note from './Note';
 
 export const fetchNotes = async (): Promise<Note[]> => {
   try {
-    const notesCollectionRef = collection(firestore, 'notes');
-    const querySnapshot = await getDocs(notesCollectionRef);
+    const uid = localStorage.getItem('id');
+    const allNotes = collection(firestore, 'notes');
+    const doctorNotes = query(allNotes, where('drId', '==', uid));
+    const querySnapshot = await getDocs(doctorNotes);
     const notes: Note[] = [];
 
     querySnapshot.forEach((doc) => {

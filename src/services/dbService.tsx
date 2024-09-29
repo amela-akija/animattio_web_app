@@ -80,9 +80,9 @@ export async function updateNoteWithContent(
   try {
     const notes = collection(firestore, 'notes');
     const newNote = query(notes, orderBy('createdAt', 'desc'), limit(1));
-    const note = await getDocs(newNote);
-    if (!note.empty) {
-      const latestNoteDoc = note.docs[0];
+    const createdNote = await getDocs(newNote);
+    if (!createdNote.empty) {
+      const latestNoteDoc = createdNote.docs[0];
       const docId = latestNoteDoc.id;
 
       await updateDoc(doc(firestore, 'notes', docId), {

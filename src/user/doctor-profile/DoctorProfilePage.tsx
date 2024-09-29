@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './DoctorProfilePage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import { Button, TextField } from '@mui/material';
-import NotesList from '../../ui-components/note/NoteListComponent';
+// import NotesList from '../../ui-components/note/NoteListComponent';
 import SaveIcon from '@mui/icons-material/Save';
 import { useTranslation } from 'react-i18next';
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -10,58 +10,13 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Doctor from './Doctor';
 import { addNote, updateNoteWithContent, updateNoteWithTitle } from '../../services/dbService';
 import { getAuth } from 'firebase/auth';
+// import SeeNotesPage from './NotesList';
+import { useNavigate } from 'react-router-dom';
 
 function DoctorProfilePage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const [infoClicked, setInfoClicked] = useState(true);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [inputValue2, setInputValue2] = useState('');
-
-  const [changeCredentials, setChangeCredentials] = useState(false);
-
-  const handleCloseChanges = () => {
-    setChangeCredentials(false);
-    setInputValue2('');
-  };
-
-  const handleChangeCredentials = () => {
-    setChangeCredentials(true);
-  };
-
   const [notesClicked, setNotesClicked] = useState(false);
-  const [note] = useState('');
-
-  const [title, setTitle] = useState('');
-
-  const handleTitleUpdate = async () => {
-    await updateNoteWithTitle(title);
-    setTitle('');
-  };
-
-  const [content, setContent] = useState('');
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleContentUpdate = async () => {
-    await updateNoteWithContent(content);
-    setContent('');
-  };
-
-  const [showWindow, setShowWindow] = useState(false);
-
-  const handleOpenWindow = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setShowWindow(true);
-    const uid = localStorage.getItem('id');
-    console.log('uid: ', uid);
-
-    await addNote('no title yet', 'no patient', uid, note);
-    await updateNoteWithContent(content);
-    setContent('');
-  };
-
-  const handleCloseWindow = () => {
-    setShowWindow(false);
-  };
-
   const handleInfoClick = () => {
     setInfoClicked(!infoClicked);
     setNotesClicked(!notesClicked);
@@ -71,6 +26,51 @@ function DoctorProfilePage() {
     setInfoClicked(!infoClicked);
   };
   const { t } = useTranslation();
+
+
+// show filed for credentials change
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [inputValue2, setInputValue2] = useState('');
+  const [changeCredentials, setChangeCredentials] = useState(false);
+  const handleCloseChanges = () => {
+    setChangeCredentials(false);
+  };
+  const handleChangeWindow = () => {
+    setChangeCredentials(true);
+  };
+
+  const [note] = useState(''); //to create note
+
+  const [title, setTitle] = useState('');
+  const handleTitleUpdate = async () => {
+    await updateNoteWithTitle(title);
+    setShowWindow(false);
+    setTitle('');
+    setContent('')
+  };
+
+  const [content, setContent] = useState('');
+
+  const [showWindow, setShowWindow] = useState(false); // window for title update
+
+  const handleOpenWindow = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setShowWindow(true);
+    const uid = localStorage.getItem('id');
+    console.log('uid: ', uid);
+
+    await addNote('no title yet', 'no patient', uid, note);
+    console.log('content:'+content);
+    await updateNoteWithContent(content);
+  };
+
+  const handleCloseWindow = () => {
+    setShowWindow(false);
+  };
+  const navigate = useNavigate();
+  const goToNotes = () => {
+    navigate('/see-notes'); };
+
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [doctorData, setDoctorData] = useState<Doctor | null>(null);
@@ -164,7 +164,8 @@ function DoctorProfilePage() {
             <text className="dr-text-button">{t('notes')}:</text>
           </button>
         </div>
-        {notesClicked && <NotesList></NotesList>}
+
+
       </div>
       <div className="doctor-profile-second-column">
         {infoClicked && (
@@ -330,7 +331,7 @@ function DoctorProfilePage() {
             <Button
               variant="contained"
               endIcon={<BorderColorIcon />}
-              onClick={handleChangeCredentials}
+              onClick={handleChangeWindow}
               style={{ backgroundColor: '#2a470c' }}>
               {t('change')}
             </Button>
@@ -380,6 +381,13 @@ function DoctorProfilePage() {
                 await handleOpenWindow(e);
               }}>
               {t('save')}
+            </Button>
+            <Button
+              variant="contained"
+              endIcon={<SaveIcon />}
+              style={{ backgroundColor: '#2a470c' }}
+              onClick={goToNotes}>
+              {t('see_notes')}
             </Button>
           </div>
         )}

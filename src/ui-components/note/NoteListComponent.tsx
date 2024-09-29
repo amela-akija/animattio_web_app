@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './NoteComponent.css';
 import NoteComponent from './NoteComponent';
-import { fetchNotes } from './getNotes';
+import { fetchNotes } from './fetchNotes';
 import Note from './Note';
+import { useTranslation } from 'react-i18next';
+
 
 
 const NotesList: React.FC = () => {
   const [notes, setNotes] = useState<Note[]>([]);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const loadNotes = async () => {
@@ -24,7 +27,7 @@ const NotesList: React.FC = () => {
           <NoteComponent key={note.id} note={note} />
         ))
       ) : (
-        <p>No notes available</p>
+        <p className="dr-text">{t('no_notes')}</p>
       )}
     </div>
   );
