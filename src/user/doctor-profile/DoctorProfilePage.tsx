@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './DoctorProfilePage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import { Button, TextField } from '@mui/material';
-// import NotesList from '../../ui-components/note/NoteListComponent';
 import SaveIcon from '@mui/icons-material/Save';
 import { useTranslation } from 'react-i18next';
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
@@ -10,8 +9,8 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Doctor from './Doctor';
 import { addNote, updateNoteWithContent, updateNoteWithTitle } from '../../services/dbService';
 import { getAuth } from 'firebase/auth';
-// import SeeNotesPage from './NotesList';
 import { useNavigate } from 'react-router-dom';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function DoctorProfilePage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
@@ -373,6 +372,7 @@ function DoctorProfilePage() {
                 </button>
               </div>
             )}
+            <div className="info-button-container">
             <Button
               variant="contained"
               endIcon={<SaveIcon />}
@@ -384,11 +384,12 @@ function DoctorProfilePage() {
             </Button>
             <Button
               variant="contained"
-              endIcon={<SaveIcon />}
+              endIcon={<ArrowForwardIcon />}
               style={{ backgroundColor: '#2a470c' }}
               onClick={goToNotes}>
               {t('see_notes')}
             </Button>
+            </div>
           </div>
         )}
       </div>
