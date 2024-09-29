@@ -12,6 +12,7 @@ import DoctorProfilePage from './user/doctor-profile/DoctorProfilePage';
 import PatientProfilePage from './user/patient-profile/PatientProfilePage';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
+import SeeNotesPage from './user/doctor-profile/NotesListPage';
 function App() {
   return (
     <Router>
@@ -26,6 +27,7 @@ function App() {
         <Route path="/see-patients" element={<SeePatientsPage />} />
         <Route path="/doctor-profile" element={<DoctorProfilePage />} />
         <Route path="/patient-profile" element={<PatientProfilePage />} />
+        <Route path="/see-notes" element={<SeeNotesPage />} />
 
 
 

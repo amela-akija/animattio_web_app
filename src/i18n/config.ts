@@ -96,6 +96,9 @@ i18n
           add_title:"Add title",
           see_note: "See details",
           content:"content",
+          no_notes: "No notes available",
+          created_at:"date",
+          no_filtered_notes:"No notes match",
 
 
         },
@@ -183,6 +186,9 @@ i18n
           add_title:"Dodaj tytuł",
           see_note: "Zobacz szczegóły",
           content:"treść",
+          no_notes: "Brak notatek",
+          created_at:"data",
+          no_filtered_notes:"Brak notatek spełniających kryteria wyszukiwania",
 
         },
       },
