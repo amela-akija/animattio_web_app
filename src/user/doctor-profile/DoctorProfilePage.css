@@ -245,7 +245,10 @@
     .window-button {
         width: 50%;
         height: 15%;
+        margin-top: 2%;
         border: none;
+        color: #FFFBEE;
+        background-color: #2a470c;
         border-radius: 15px;
         box-shadow: #282c34 0px 1px 4px;
     }
@@ -253,11 +256,14 @@
 
 @media (max-width: 480px) {
     .window-button {
-        width: 45%;
+        width: 60%;
         height: 15%;
+        margin-top: 2%;
         border: none;
         border-radius: 15px;
         box-shadow: #282c34 0px 1px 4px;
+        color: #FFFBEE;
+        background-color: #2a470c;
     }
 }
 
@@ -515,25 +521,27 @@
 @media (max-width: 480px) {
     .credentials-container {
         width: 80%;
-        height: 85%;
+        height: 20%;
+        margin-top: 15%;
+        margin-left: 5%;
         border-radius: 10px;
+        padding: 2%;
         background-color: #FFFBEE;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: flex-start;
-        padding: 2%;
+        justify-content: center;
     }
 }
 
-@media (min-width: 480px) and (max-width: 1024px) {
+@media (min-width: 1025px) {
     .credentials-container {
         width: 90%;
-        height: 100%;
-        margin-top: 2%;
-        margin-left: 5%;
+        height: 20%;
+        margin-top: 5%;
         border-radius: 10px;
-        background-color: #2a470c;
+        padding: 2%;
+        background-color: #FFFBEE;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -546,6 +554,7 @@
     .credentials-container {
         width: 50%;
         height: 20%;
+        margin-top: 5%;
         margin-left: 20%;
         border-radius: 10px;
         padding: 2%;
