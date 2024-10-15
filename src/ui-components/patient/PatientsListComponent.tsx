@@ -11,7 +11,7 @@ const PatientsList: React.FC<Patients> = ({ patients }) => {
   return (
     <div className="patient-list">
       {patients.map((patient) => (
-        <PatientComponent key={patient.email} patient={patient} />
+        <PatientComponent key={patient.patientUsername} patient={patient} />
       ))}
     </div>
   );

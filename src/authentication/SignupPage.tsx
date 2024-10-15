@@ -55,6 +55,7 @@ function SignupPage() {
       console.log(userCredential);
       const uid = userCredential.user.uid;
       await addDoctor(username, 'doctor', uid);
+      localStorage.setItem('doctorUsername', username);
       navigate('/login');
     } catch (error) {
       console.log(error);
