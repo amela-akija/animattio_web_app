@@ -1,8 +1,9 @@
 interface Patient {
-  name: string;
-  lastName: string;
-  email: string;
-  pesel: number;
+  patientUsername: string;
+  gender: string;
+  age: number;
+  type: string;
+
 }
 
 export default Patient;

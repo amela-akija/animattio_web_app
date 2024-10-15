@@ -29,14 +29,22 @@ function LoginPage() {
 
       const idToken = await user.getIdToken();
       console.log('token', idToken);
-      const doctor = doc(firestore, 'doctors', user.uid);
-      const doctorSnapshot = await getDoc(doctor);
+      const doctorRef = doc(firestore, 'doctors', user.uid);
+      const doctorSnapshot = await getDoc(doctorRef);
 
       if (doctorSnapshot.exists()) {
         const doctorData = doctorSnapshot.data();
+        console.log('Doctor data:', doctorData);
 
         if (doctorData?.role === 'doctor') {
-          localStorage.setItem('id', doctor.id);
+          const doctorUsername = doctorData.username;
+          if (doctorUsername) {
+            localStorage.setItem('doctorUsername', doctorUsername);
+            console.log('Doctor Username:', doctorUsername);
+          } else {
+            console.error('Username is undefined. Check if it is stored in Firestore.');
+          }
+
           console.log(t('doctor_login'));
 
           const response = await fetch('http://localhost:8080/signin', {
@@ -67,6 +75,7 @@ function LoginPage() {
       console.error('Error:', error);
     }
   };
+
 
   return (
     <div className="login-container">

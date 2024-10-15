@@ -17,16 +17,16 @@ const PatientComponent: React.FC<patients> = ({ patient }) => {
   return (
     <div className="patient-container">
       <p className="patient-details">
-        <strong>{t("name")}:</strong> {patient.name}
+        <strong>{t("username")}:</strong> {patient.patientUsername}
       </p>
       <p className="patient-details">
-        <strong>{t("last_name")}:</strong> {patient.lastName}
+        <strong>{t("gender")}:</strong> {patient.gender}
       </p>
       <p className="patient-details">
-        <strong>{t("email")}:</strong> {patient.email}
+        <strong>{t("age")}:</strong> {patient.age}
       </p>
       <p className="patient-details">
-        <strong>PESEL:</strong> {patient.pesel}
+        <strong>{t("type")}:</strong> {patient.type}
       </p>
       <button className="see-profile-button" onClick={goToPatientProfile}>{t("see_patient_profile")}</button>
     </div>

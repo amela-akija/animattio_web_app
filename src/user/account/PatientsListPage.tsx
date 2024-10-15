@@ -1,37 +1,40 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './PatientsListPage.css';
-// import useResponsive from '../../ui-components/useResponsive';
-import PatientsList from '../../ui-components/patient/PatientsListComponent';
+import PatientsList from '../../ui-components/patient/PatientsListComponent'; // Uncomment to use PatientsList
 import { useTranslation } from 'react-i18next';
 
-const patientsMockList = [
-  {
-    name: 'John',
-    lastName: 'Doe',
-    email: 'john.doe@example.com',
-    pesel: 12345678901
-  },
-  {
-    name: 'Jane',
-    lastName: 'Smith',
-    email: 'jane.smith@example.com',
-    pesel: 98765432101
-  },
-  {
-    name: 'Emily',
-    lastName: 'Johnson',
-    email: 'emily.johnson@example.com',
-    pesel: 11223344556
-  },
-  {
-    name: 'Michael',
-    lastName: 'Brown',
-    email: 'michael.brown@example.com',
-    pesel: 22334455667
-  }
-];
-function SeePatientsPage() {
+interface Patient {
+  patientUsername: string;
+  gender: string;
+  age: number;
+  type: string;
+}
+
+const SeePatientsPage: React.FC = () => {
   const { t } = useTranslation();
+  const [patients, setPatients] = useState<Patient[]>([]);
+  const [loading, setLoading] = useState(true);
+  const doctorId = localStorage.getItem('doctorUsername');
+
+  const fetchPatients = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/patients/get-all-patients?doctorId=${doctorId}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data: Patient[] = await response.json();
+      setPatients(data);
+    } catch (error) {
+      console.error('Error fetching patients:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchPatients();
+  }, []);
+
   return (
     <div className="patients-list-container">
       <div className="searchContainer">
@@ -44,10 +47,14 @@ function SeePatientsPage() {
         </select>
       </div>
       <div className="patients-container">
-        <PatientsList patients={patientsMockList} />
+        {loading ? (
+          <p>{t('loading')}</p>
+        ) : (
+          <PatientsList patients={patients} />
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default SeePatientsPage;

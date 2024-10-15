@@ -99,15 +99,19 @@ i18n
           no_notes: "No notes available",
           created_at:"date",
           username:"Username",
-
+          age:"Age",
+          gender: "Gender",
           no_filtered_notes:"No notes match",
           see_notes: "See notes",
+          epilepsy: "Epilepsy"
 
 
         },
       },
       pl: {
         translation: {
+          age:"Wiek",
+          gender: "Płeć",
           sign_in: "Zaloguj się",
           sign_up: "Zarejestruj się",
           about: "O aplikacji",
@@ -194,6 +198,7 @@ i18n
           created_at:"data",
           no_filtered_notes:"Brak notatek spełniających kryteria wyszukiwania",
           see_notes: "Zobacz listę notatek",
+          epilepsy: "Padaczka"
 
         },
       },
