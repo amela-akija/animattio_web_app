@@ -3,16 +3,12 @@ import { collection, query,setDoc, orderBy, limit, getDocs, doc, updateDoc } fro
 
 
 
-export async function addDoctor(name: string, lastName: string, role: string, pwz: string, email: string, dateOfBirth: string, uid: string) {
+export async function addDoctor(username: string, role: string, uid: string) {
   try {
     const doctorRef = doc(firestore, 'doctors', uid);
 
     const newDoctor = {
-      name: name,
-      lastName: lastName,
-      pwz: pwz,
-      dateOfBirth: dateOfBirth,
-      email: email,
+      username: username,
       role: role,
     };
 

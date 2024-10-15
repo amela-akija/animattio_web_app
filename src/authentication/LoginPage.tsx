@@ -27,6 +27,8 @@ function LoginPage() {
       const doctorCredentials = await signInWithEmailAndPassword(auth, email, password);
       const user = doctorCredentials.user;
 
+      const idToken = await user.getIdToken();
+      console.log('token', idToken);
       const doctor = doc(firestore, 'doctors', user.uid);
       const doctorSnapshot = await getDoc(doctor);
 
@@ -36,7 +38,22 @@ function LoginPage() {
         if (doctorData?.role === 'doctor') {
           localStorage.setItem('id', doctor.id);
           console.log(t('doctor_login'));
-          navigate('/user-account');
+
+          const response = await fetch('http://localhost:8080/signin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({ uid: user.uid }),
+          });
+
+          if (response.ok) {
+            navigate('/user-account');
+          } else {
+            console.log('Failed to authenticate with backend');
+            alert(t('backend_auth_failed'));
+          }
         } else {
           console.log('Access denied');
           await auth.signOut();
@@ -50,6 +67,7 @@ function LoginPage() {
       console.error('Error:', error);
     }
   };
+
   return (
     <div className="login-container">
       {laptop && <h1 className="login-title-laptop">{t('login_page')}</h1>}

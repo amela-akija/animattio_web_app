@@ -98,6 +98,8 @@ i18n
           content:"content",
           no_notes: "No notes available",
           created_at:"date",
+          username:"Username",
+
           no_filtered_notes:"No notes match",
           see_notes: "See notes",
 
@@ -182,6 +184,7 @@ i18n
           message_changes: "Aby zmienić dane osobiste, wprowadź nowe dane i kliknij",
           message_credential: "Aby zmienić dane logowania kliknij",
           close: "Zamknij",
+          username:"Nazwa użytkownika",
           message_note:"Pomyślnie dodano notatkę",
           add_note:"Dodaj notatkę",
           add_title:"Dodaj tytuł",

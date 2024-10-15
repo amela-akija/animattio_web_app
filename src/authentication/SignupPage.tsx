@@ -17,17 +17,15 @@ function SignupPage() {
     navigate('/login');
   };
 
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [pwz, setPwz] = useState('');
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
+  const [error] = useState<string | null>(null);
 
   const signUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name || !lastName || !pwz || !email || !password || !repeatPassword) {
+    if (!username || !password || !repeatPassword) {
       alert(t('all_fields'));
       return;
     }
@@ -56,7 +54,7 @@ function SignupPage() {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log(userCredential);
       const uid = userCredential.user.uid;
-      await addDoctor(name, lastName, 'doctor',pwz, email, '', uid);
+      await addDoctor(username, 'doctor', uid);
       navigate('/login');
     } catch (error) {
       console.log(error);
@@ -71,45 +69,20 @@ function SignupPage() {
       {tablet && <h1 className="signup-title-tablet">{t('signup_page')}</h1>}
       <form onSubmit={signUp} className="signup-form">
       <div className="signup-input-container">
-        <label className="signup_label"> {t('name')}:</label>
+        <label className="signup_label"> {t('username')}:</label>
         <TextField
-          id="name"
+          id="username"
           variant="standard"
-          name="name"
+          name="username"
           InputProps={{
             disableUnderline: true
           }}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setUsername(e.target.value)}
           className="signup-input"
         />
       </div>
 
-      <div className="signup-input-container">
-        <label className="signup_label"> {t('last_name')}:</label>
-        <TextField
-          id="lastName"
-          variant="standard"
-          name="lastName"
-          InputProps={{
-            disableUnderline: true
-          }}
-          onChange={(e) => setLastName(e.target.value)}
-          className="signup-input"
-        />
-      </div>
-      <div className="signup-input-container">
-        <label className="signup_label"> {t('pwz')}:</label>
-        <TextField
-          id="pwz"
-          variant="standard"
-          name="pwz"
-          InputProps={{
-            disableUnderline: true
-          }}
-          onChange={(e) => setPwz(e.target.value)}
-          className="signup-input"
-        />
-      </div>
+
       <div className="signup-input-container">
         <label className="signup_label"> {t('email')}:</label>
         <TextField
