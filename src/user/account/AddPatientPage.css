@@ -1,24 +1,28 @@
 .add-patient-container {
+    flex-direction: column;
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
 }
 
 .add-patient-laptop {
     font-family: 'Karla', sans-serif;
     padding-bottom: 5%;
-    padding-left: 10%;
-    font-size: 5vh;
+    font-size: 7vh;
     color: #2A470C;
     text-shadow: #2A350D 1px 1px 4px;
+    white-space: nowrap;
 }
 
 .add-patient-mobile {
     font-family: 'Karla', sans-serif;
     padding-bottom: 3%;
-    font-size: 2vh;
+    font-size: 2.5vh;
     padding-left: 10%;
     color: #2A470C;
     text-shadow: #2A350D 1px 1px 4px;
+    white-space: nowrap;
 }
 
 .add-patient-tablet {
@@ -28,110 +32,39 @@
     font-size: 5vh;
     color: #2A470C;
     text-shadow: #2A350D 1px 1px 4px;
+    white-space: nowrap;
 }
-
-.add-patient-dot-laptop {
-    font-family: 'Karla', sans-serif;
-    padding-bottom: 5%;
-    padding-left: 10%;
-    font-size: 5vh;
-    color: #FFFBEE;
-    text-shadow: #FFFBEE 1px 1px 4px;
-}
-
-.add-patient-dot-mobile {
-    font-family: 'Karla', sans-serif;
-    padding-bottom: 3%;
-    padding-left: 10%;
-    font-size: 2vh;
-    color: #FFFBEE;
-    text-shadow: #FFFBEE 1px 1px 4px;
-}
-
-.add-patient-dot-tablet {
-    font-family: 'Karla', sans-serif;
-    padding-bottom: 10%;
-    padding-left: 10%;
-    font-size: 5vh;
-    color: #FFFBEE;
-    text-shadow: #FFFBEE 1px 1px 4px;
-}
-
-.add-patient-first-column {
-    flex: 1 1 100%;
-    order: 1;
-}
-
-.add-patient-second-column {
-    flex: 1 1 100%;
-    order: 2;
-}
-
-.add-patient-third-column {
-    flex: 1 1 100%;
-    order: 3;
-}
-
-@media (min-width: 1025px) {
-    .add-patient-first-column,
-    .add-patient-second-column,
-    .add-patient-third-column {
-        flex: 1 1 33%;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .add-patient-first-column,
-    .add-patient-second-column,
-    .add-patient-third-column {
-        flex: 1 1 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .add-patient-first-column,
-    .add-patient-second-column,
-    .add-patient-third-column {
-        flex: 1 1 100%;
-    }
-}
-
 
 .add-patient-input {
     height: 50%;
-    width: 90%;
+    width: 95%;
     font-size: large;
     border-radius: 5px;
     background-color: #FBE3BE;
     color: #2A470C;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-
 }
 
 .add-patient-additional-input {
-    width: 90%;
+    width: 95%;
     font-size: small;
     border-radius: 5px;
     background-color: #FBE3BE;
     color: #2A470C;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-
 }
 
-.add-patient-input .MuiInputLabel-root {
-    padding-left: 10px;
-}
-
+.add-patient-input .MuiInputLabel-root,
 .add-patient-additional-input .MuiInputLabel-root {
     padding-left: 10px;
 }
 
 @media (min-width: 1025px) {
     .add-patient-input-container {
-        width: 80%;
+        width: 90%;
         padding-top: 3%;
-        padding-bottom: 1%;
-        padding-left: 10%;
+        padding-bottom: 3%;
+        padding-left: 5%;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -154,7 +87,7 @@
 
 @media (min-width: 480px) and (max-width: 1024px) {
     .add-patient-input-container {
-        width: 90%;
+        width: 95%;
         padding-top: 1%;
         padding-bottom: 7%;
         padding-left: 10%;
@@ -176,163 +109,22 @@
     color: #2A470C;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 }
-
-@media (min-width: 1025px) {
-    .info-small-text-button {
-        width: 90%;
-        font-family: 'Karla', sans-serif;
-        font-size: 2vh;
-        color: #2a470c;
-    }
+.space{
+    padding-top: 5%;
 }
-
-@media (max-width: 480px) {
-    .info-small-text-button {
-        font-family: 'Karla', sans-serif;
-        font-size: 2vh;
-        color: #2a470c;
-
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .info-small-text-button {
-        width: 90%;
-        font-family: 'Karla', sans-serif;
-        font-size: 1.3vh;
-        color: #2a470c;
-
-    }
-}
-
 .checkbox {
-    color: #2a470c;
-    padding-left: 10%;
-}
-
-@media (min-width: 1025px) {
-    .add-patient-additional-input-container {
-        width: 80%;
-        padding-top: 1%;
-        padding-bottom: 1%;
-        padding-left: 10%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .add-patient-additional-input-container {
-        width: 100%;
-        padding-top: 1%;
-        padding-bottom: 8%;
-        padding-left: 5%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .add-patient-additional-input-container {
-        width: 90%;
-        padding-top: 1%;
-        padding-bottom: 8%;
-        padding-left: 10%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-    }
-}
-
-@media (min-width: 1025px) {
-    .save-patient-button {
-        width: 24%;
-        background-color: #2A470C;
-        color: #FFFBEE;
-        border-radius: 10px;
-    }
-}
-
-@media (max-width: 480px) {
-    .save-patient-button {
-        width: 61%;
-        background-color: #2A470C;
-        color: #FFFBEE;
-        border-radius: 10px;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .save-patient-button {
-        width: 42%;
-        background-color: #2A470C;
-        color: #FFFBEE;
-        border-radius: 10px;
-    }
-}
-
-@media (min-width: 1025px) {
-    .save-text-button {
-        font-family: 'Karla', sans-serif;
-        font-size: 4vh;
-    }
-}
-
-@media (max-width: 480px) {
-    .save-text-button {
-        font-family: 'Karla', sans-serif;
-        font-size: 4vh;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .save-text-button {
-        font-family: 'Karla', sans-serif;
-        font-size: 2.5vh;
-    }
-}
-
-@media (min-width: 1025px) {
-    .save-button-container {
-        padding-bottom: 1%;
-        padding-top: 10%;
-        display: flex;
-        justify-content: center;
-        width: 100%;
-    }
-}
-
-@media (max-width: 480px) {
-    .save-button-container {
-        padding-top: 10%;
-        padding-bottom: 35%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .save-button-container {
-        padding-top: 5%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-    }
-}
-.add_label{
     color: #2A470C;
-    margin-left: 0.5%;
+    padding-left: 5%;
+}
+.save-button-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 10%;
 }
 
+.save-patient-button {
+    width:40%;
+    background-color: #2A470C;
+    color: #FFFBEE;
+    border-radius: 10px;
+}
