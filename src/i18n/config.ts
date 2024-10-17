@@ -103,7 +103,8 @@ i18n
           gender: "Gender",
           no_filtered_notes:"No notes match",
           see_notes: "See notes",
-          epilepsy: "Epilepsy"
+          epilepsy: "Epilepsy",
+          loading: "Loading..."
 
 
         },
@@ -198,7 +199,8 @@ i18n
           created_at:"data",
           no_filtered_notes:"Brak notatek spełniających kryteria wyszukiwania",
           see_notes: "Zobacz listę notatek",
-          epilepsy: "Padaczka"
+          epilepsy: "Padaczka",
+          loading: "Ładowanie..."
 
         },
       },
