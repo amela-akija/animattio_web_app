@@ -26,7 +26,7 @@ function App() {
         <Route path="/add-patient" element={<AddPatientPage />} />
         <Route path="/see-patients" element={<SeePatientsPage />} />
         <Route path="/doctor-profile" element={<DoctorProfilePage />} />
-        <Route path="/patient-profile" element={<PatientProfilePage />} />
+        <Route path="/patient-profile/:username" element={<PatientProfilePage />} />
         <Route path="/see-notes" element={<SeeNotesPage />} />
 
 

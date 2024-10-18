@@ -4,16 +4,19 @@ import Patient from './Patient';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
-interface patients {
+interface Patients {
   patient: Patient;
 }
 
-const PatientComponent: React.FC<patients> = ({ patient }) => {
+const PatientComponent: React.FC<Patients> = ({ patient }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const goToPatientProfile = () => {
-    navigate('/patient-profile');
+
+  const goToPatientProfile = (username: string) => {
+    navigate(`/patient-profile/${username}`);
   };
+
+
   return (
     <div className="patient-container">
       <p className="patient-details">
@@ -28,7 +31,9 @@ const PatientComponent: React.FC<patients> = ({ patient }) => {
       <p className="patient-details">
         <strong>{t("type")}:</strong> {patient.type}
       </p>
-      <button className="see-profile-button" onClick={goToPatientProfile}>{t("see_patient_profile")}</button>
+      <button className="see-profile-button" onClick={() => goToPatientProfile(patient.patientUsername)}>
+        {t("see_patient_profile")}
+      </button>
     </div>
   );
 };

@@ -132,7 +132,7 @@
 }
 
 .space {
-    padding-bottom: 5%;
+    padding-bottom: 2%;
 }
 
 .big-space {
@@ -145,6 +145,10 @@
     display: flex;
     align-items: stretch;
     justify-content: center;
+}
+.button-container{
+    margin-left:35%;
+    padding-top: 2%;
 }
 
 @media (min-width: 1025px) {
