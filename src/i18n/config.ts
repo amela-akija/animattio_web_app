@@ -15,6 +15,7 @@ i18n
     resources: {
       en: {
         translation: {
+          mobile_username:"ID in mobile app",
           sign_in: "Sign in",
           sign_up: "Sign up",
           about: "About",
@@ -104,13 +105,19 @@ i18n
           no_filtered_notes:"No notes match",
           see_notes: "See notes",
           epilepsy: "Epilepsy",
-          loading: "Loading..."
+          type: "Type",
+          loading: "Loading...",
+          patient_update_success: "Patient updated successfully",
+          patient_update_failure: "Failed to update patient",
 
 
         },
       },
       pl: {
         translation: {
+          patient_update_success: "Zaktualizowano dane użytkownika",
+          patient_update_failure: "Nie udało się zaktualizować użytkownia",
+          mobile_username:"ID w aplikacji mobilnej",
           age:"Wiek",
           gender: "Płeć",
           sign_in: "Zaloguj się",
@@ -125,6 +132,7 @@ i18n
           email: "adres e-mail",
           pwz: "numer pwz",
           password: "hasło",
+          type: "Typ",
           repeat_password: "powtórz hasło",
           message_login:"Nie masz jeszcze konta? Zarejestruj się",
           message_signup: "Masz już konto? Zaloguj się",
