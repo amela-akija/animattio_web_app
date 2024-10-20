@@ -1,7 +1,10 @@
 interface Test {
-  id: string;
-  mode: string;
-  timestamp: string;
+  testId: string;
+  gameMode: string;
+  startDate: string;
+  endDate: string;
+  commissions: number;
+  omissions: number;
 }
 
 export default Test;

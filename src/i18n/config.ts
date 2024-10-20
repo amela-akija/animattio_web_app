@@ -109,12 +109,12 @@ i18n
           loading: "Loading...",
           patient_update_success: "Patient updated successfully",
           patient_update_failure: "Failed to update patient",
-
-
+          endDate: "End date",
         },
       },
       pl: {
         translation: {
+          endDate: "Data ukończenia",
           patient_update_success: "Zaktualizowano dane użytkownika",
           patient_update_failure: "Nie udało się zaktualizować użytkownia",
           mobile_username:"ID w aplikacji mobilnej",

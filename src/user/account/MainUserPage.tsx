@@ -55,7 +55,7 @@ function MainUserPage() {
           {mobile && <text className="user-result-mobile">  {t("new_results")}</text>}
           {tablet && <text className="user-result-tablet">  {t("new_results")}</text>}
           <div className="game-container">
-            <TestsList tests={tests} />
+            {/*<TestsList tests={tests} />*/}
           </div>
         </div>
       </div>
