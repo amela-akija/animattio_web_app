@@ -57,7 +57,7 @@ function LoginPage() {
           });
 
           if (response.ok) {
-            navigate('/user-account');
+            navigate('/see-patients');
           } else {
             console.log('Failed to authenticate with backend');
             alert(t('backend_auth_failed'));

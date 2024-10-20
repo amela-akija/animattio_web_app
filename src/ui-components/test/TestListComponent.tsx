@@ -11,7 +11,7 @@ const TestsList: React.FC<Tests> = ({ tests }) => {
   return (
     <div className="test-list">
       {tests.map((test) => (
-        <TestComponent key={test.id} test={test} />
+        <TestComponent key={test.testId} test={test} />
       ))}
     </div>
   );

@@ -8,20 +8,26 @@ interface tests {
 }
 
 const TestComponent: React.FC<tests> = ({ test }) => {
-  const formattedDate = new Date(test.timestamp).toLocaleString();
   const { t } = useTranslation();
-
+  const displayMode = () => {
+    switch (test.gameMode) {
+      case 'mode1':
+        return '1';
+      case 'mode2':
+        return '2';
+      default:
+        return 'N/A';
+    }
+  };
   return (
     <div className="test-container">
       <p className="game-details">
-        <strong>{t("patient_id")}:</strong> {test.id}
+        <strong>{t("endDate")}:</strong> {test.endDate}
       </p>
       <p className="game-details">
-        <strong>{t("mode")}:</strong> {test.mode}
+        <strong>{t("mode")}:</strong> {displayMode()}
       </p>
-      <p className="game-details">
-        <strong>{t("date")}:</strong> {formattedDate}
-      </p>
+
       <button className="see-more-button">{t("see_more")}</button>
     </div>
   );

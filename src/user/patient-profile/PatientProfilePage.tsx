@@ -8,6 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import TestsList from '../../ui-components/test/TestListComponent';
 
 const StartDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
   ({ value, onClick }, ref) => {
@@ -50,6 +51,7 @@ function PatientProfilePage() {
   const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const { username } = useParams<{ username: string }>();
+  const [summedErrors, setSummedErrors] = useState([]);
   useEffect(() => {
     if (username) {
       localStorage.setItem("clicked_user", username);
@@ -133,15 +135,30 @@ function PatientProfilePage() {
     try {
       console.log("documnetId",documentId);
       console.log(updatedPatient)
-      //http://localhost:8080/patients/update-patient?documentId=example_change2
       await axios.put(`http://localhost:8080/patients/update-patient?documentId=${documentId}`, updatedPatient);
-      console.log("documnetId2",documentId);
       alert(t('patient_update_success'));
     } catch (error) {
       console.error('Error updating patient:', error);
       alert(t('patient_update_failure'));
     }
   };
+
+
+  useEffect(() => {
+    const fetchSummedErrors = async () => {
+      if (mobileId) {
+        try {
+          const response = await axios.get(`http://localhost:8080/summed-errors/${mobileId}`);
+          console.log("Fetched summed errors:", response.data);
+          setSummedErrors(response.data); 
+        } catch (error) {
+          console.error('Error fetching summed errors:', error);
+        }
+      }
+    };
+
+    fetchSummedErrors();
+  }, [mobileId]);
 
   return (
     <div className="patient-profile-container">
@@ -167,7 +184,7 @@ function PatientProfilePage() {
             style={{
               backgroundColor: activeButton === 'stats' ? '#FFC267' : '#FBE3BE'
             }}>
-            <text className="patient-text-button">{t('stats')}:</text>
+            <text className="patient-text-button">{t('results')}:</text>
           </button>
         </div>
 
@@ -190,33 +207,16 @@ function PatientProfilePage() {
             </label>
           </div>
         )}
-        {activeButton === 'stats' && (
-          <div className="stats-dropdown-container">
-            <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
-              {' '}
-              {t('parameter')}:
-              <select
-                id="parameter"
-                value={selectedOption}
-                onChange={handleSelectChange}
-                className="stats-dropdown">
-                <option value="" disabled>
-                  {t('message_parameter')}
-                </option>
-                <option value="omissionParameter">{t('Omission')}</option>
-                <option value="comissionParameter">{t('Comission')}</option>
-                <option value="hitRateParameter">{t('Hit_rate')}</option>
-                <option value="reactionParameter">{t('Reaction_time')}</option>
-              </select>
-            </label>
-          </div>
-        )}
+
       </div>
 
       {/*column 2*/}
       {/**/}
       {/**/}
       <div className="patient-profile-second-column">
+        {activeButton === 'stats' && (
+          <TestsList tests={summedErrors} />
+        )}
         {activeButton === 'info' && (
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">
@@ -293,7 +293,7 @@ function PatientProfilePage() {
                 variant="contained"
                 endIcon={<BorderColorIcon />}
                 onClick={handleSaveChanges}
-                style={{ color: '#2a470c', backgroundColor:'#FFFBEE' }}>
+                style={{ color: '#2a470c', backgroundColor: '#FFFBEE' }}>
                 {t('save')}
               </Button>
             </div>
