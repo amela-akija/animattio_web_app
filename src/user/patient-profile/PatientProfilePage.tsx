@@ -9,19 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 
-
-const tests = [
-  {
-    id: 'pIqWxP87HaZjuosGDgIk1nw0x2W2',
-    mode: 'mode2',
-    timestamp: 'September 2, 2024 at 8:51:18 PM UTC+2'
-  },
-  {
-    id: 'pIqWxP87HaZjuosGDgIk1nw0x2W2',
-    mode: 'mode2',
-    timestamp: 'September 2, 2024 at 8:51:18 PM UTC+2'
-  }
-];
 const StartDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
   ({ value, onClick }, ref) => {
     const { t } = useTranslation();
@@ -84,12 +71,34 @@ function PatientProfilePage() {
   const [type, setType] = useState('');
   const [documentId, setDocumentId] = useState('');
   const [patientUsername, setPatientUsername] = useState('');
+  const [mobileId, setMobileId] = useState('');
+
+
   useEffect(() => {
     if (username) {
       localStorage.setItem("clicked_user", username);
       setDocumentId(username);
       setPatientUsername(username)
       console.log("clicked_user", username);
+      const fetchMobileId = async () => {
+        try {
+          const response = await axios.get('http://localhost:8080/patients/get-patient-id', {
+            params: { username },
+          });
+          if (response.data) {
+            const fetchedMobileId = response.data.documentId;
+            console.log("Fetched mobileId from API:", fetchedMobileId);
+
+            setMobileId(fetchedMobileId);
+          } else {
+            console.error('No mobile ID returned in the response');
+          }
+        } catch (error) {
+          console.error('Error fetching patient mobile ID:', error);
+        }
+      };
+
+      fetchMobileId();
     }
   }, [username]);
   useEffect(() => {
