@@ -64,7 +64,7 @@ const SeePatientsPage: React.FC = () => {
           className="searchType"
           value={searchType}
           onChange={(e) => setSearchType(e.target.value)}>
-          <option value="">{t('all')}</option>
+          <option value=""></option>
           <option value="username">{t('username')}</option>
           <option value="gender">{t('gender')}</option>
           <option value="age">{t('age')}</option>

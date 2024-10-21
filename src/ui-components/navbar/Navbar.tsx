@@ -29,7 +29,6 @@ const Navbar = () => {
     navigate('/doctor-profile');
   };
 
-  // Check if the current page is an authentication page
   const isAuthPage = activeTab === '/' || activeTab === '/signup' || activeTab === '/login';
 
   return (
@@ -39,7 +38,6 @@ const Navbar = () => {
       </a>
       {!isAuthPage && (
         <div className="navbar-tabs">
-          {/* Show buttons based on activeTab */}
           {activeTab === '/add-patient' ? (
             <>
               <button className="navbar-tab" onClick={handleUserProfile}>
@@ -67,7 +65,35 @@ const Navbar = () => {
                 See Patients
               </button>
             </>
-          ) : null}
+          ) : activeTab === '/doctor-profile' ? (
+            <>
+              <button className="navbar-tab" onClick={handleAddPatient}>
+                Add Patient
+              </button>
+              <button className="navbar-tab" onClick={handleSeePatients}>
+                See Patients
+              </button>
+            </>
+          ) : activeTab === '/doctor-profile' ? (
+            <>
+              <button className="navbar-tab" onClick={handleAddPatient}>
+                Add Patient
+              </button>
+              <button className="navbar-tab" onClick={handleSeePatients}>
+                See Patients
+              </button>
+            </>
+          ) : activeTab === '/patient-profile' ? (
+            <>
+              <button className="navbar-tab" onClick={handleAddPatient}>
+                Add Patient
+              </button>
+              <button className="navbar-tab" onClick={handleSeePatients}>
+                See Patients
+              </button>
+            </>
+          ) : null
+          }
         </div>
       )}
       <Sidebar />

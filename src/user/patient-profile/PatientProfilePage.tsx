@@ -150,7 +150,7 @@ function PatientProfilePage() {
         try {
           const response = await axios.get(`http://localhost:8080/summed-errors/${mobileId}`);
           console.log("Fetched summed errors:", response.data);
-          setSummedErrors(response.data); 
+          setSummedErrors(response.data);
         } catch (error) {
           console.error('Error fetching summed errors:', error);
         }
@@ -188,25 +188,25 @@ function PatientProfilePage() {
           </button>
         </div>
 
-        {activeButton === 'stats' && (
-          <div className="stats-dropdown-container">
-            <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
-              {' '}
-              {t('game_mode')}:
-              <select
-                id="gamemode"
-                value={selectedOption}
-                onChange={handleSelectChange}
-                className="stats-dropdown">
-                <option value="" disabled>
-                  {t('message_game')}
-                </option>
-                <option value="mode1">{t('mode1')}</option>
-                <option value="mode2">{t('mode2')}</option>
-              </select>
-            </label>
-          </div>
-        )}
+        {/*{activeButton === 'stats' && (*/}
+        {/*  <div className="stats-dropdown-container">*/}
+        {/*    <label className="patient-small-text-button" style={{ color: '#2A470C' }}>*/}
+        {/*      {' '}*/}
+        {/*      {t('game_mode')}:*/}
+        {/*      <select*/}
+        {/*        id="gamemode"*/}
+        {/*        value={selectedOption}*/}
+        {/*        onChange={handleSelectChange}*/}
+        {/*        className="stats-dropdown">*/}
+        {/*        <option value="" disabled>*/}
+        {/*          {t('message_game')}*/}
+        {/*        </option>*/}
+        {/*        <option value="mode1">{t('mode1')}</option>*/}
+        {/*        <option value="mode2">{t('mode2')}</option>*/}
+        {/*      </select>*/}
+        {/*    </label>*/}
+        {/*  </div>*/}
+        {/*)}*/}
 
       </div>
 

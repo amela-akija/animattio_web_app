@@ -3,7 +3,7 @@
     color: #FFFBEE;
     display: flex;
     padding-right: 1%;
-    width: 100%;
+    width: 99%;
     justify-content: space-between;
     align-items: center;
 }
@@ -32,7 +32,7 @@
 .navbar-tabs {
     display: flex;
     gap: 15px;
-    width:30%;
+    width:20%;
 }
 
 .navbar-tab {
