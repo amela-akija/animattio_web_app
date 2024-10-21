@@ -1,0 +1,76 @@
+.result-button-container {
+    padding-top: 3%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+}
+
+.plot-container {
+    padding-top: 3%;
+    padding-left: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    width: 80%;
+}
+
+
+@media (min-width: 1025px) {
+    .result-text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 3.5vh;
+        color: #2a470c;
+    }
+}
+
+@media (max-width: 480px) {
+    .result-text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 2vh;
+        color: #2a470c;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .result-text-button {
+        font-family: 'Karla', sans-serif;
+        font-size: 2.5vh;
+        color: #2a470c;
+    }
+}
+
+@media (min-width: 1025px) {
+    .result-button {
+        width: 30%;
+        height: 15%;
+        border: none;
+        border-bottom-right-radius: 15px;
+        border-top-right-radius: 15px;
+        box-shadow: #282c34 0px 1px 4px;
+    }
+}
+
+@media (max-width: 480px) {
+    .result-button {
+        width: 50%;
+        height: 15%;
+        border: none;
+        border-bottom-right-radius: 15px;
+        border-top-right-radius: 15px;
+        box-shadow: #282c34 0px 1px 4px;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .result-button {
+        width: 45%;
+        height: 15%;
+        border: none;
+        border-bottom-right-radius: 15px;
+        border-top-right-radius: 15px;
+        box-shadow: #282c34 0px 1px 4px;
+    }
+}

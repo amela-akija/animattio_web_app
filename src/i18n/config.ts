@@ -110,10 +110,12 @@ i18n
           patient_update_success: "Patient updated successfully",
           patient_update_failure: "Failed to update patient",
           endDate: "End date",
+          reactionTime: "Reaction Time (ms)",
         },
       },
       pl: {
         translation: {
+          reactionTime: "Czas reakcji (ms)",
           endDate: "Data ukończenia",
           patient_update_success: "Zaktualizowano dane użytkownika",
           patient_update_failure: "Nie udało się zaktualizować użytkownia",

@@ -2,6 +2,7 @@ import React from 'react';
 import './TestComponent.css';
 import Test from './Test';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 interface tests {
   test: Test;
@@ -19,6 +20,10 @@ const TestComponent: React.FC<tests> = ({ test }) => {
         return 'N/A';
     }
   };
+  const navigate = useNavigate();
+  const goToResultPage = (testId: string) => {
+    navigate(`/test-results/${testId}`);
+  };
   return (
     <div className="test-container">
       <p className="game-details">
@@ -28,7 +33,7 @@ const TestComponent: React.FC<tests> = ({ test }) => {
         <strong>{t("mode")}:</strong> {displayMode()}
       </p>
 
-      <button className="see-more-button">{t("see_more")}</button>
+      <button className="see-more-button" onClick={() => goToResultPage(test.testId)}>{t("see_more")}</button>
     </div>
   );
 };
