@@ -8,45 +8,35 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-  ResponsiveContainer,
-  ReferenceArea,
+  ResponsiveContainer, ReferenceArea
 } from 'recharts';
 import { t } from 'i18next';
-
-interface TappedImage {
-  index: number;
-  reactionTime: number;
-  interval: number;
-}
-
-interface GameData {
-  tappedImages: TappedImage[];
-}
 
 interface ProcessedGamesChartProps {
   testId: string;
 }
 
 const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => {
-  const [gamesData, setGamesData] = useState<GameData[]>([]);
+  const [gamesData, setGamesData] = useState<{ [key: string]: number[] }>({});
   const [loading, setLoading] = useState<boolean>(true);
-  const [activeIntervals, setActiveIntervals] = useState<{ [key: string]: boolean }>({
-    '1250': true,
-    '2250': true,
-    '4250': true,
-  });
-
+  const [activeIntervals, setActiveIntervals] = useState<{ [key: string]: boolean }>({});
   const normativeData = {
     1250: { mean: 348.84, stdDev: 59.53, color: "#8884d8" },
     2250: { mean: 393.66, stdDev: 74.68, color: "#82ca9d" },
     4250: { mean: 450.97, stdDev: 105.01, color: "#ff7300" },
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<GameData[]>(`http://localhost:8080/${testId}/processed-games`);
+        const response = await axios.get<{ [key: string]: number[] }>(`http://localhost:8080/${testId}/processed-games`);
         setGamesData(response.data);
+
+        const initialActiveIntervals = Object.keys(response.data).reduce((acc, key) => {
+          acc[key] = true;
+          return acc;
+        }, {} as { [key: string]: boolean });
+
+        setActiveIntervals(initialActiveIntervals);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -61,72 +51,63 @@ const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => 
     return <div>Loading...</div>;
   }
 
-  const processData = (data: GameData[]) => {
-    const groupedData: { [key: number]: { x: number; y: number }[] } = { 1250: [], 2250: [], 4250: [] };
-
-    data.forEach((game) => {
-      game.tappedImages.forEach((image) => {
-        if (groupedData[image.interval]) {
-          groupedData[image.interval].push({ x: image.index, y: image.reactionTime });
-        }
-      });
-    });
-
-    return Object.keys(groupedData).map((interval) => ({
-      name: `${interval} ms`,
-      data: groupedData[Number(interval)],
-      key: interval,
-    }));
-  };
-
-  const chartData = processData(gamesData);
-
-  const maxIndex = Math.max(
-    ...chartData.flatMap(lineData => lineData.data.map(point => point.x))
-  );
+  const intervals = Object.keys(gamesData);
 
   const handleLegendClick = (interval: string) => {
-    const intervalKey = interval.replace(" ms", "");
-    setActiveIntervals(prev => ({
+    setActiveIntervals((prev) => ({
       ...prev,
-      [intervalKey]: !prev[intervalKey],
+      [interval]: !prev[interval],
     }));
   };
+
+  const maxDataPoints = Math.max(
+    ...intervals.map(interval => gamesData[interval].length)
+  );
+
+  const chartData = Array.from({ length: maxDataPoints }, (_, i) => {
+    const dataPoint: { index: number; [key: string]: number | undefined } = { index: i + 1 };
+    intervals.forEach(interval => {
+      if (i < gamesData[interval].length) {
+        dataPoint[interval] = gamesData[interval][i];
+      }
+    });
+    return dataPoint;
+  });
 
   return (
     <ResponsiveContainer width="100%" height={400}>
-      <LineChart margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+      <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="x" domain={[0, maxIndex]} tick={false} />
+        <XAxis dataKey="index" />
         <YAxis label={{ value: t('reactionTime'), angle: -90, position: "insideLeft" }} />
         <Tooltip />
         <Legend
           onClick={(e) => handleLegendClick(e.value)}
           formatter={(value) => {
-            const intervalKey = value.replace(" ms", "");
-            const displayValue = intervalKey === "1250" ? "1s" : intervalKey === "2250" ? "2s" : "4s";
+            const labelMap: { [key: string]: string } = {
+              '1250': '1s',
+              '2250': '2s',
+              '4250': '4s'
+            };
             return (
-              <span style={{ cursor: 'pointer', color: activeIntervals[intervalKey] ? '#000' : '#ccc' }}>
-                {displayValue}
+              <span style={{ cursor: 'pointer', color: activeIntervals[value] ? '#000' : '#ccc' }}>
+                {labelMap[value] || value}
               </span>
             );
           }}
         />
-
-        {chartData.map((lineData) => (
+        {intervals.map((interval) => (
           <Line
-            key={lineData.key}
+            key={interval}
             type="monotone"
-            data={lineData.data}
-            dataKey="y"
-            name={lineData.name}
-            stroke={lineData.key === '1250' ? "#8884d8" : lineData.key === '2250' ? "#82ca9d" : "#ff7300"}
+            dataKey={interval}
+            name={`${interval}`}
+            stroke={interval === '1250' ? "#8884d8" : interval === '2250' ? "#82ca9d" : "#ff7300"}
             activeDot={{ r: 8 }}
             isAnimationActive={false}
-            style={{ display: activeIntervals[lineData.key] ? 'block' : 'none' }}
+            hide={!activeIntervals[interval]}
           />
         ))}
-
         {Object.entries(normativeData).map(([key, { mean, stdDev, color }]) => (
           activeIntervals[key] && (
             <ReferenceArea
