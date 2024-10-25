@@ -5,20 +5,22 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
 import ProcessedGamesChart from './ProcessedGamesChart';
 import { useParams } from 'react-router-dom';
+import OmissionGraph from './OmissionGraph';
+import ReactionTimeTable from './ReactionTimeTable';
 
 function ResultsPage() {
   const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
 
   const [selectedOption, setSelectedOption] = useState('');
-  const [activeButton, setActiveButton] = useState<'general' | 'gender' | 'age'>('general');
+  const [activeButton, setActiveButton] = useState<'reactionTime' | 'commission' | 'omission'>('reactionTime');
   const { testId } = useParams<{ testId: string }>();
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleButtonClick = (button: 'general' | 'gender' | 'age') => {
+  const handleButtonClick = (button: 'reactionTime' | 'commission' | 'omission') => {
     setActiveButton(button);
   };
 
@@ -29,41 +31,51 @@ function ResultsPage() {
       <div className="result-button-container">
         <button
           className="result-button"
-          onClick={() => handleButtonClick('general')}
+          onClick={() => handleButtonClick('reactionTime')}
           style={{
-            backgroundColor: activeButton === 'general' ? '#FFC267' : '#FBE3BE',
+            backgroundColor: activeButton === 'reactionTime' ? '#FFC267' : '#FBE3BE',
           }}
         >
-          <text className="result-text-button">{t('general')}:</text>
+          <text className="result-text-button">{t('reactionTime')}:</text>
         </button>
       </div>
 
       <div className="plot-container">
-        {testId ? <ProcessedGamesChart testId={testId} /> : <p>No test ID available.</p>}
+        {activeButton === 'reactionTime' && testId ? (
+          <>
+            <ReactionTimeTable testId={testId} />
+            <ProcessedGamesChart testId={testId} />
+          </>
+        ) : (
+          activeButton === 'reactionTime' && !testId && <p>No test ID available.</p>
+        )}
       </div>
 
       <div className="result-button-container">
         <button
-          onClick={() => handleButtonClick('gender')}
+          onClick={() => handleButtonClick('commission')}
           className="result-button"
           style={{
-            backgroundColor: activeButton === 'gender' ? '#FFC267' : '#FBE3BE',
+            backgroundColor: activeButton === 'commission' ? '#FFC267' : '#FBE3BE',
           }}
         >
-          <text className="result-text-button">{t('gender')}:</text>
+          <text className="result-text-button">{t('commission')}:</text>
         </button>
       </div>
 
       <div className="result-button-container">
         <button
-          onClick={() => handleButtonClick('age')}
+          onClick={() => handleButtonClick('omission')}
           className="result-button"
           style={{
-            backgroundColor: activeButton === 'age' ? '#FFC267' : '#FBE3BE',
+            backgroundColor: activeButton === 'omission' ? '#FFC267' : '#FBE3BE',
           }}
         >
-          <text className="result-text-button">{t('age')}:</text>
+          <text className="result-text-button">{t('omission')}:</text>
         </button>
+        {activeButton === 'omission' && testId ? (
+          <OmissionGraph testId={testId} />
+        ) : null}
       </div>
     </div>
   );

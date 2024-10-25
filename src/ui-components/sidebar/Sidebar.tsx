@@ -28,6 +28,8 @@ const Sidebar = () => {
   const logOut = async () => {
     try {
       await signOut(auth);
+      localStorage.removeItem("doctorUsername")
+      localStorage.removeItem("token")
       console.log("User signed out successfully");
       navigate('/login');
     } catch (error) {
