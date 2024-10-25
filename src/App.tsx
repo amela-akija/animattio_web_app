@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import MainPage from './authentication/MainPage';
 import Navbar from './ui-components/navbar/Navbar';
 import LoginPage from './authentication/LoginPage';
 import SignupPage from './authentication/SignupPage';
@@ -20,8 +19,8 @@ function App() {
       <I18nextProvider i18n={i18n}>
       <Navbar />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        {/*<Route path="/" element={<MainPage />} />*/}
+        <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/user-account" element={<MainUserPage />} />
         <Route path="/add-patient" element={<AddPatientPage />} />

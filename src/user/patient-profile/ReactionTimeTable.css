@@ -1,0 +1,30 @@
+.reaction-time-table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: auto auto 2%;
+}
+.reaction-time-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2%;
+}
+
+.reaction-time-table th, .reaction-time-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.reaction-time-table th {
+    background-color: #2a470c;
+    color: #FFFBEE;
+}
+
+.reaction-time-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.reaction-time-table td {
+    color: #555;
+}
