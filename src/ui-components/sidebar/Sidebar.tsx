@@ -2,13 +2,17 @@ import React, { useEffect, useState } from 'react';
 import './Sidebar.css';
 import { useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import {Button } from '@mui/material';
+import { Button } from '@mui/material';
 import { auth } from '../../firebaseConfig';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const Sidebar = () => {
-  const {t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
+
   useEffect(() => {
     i18n.changeLanguage(language);
     localStorage.setItem('language', language);
@@ -19,21 +23,26 @@ const Sidebar = () => {
     const newLanguage = language === 'pl' ? 'en' : 'pl';
     setLanguage(newLanguage);
   };
+
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
+  const logOutNotification = () => toast.success(t('logOutMessage'));
+
   const logOut = async () => {
     try {
       await signOut(auth);
-      localStorage.removeItem("doctorUsername")
-      localStorage.removeItem("token")
+      localStorage.removeItem("doctorUsername");
+      localStorage.removeItem("token");
       console.log("User signed out successfully");
-      navigate('/login');
+      logOutNotification();
+      navigate('/');
     } catch (error) {
       console.error("Error signing out: ", error);
+      toast.error(t('errorLogOutMessage'))
     }
   };
 
@@ -88,7 +97,10 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/login" onClick={logOut}>{t("log_out")}</a>
+              <a href="/" onClick={(event) => {
+                event.preventDefault();
+                logOut();
+              }}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -102,7 +114,10 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/login" onClick={logOut}>{t("log_out")}</a>
+              <a href="/" onClick={(event) => {
+                event.preventDefault();
+                logOut();
+              }}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -116,7 +131,10 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/login" onClick={logOut}>{t("log_out")}</a>
+              <a href="/" onClick={(event) => {
+                event.preventDefault();
+                logOut();
+              }}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -130,7 +148,10 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/login" onClick={logOut}>{t("log_out")}</a>
+              <a href="/" onClick={(event) => {
+                event.preventDefault();
+                logOut();
+              }}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -144,7 +165,10 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/login" onClick={logOut}>{t("log_out")}</a>
+              <a href="/" onClick={(event) => {
+                event.preventDefault();
+                logOut();
+              }}>{t("log_out")}</a>
             </li>
             <li>
               <a href="/settings">{t("settings")}</a>
@@ -180,6 +204,7 @@ const Sidebar = () => {
         </button>
         <ul className="sidebar-menu">{getMenuItems()}</ul>
       </div>
+      <ToastContainer />
     </div>
   );
 };
