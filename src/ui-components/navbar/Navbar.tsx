@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './Navbar.css';
 import logo from '../../assets/logo-web-navbar.png';
 import Sidebar from '../sidebar/Sidebar';
+import { t } from 'i18next';
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -41,55 +42,55 @@ const Navbar = () => {
           {activeTab === '/add-patient' ? (
             <>
               <button className="navbar-tab" onClick={handleUserProfile}>
-                User Profile
+                {t('userProfile')}
               </button>
               <button className="navbar-tab" onClick={handleSeePatients}>
-                See Patients
+                {t('seePatients')}
               </button>
             </>
           ) : activeTab === '/see-patients' ? (
             <>
               <button className="navbar-tab" onClick={handleAddPatient}>
-                Add Patient
+                {t('addPatient')}
               </button>
               <button className="navbar-tab" onClick={handleUserProfile}>
-                User Profile
+                {t('userProfile')}
               </button>
             </>
           ) : activeTab === '/doctor-profile' ? (
             <>
               <button className="navbar-tab" onClick={handleAddPatient}>
-                Add Patient
+                {t('addPatient')}
               </button>
               <button className="navbar-tab" onClick={handleSeePatients}>
-                See Patients
+                {t('seePatients')}
               </button>
             </>
           ) : activeTab === '/doctor-profile' ? (
             <>
               <button className="navbar-tab" onClick={handleAddPatient}>
-                Add Patient
+                {t('addPatient')}
               </button>
               <button className="navbar-tab" onClick={handleSeePatients}>
-                See Patients
+                {t('seePatients')}
               </button>
             </>
           ) : activeTab === '/doctor-profile' ? (
             <>
               <button className="navbar-tab" onClick={handleAddPatient}>
-                Add Patient
+                {t('addPatient')}
               </button>
               <button className="navbar-tab" onClick={handleSeePatients}>
-                See Patients
+                {t('seePatients')}
               </button>
             </>
           ) : activeTab === '/patient-profile' ? (
             <>
               <button className="navbar-tab" onClick={handleAddPatient}>
-                Add Patient
+                {t('addPatient')}
               </button>
               <button className="navbar-tab" onClick={handleSeePatients}>
-                See Patients
+                {t('seePatients')}
               </button>
             </>
           ) : null

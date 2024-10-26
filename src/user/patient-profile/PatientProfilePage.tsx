@@ -136,6 +136,7 @@ function PatientProfilePage() {
       console.log("documnetId",documentId);
       console.log(updatedPatient)
       await axios.put(`http://localhost:8080/patients/update-patient?documentId=${documentId}`, updatedPatient);
+      setDocumentId(patientUsername);
       alert(t('patient_update_success'));
     } catch (error) {
       console.error('Error updating patient:', error);

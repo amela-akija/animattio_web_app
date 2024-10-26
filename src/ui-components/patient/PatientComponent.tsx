@@ -15,6 +15,16 @@ const PatientComponent: React.FC<Patients> = ({ patient }) => {
   const goToPatientProfile = (username: string) => {
     navigate(`/patient-profile/${username}`);
   };
+  const displayType = () => {
+    switch (patient.type) {
+      case 'epilepsy':
+        return t('epilepsy');
+      case 'no epilepsy':
+        return t('noEpilepsy');
+      default:
+        return 'N/A';
+    }
+  };
 
 
   return (

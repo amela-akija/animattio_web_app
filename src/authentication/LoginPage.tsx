@@ -15,9 +15,9 @@ function LoginPage() {
   const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const navigate = useNavigate();
-  const goToSignup = () => {
-    navigate('/signup');
-  };
+  // const goToSignup = () => {
+  //   navigate('/signup');
+  // };
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -122,10 +122,10 @@ function LoginPage() {
       </div>
   </form>
       <div className="login-button-container">
-        <button className="registration-button" onClick={goToSignup}>
+        {/*<button className="registration-button" onClick={goToSignup}>*/}
           {/* eslint-disable-next-line react/no-unescaped-entities */}
-          <text className="login-small-text-button"> {t("message_login")}</text>
-        </button>
+          {/*<text className="login-small-text-button"> {t("message_login")}</text>*/}
+        {/*</button>*/}
       </div>
     </div>
   );
