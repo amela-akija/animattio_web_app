@@ -13,6 +13,7 @@ import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
 import SeeNotesPage from './user/doctor-profile/NotesListPage';
 import ResultsPage from './user/patient-profile/ResultsPage';
+import DoctorsListPage from './admin/DoctorsListPage';
 function App() {
   return (
     <Router>
@@ -20,12 +21,14 @@ function App() {
       <Navbar />
       <Routes>
         {/*<Route path="/" element={<MainPage />} />*/}
+
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/see-doctors" element={<DoctorsListPage />} />
         <Route path="/user-account" element={<MainUserPage />} />
         <Route path="/add-patient" element={<AddPatientPage />} />
         <Route path="/see-patients" element={<SeePatientsPage />} />
-        <Route path="/doctor-profile" element={<DoctorProfilePage />} />
+        <Route path="/doctor-profile/:username" element={<DoctorProfilePage />} />
         <Route path="/patient-profile/:username" element={<PatientProfilePage />} />
         <Route path="/test-results/:testId" element={<ResultsPage />} />
         <Route path="/see-notes" element={<SeeNotesPage />} />

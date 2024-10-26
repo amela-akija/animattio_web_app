@@ -62,7 +62,34 @@ function LoginPage() {
             console.log('Failed to authenticate with backend');
             alert(t('backend_auth_failed'));
           }
-        } else {
+        } else if(doctorData?.role === "admin"){
+          const doctorUsername = doctorData.username;
+          if (doctorUsername) {
+            localStorage.setItem('doctorUsername', doctorUsername);
+            console.log('Doctor Username:', doctorUsername);
+          } else {
+            console.error('Username is undefined. Check if it is stored in Firestore.');
+          }
+
+          console.log(t('doctor_login'));
+
+          const response = await fetch('http://localhost:8080/signin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${idToken}`,
+            },
+            body: JSON.stringify({ uid: user.uid }),
+          });
+
+          if (response.ok) {
+            navigate('/see-doctors');
+          } else {
+            console.log('Failed to authenticate with backend');
+            alert(t('backend_auth_failed'));
+          }
+        }
+        else {
           console.log('Access denied');
           await auth.signOut();
           alert(t('access_denied'));
