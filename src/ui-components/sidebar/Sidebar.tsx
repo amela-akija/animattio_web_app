@@ -55,10 +55,10 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/about">{t("about")}</a>
+              <a href="/about">{t('about')}</a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -69,10 +69,10 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/about">{t("about")}</a>
+              <a href="/about">{t('about')}</a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -83,10 +83,17 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/about">{t("about")}</a>
+              <a
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
+                  logOut();
+                }}>
+                {t('log_out')}
+              </a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -97,16 +104,21 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/" onClick={(event) => {
-                event.preventDefault();
-                logOut();
-              }}>{t("log_out")}</a>
+              <a
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
+                  logOut();
+                }}>
+                {t('log_out')}
+              </a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
+
       case '/user-account':
         return (
           <>
@@ -114,13 +126,17 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/" onClick={(event) => {
-                event.preventDefault();
-                logOut();
-              }}>{t("log_out")}</a>
+              <a
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
+                  logOut();
+                }}>
+                {t('log_out')}
+              </a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -131,13 +147,17 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/" onClick={(event) => {
-                event.preventDefault();
-                logOut();
-              }}>{t("log_out")}</a>
+              <a
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
+                  logOut();
+                }}>
+                {t('log_out')}
+              </a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -148,13 +168,17 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/" onClick={(event) => {
-                event.preventDefault();
-                logOut();
-              }}>{t("log_out")}</a>
+              <a
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
+                  logOut();
+                }}>
+                {t('log_out')}
+              </a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -165,13 +189,17 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/" onClick={(event) => {
-                event.preventDefault();
-                logOut();
-              }}>{t("log_out")}</a>
+              <a
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
+                  logOut();
+                }}>
+                {t('log_out')}
+              </a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -182,10 +210,17 @@ const Sidebar = () => {
               {language === 'pl' ? 'EN' : 'PL'}
             </Button>
             <li>
-              <a href="/about">{t("about")}</a>
+              <a
+                href="/"
+                onClick={(event) => {
+                  event.preventDefault();
+                  logOut();
+                }}>
+                {t('log_out')}
+              </a>
             </li>
             <li>
-              <a href="/settings">{t("settings")}</a>
+              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );

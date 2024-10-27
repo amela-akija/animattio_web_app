@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, TooltipItem } from 'chart.js';
 import PropTypes from 'prop-types';
+import { t } from 'i18next';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
@@ -122,7 +123,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
   const sd = normativeData.sd ?? 0;
 
   const chartData = {
-    labels: ['Patient Result', `Normative ${patientInfo.gender}`],
+    labels: [t('patientResult'), t('normative')],
     datasets: [
       {
         label: 'Commission Errors (%)',
@@ -137,7 +138,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       y: {
         title: {
           display: true,
-          text: 'Error of Commission (%)',
+          text: t('errorCommission'),
         },
       },
     },

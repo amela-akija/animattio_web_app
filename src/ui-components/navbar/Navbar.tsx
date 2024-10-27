@@ -32,6 +32,8 @@ const Navbar = () => {
 
   const isAuthPage = activeTab === '/' || activeTab === '/signup' || activeTab === '/login';
 
+  const isTestResultsPage = location.pathname.startsWith('/test-results/');
+
   return (
     <nav className="navbar">
       <a href="/">
@@ -39,7 +41,7 @@ const Navbar = () => {
       </a>
       {!isAuthPage && (
         <div className="navbar-tabs">
-          {activeTab === '/add-patient' ? (
+          {activeTab === '/add-patient' || isTestResultsPage ? (
             <>
               <button className="navbar-tab" onClick={handleUserProfile}>
                 {t('userProfile')}
@@ -66,24 +68,6 @@ const Navbar = () => {
                 {t('seePatients')}
               </button>
             </>
-          ) : activeTab === '/doctor-profile' ? (
-            <>
-              <button className="navbar-tab" onClick={handleAddPatient}>
-                {t('addPatient')}
-              </button>
-              <button className="navbar-tab" onClick={handleSeePatients}>
-                {t('seePatients')}
-              </button>
-            </>
-          ) : activeTab === '/doctor-profile' ? (
-            <>
-              <button className="navbar-tab" onClick={handleAddPatient}>
-                {t('addPatient')}
-              </button>
-              <button className="navbar-tab" onClick={handleSeePatients}>
-                {t('seePatients')}
-              </button>
-            </>
           ) : activeTab === '/patient-profile' ? (
             <>
               <button className="navbar-tab" onClick={handleAddPatient}>
@@ -93,8 +77,7 @@ const Navbar = () => {
                 {t('seePatients')}
               </button>
             </>
-          ) : null
-          }
+          ) : null}
         </div>
       )}
       <Sidebar />

@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, TooltipItem } from 'chart.js';
 import PropTypes from 'prop-types';
+import { t } from 'i18next';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
@@ -58,8 +59,8 @@ const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
       try {
         const response = await axios.get(`http://localhost:8080/${testId}/omissions`);
         const totalOmissionErrors = response.data.totalOmissionErrors;
-console.log("omission", totalOmissionErrors);
-console.log("stimuli", totalStimuliCount);
+        console.log("omission", totalOmissionErrors);
+        console.log("stimuli", totalStimuliCount);
         const percentageOmission = (totalOmissionErrors / totalStimuliCount) * 100;
         setOmissionData({ percentage: percentageOmission });
       } catch (error) {
@@ -110,7 +111,7 @@ console.log("stimuli", totalStimuliCount);
   const sd = normativeData.sd ?? 0;
 
   const chartData = {
-    labels: ['Patient Result', `Normative ${patientInfo.gender}`],
+    labels: [t('patientResult'), t('normative')],
     datasets: [
       {
         label: 'Omission Errors (%)',
@@ -125,7 +126,7 @@ console.log("stimuli", totalStimuliCount);
       y: {
         title: {
           display: true,
-          text: 'Error of Omission (%)',
+          text: t('errorOmission'),
         },
       },
     },
