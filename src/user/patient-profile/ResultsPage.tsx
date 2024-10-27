@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './ResultsPage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -7,6 +7,8 @@ import ProcessedGamesChart from './ProcessedGamesChart';
 import { useParams } from 'react-router-dom';
 import OmissionGraph from './OmissionGraph';
 import ReactionTimeTable from './ReactionTimeTable';
+import axios from 'axios';
+import CommissionGraph from './CommissionGraph';
 
 function ResultsPage() {
   const { t } = useTranslation();
@@ -15,6 +17,7 @@ function ResultsPage() {
   const [selectedOption, setSelectedOption] = useState('');
   const [activeButton, setActiveButton] = useState<'reactionTime' | 'commission' | 'omission'>('reactionTime');
   const { testId } = useParams<{ testId: string }>();
+  const patientId = localStorage.getItem('patientUsername');
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
@@ -25,6 +28,7 @@ function ResultsPage() {
   };
 
   console.log('Test ID:', testId);
+  console.log('Patient ID', patientId);
 
   return (
     <div>
@@ -33,9 +37,8 @@ function ResultsPage() {
           className="result-button"
           onClick={() => handleButtonClick('reactionTime')}
           style={{
-            backgroundColor: activeButton === 'reactionTime' ? '#FFC267' : '#FBE3BE',
-          }}
-        >
+            backgroundColor: activeButton === 'reactionTime' ? '#FFC267' : '#FBE3BE'
+          }}>
           <text className="result-text-button">{t('reactionTime')}:</text>
         </button>
       </div>
@@ -56,11 +59,15 @@ function ResultsPage() {
           onClick={() => handleButtonClick('commission')}
           className="result-button"
           style={{
-            backgroundColor: activeButton === 'commission' ? '#FFC267' : '#FBE3BE',
-          }}
-        >
+            backgroundColor: activeButton === 'commission' ? '#FFC267' : '#FBE3BE'
+          }}>
           <text className="result-text-button">{t('commission')}:</text>
         </button>
+        <div className="omission-plot-container">
+          {activeButton === 'commission' && testId && patientId ? (
+            <CommissionGraph testId={testId} patientId={patientId} />
+          ) : null}
+        </div>
       </div>
 
       <div className="result-button-container">
@@ -68,14 +75,15 @@ function ResultsPage() {
           onClick={() => handleButtonClick('omission')}
           className="result-button"
           style={{
-            backgroundColor: activeButton === 'omission' ? '#FFC267' : '#FBE3BE',
-          }}
-        >
+            backgroundColor: activeButton === 'omission' ? '#FFC267' : '#FBE3BE'
+          }}>
           <text className="result-text-button">{t('omission')}:</text>
         </button>
-        {activeButton === 'omission' && testId ? (
-          <OmissionGraph testId={testId} />
-        ) : null}
+        <div className="omission-plot-container">
+          {activeButton === 'omission' && testId && patientId ? (
+            <OmissionGraph testId={testId} patientId={patientId} />
+          ) : null}
+        </div>
       </div>
     </div>
   );
