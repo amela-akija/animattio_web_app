@@ -1,15 +1,23 @@
 import React from 'react';
 import './TestComponent.css';
-import Test from './Test';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
-interface tests {
-  test: Test;
+interface Test {
+  testId: string;
+  endDate: string;
+  gameMode: string;
 }
 
-const TestComponent: React.FC<tests> = ({ test }) => {
+interface TestComponentProps {
+  test: Test;
+  tests: Test[];
+}
+
+const TestComponent: React.FC<TestComponentProps> = ({ test, tests }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const displayMode = () => {
     switch (test.gameMode) {
       case 'mode1':
@@ -20,10 +28,11 @@ const TestComponent: React.FC<tests> = ({ test }) => {
         return 'N/A';
     }
   };
-  const navigate = useNavigate();
+
   const goToResultPage = (testId: string) => {
-    navigate(`/test-results/${testId}`);
+    navigate(`/test-results/${testId}`, { state: { tests } });
   };
+
   return (
     <div className="test-container">
       <p className="game-details">
@@ -32,8 +41,9 @@ const TestComponent: React.FC<tests> = ({ test }) => {
       <p className="game-details">
         <strong>{t("mode")}:</strong> {displayMode()}
       </p>
-
-      <button className="see-more-button" onClick={() => goToResultPage(test.testId)}>{t("see_more")}</button>
+      <button className="see-more-button" onClick={() => goToResultPage(test.testId)}>
+        {t("see_more")}
+      </button>
     </div>
   );
 };

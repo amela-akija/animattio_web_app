@@ -216,6 +216,8 @@ function PatientProfilePage() {
       {/**/}
       {/**/}
       <div className="patient-profile-second-column">
+        <div className="big-space">
+        </div>
         {activeButton === 'stats' && (
           <TestsList tests={summedErrors} />
         )}
