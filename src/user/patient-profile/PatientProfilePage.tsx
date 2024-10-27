@@ -51,6 +51,7 @@ function PatientProfilePage() {
   const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const { username } = useParams<{ username: string }>();
+  localStorage.setItem("patientUsername", username as string);
   const [summedErrors, setSummedErrors] = useState([]);
   useEffect(() => {
     if (username) {

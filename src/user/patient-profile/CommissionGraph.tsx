@@ -21,19 +21,31 @@ interface NormativeDataType {
 }
 
 const NormativeData: NormativeDataType = {
-  '9-11': { female: { mean: 6.7, sd: 6.4 }, male: { mean: 6.5, sd: 5.1 } },
-  '12-13': { female: { mean: 5.4, sd: 6.4 }, male: { mean: 3.5, sd: 5.1 } },
-  '14-15': { female: { mean: 2.3, sd: 6.4 }, male: { mean: 3.0, sd: 5.1 } },
-  '16-18': { female: { mean: 2.1, sd: 6.4 }, male: { mean: 2.9, sd: 5.1 } },
+  '9-11': {
+    female: { mean: 58.2, sd: 17.8 },
+    male: { mean: 68.3, sd: 17.3 },
+  },
+  '12-13': {
+    female: { mean: 52.3, sd: 20.6 },
+    male: { mean: 66.3, sd: 16.9 },
+  },
+  '14-15': {
+    female: { mean: 45.1, sd: 22.4 },
+    male: { mean: 59.9, sd: 22.1 },
+  },
+  '16-18': {
+    female: { mean: 40.5, sd: 22.2 },
+    male: { mean: 53.6, sd: 18.9 },
+  },
 };
 
-interface OmissionGraphProps {
+interface CommissionGraphProps {
   testId: string;
   patientId: string;
 }
 
-const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
-  const [omissionData, setOmissionData] = useState<{ percentage: number }>({ percentage: 0 });
+const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) => {
+  const [commissionData, setCommissionData] = useState<{ percentage: number }>({ percentage: 0 });
   const [patientInfo, setPatientInfo] = useState<{ age: number; gender: Gender }>({ age: 0, gender: 'female' });
   const [loading, setLoading] = useState(true);
   const [totalStimuliCount, setTotalStimuliCount] = useState<number | null>(null);
@@ -41,7 +53,7 @@ const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
   useEffect(() => {
     const fetchTotalStimuliCount = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/${testId}/stimuli-count`);
+        const response = await axios.get(`http://localhost:8080/${testId}/non-stimuli-count`);
         setTotalStimuliCount(response.data);
       } catch (error) {
         console.error('Error fetching total stimuli count:', error);
@@ -52,22 +64,22 @@ const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
   }, [testId]);
 
   useEffect(() => {
-    const fetchOmissionData = async () => {
+    const fetchCommissionData = async () => {
       if (totalStimuliCount === null) return;
 
       try {
-        const response = await axios.get(`http://localhost:8080/${testId}/omissions`);
-        const totalOmissionErrors = response.data.totalOmissionErrors;
-console.log("omission", totalOmissionErrors);
-console.log("stimuli", totalStimuliCount);
-        const percentageOmission = (totalOmissionErrors / totalStimuliCount) * 100;
-        setOmissionData({ percentage: percentageOmission });
+        const response = await axios.get(`http://localhost:8080/${testId}/commissions`);
+        const totalCommissionErrors = response.data.totalCommissionErrors;
+        const percentageCommission = (totalCommissionErrors / totalStimuliCount) * 100;
+        setCommissionData({ percentage: percentageCommission });
+        console.log("comission", totalCommissionErrors);
+        console.log("stimuli", totalStimuliCount);
       } catch (error) {
-        console.error('Error fetching omission data:', error);
+        console.error('Error fetching commission data:', error);
       }
     };
 
-    fetchOmissionData();
+    fetchCommissionData();
   }, [testId, totalStimuliCount]);
 
   useEffect(() => {
@@ -113,8 +125,8 @@ console.log("stimuli", totalStimuliCount);
     labels: ['Patient Result', `Normative ${patientInfo.gender}`],
     datasets: [
       {
-        label: 'Omission Errors (%)',
-        data: [omissionData.percentage, mean],
+        label: 'Commission Errors (%)',
+        data: [commissionData.percentage, mean],
         backgroundColor: ['rgba(9,62,2,0.6)', 'rgb(248,232,159)'],
       },
     ],
@@ -125,7 +137,7 @@ console.log("stimuli", totalStimuliCount);
       y: {
         title: {
           display: true,
-          text: 'Error of Omission (%)',
+          text: 'Error of Commission (%)',
         },
       },
     },
@@ -194,9 +206,9 @@ console.log("stimuli", totalStimuliCount);
   );
 };
 
-OmissionGraph.propTypes = {
+CommissionGraph.propTypes = {
   testId: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
 };
 
-export default OmissionGraph;
+export default CommissionGraph;
