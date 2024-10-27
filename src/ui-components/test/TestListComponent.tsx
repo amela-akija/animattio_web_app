@@ -1,17 +1,21 @@
 import React from 'react';
-import Test from './Test';
 import TestComponent from './TestComponent';
-import './TestComponent.css';
 
-interface Tests {
+interface Test {
+  testId: string;
+  endDate: string;
+  gameMode: string;
+}
+
+interface TestsListProps {
   tests: Test[];
 }
 
-const TestsList: React.FC<Tests> = ({ tests }) => {
+const TestsList: React.FC<TestsListProps> = ({ tests }) => {
   return (
-    <div className="test-list">
+    <div>
       {tests.map((test) => (
-        <TestComponent key={test.testId} test={test} />
+        <TestComponent key={test.testId} test={test} tests={tests} />
       ))}
     </div>
   );

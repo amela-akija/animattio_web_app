@@ -1,45 +1,70 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './ResultsPage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
 import ProcessedGamesChart from './ProcessedGamesChart';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import OmissionGraph from './OmissionGraph';
 import ReactionTimeTable from './ReactionTimeTable';
-import axios from 'axios';
 import CommissionGraph from './CommissionGraph';
+
+interface Test {
+  testId: string;
+  endDate: string;
+  gameMode: string;
+}
+
+interface LocationState {
+  tests: Test[];
+}
 
 function ResultsPage() {
   const { t } = useTranslation();
-  const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
-
-  const [selectedOption, setSelectedOption] = useState('');
-  const [activeButton, setActiveButton] = useState<'reactionTime' | 'commission' | 'omission'>('reactionTime');
+  const { isMobile, isTablet, isLaptop } = useResponsive();
   const { testId } = useParams<{ testId: string }>();
-  const patientId = localStorage.getItem('patientUsername');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { tests } = (location.state as LocationState) || { tests: [] }; // Default to an empty array if no tests are passed
 
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
-  };
+  const [activeButton, setActiveButton] = useState<'reactionTime' | 'commission' | 'omission'>('reactionTime');
+  const patientId = localStorage.getItem('patientUsername');
 
   const handleButtonClick = (button: 'reactionTime' | 'commission' | 'omission') => {
     setActiveButton(button);
   };
 
-  console.log('Test ID:', testId);
-  console.log('Patient ID', patientId);
+  const currentTestIndex = tests.findIndex(test => test.testId === testId);
+  const previousTest = tests[currentTestIndex - 1];
+  const nextTest = tests[currentTestIndex + 1];
+
+  const navigateToTest = (testId: string) => {
+    navigate(`/test-results/${testId}`, { state: { tests } });
+  };
 
   return (
     <div>
+      <div className="navigation-buttons">
+        {previousTest && (
+          <button onClick={() => navigateToTest(previousTest.testId)}>
+            &larr;
+          </button>
+        )}
+        {nextTest && (
+          <button onClick={() => navigateToTest(nextTest.testId)}>
+             &rarr;
+          </button>
+        )}
+      </div>
       <div className="result-button-container">
+
         <button
           className="result-button"
           onClick={() => handleButtonClick('reactionTime')}
           style={{
             backgroundColor: activeButton === 'reactionTime' ? '#FFC267' : '#FBE3BE'
           }}>
-          <text className="result-text-button">{t('reactionTime')}:</text>
+          <span className="result-text-button">{t('reactionTime')}</span>
         </button>
       </div>
 
@@ -61,7 +86,7 @@ function ResultsPage() {
           style={{
             backgroundColor: activeButton === 'commission' ? '#FFC267' : '#FBE3BE'
           }}>
-          <text className="result-text-button">{t('commission')}:</text>
+          <span className="result-text-button">{t('commission')}</span>
         </button>
         <div className="omission-plot-container">
           {activeButton === 'commission' && testId && patientId ? (
@@ -77,7 +102,7 @@ function ResultsPage() {
           style={{
             backgroundColor: activeButton === 'omission' ? '#FFC267' : '#FBE3BE'
           }}>
-          <text className="result-text-button">{t('omission')}:</text>
+          <span className="result-text-button">{t('omission')}</span>
         </button>
         <div className="omission-plot-container">
           {activeButton === 'omission' && testId && patientId ? (
@@ -85,6 +110,7 @@ function ResultsPage() {
           ) : null}
         </div>
       </div>
+
     </div>
   );
 }
