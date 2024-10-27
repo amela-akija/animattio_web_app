@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ReactionTimeTable.css';
+import { t } from 'i18next';
 
 interface ReactionTimeTableProps {
   testId: string;
@@ -45,7 +46,6 @@ const ReactionTimeTable: React.FC<ReactionTimeTableProps> = ({ testId }) => {
           const variance = values.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) / (values.length - 1);
           const stdDev = Math.sqrt(variance);
 
-          // Calculate Z-score based on normative data
           const normativeMean = normativeData[interval as Interval].mean;
           const normativeStdDev = normativeData[interval as Interval].stdDev;
           const zScore = ((mean - normativeMean) / normativeStdDev);
@@ -77,9 +77,9 @@ const ReactionTimeTable: React.FC<ReactionTimeTableProps> = ({ testId }) => {
         <table className="reaction-time-table">
           <thead>
           <tr>
-            <th>Interval</th>
-            <th>Mean Reaction Time (ms)</th>
-            <th>Standard Deviation (ms)</th>
+            <th>{t('interval')}</th>
+            <th>{t('meanReactionTime')}</th>
+            <th>{t('SD')}</th>
             <th>Z-Score</th>
           </tr>
           </thead>

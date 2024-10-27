@@ -68,16 +68,18 @@ function ResultsPage() {
         </button>
       </div>
 
-      <div className="plot-container">
+
         {activeButton === 'reactionTime' && testId ? (
+            <div className="plot-container">
           <>
             <ReactionTimeTable testId={testId} />
             <ProcessedGamesChart testId={testId} />
           </>
+            </div>
+
         ) : (
           activeButton === 'reactionTime' && !testId && <p>No test ID available.</p>
         )}
-      </div>
 
       <div className="result-button-container">
         <button
@@ -88,11 +90,13 @@ function ResultsPage() {
           }}>
           <span className="result-text-button">{t('commission')}</span>
         </button>
-        <div className="omission-plot-container">
-          {activeButton === 'commission' && testId && patientId ? (
+
+
+        {activeButton === 'commission' && testId && patientId ? (
+          <div className="omission-plot-container">
             <CommissionGraph testId={testId} patientId={patientId} />
+          </div>
           ) : null}
-        </div>
       </div>
 
       <div className="result-button-container">
@@ -104,15 +108,17 @@ function ResultsPage() {
           }}>
           <span className="result-text-button">{t('omission')}</span>
         </button>
-        <div className="omission-plot-container">
-          {activeButton === 'omission' && testId && patientId ? (
-            <OmissionGraph testId={testId} patientId={patientId} />
-          ) : null}
-        </div>
-      </div>
 
-    </div>
-  );
-}
+          {activeButton === 'omission' && testId && patientId ? (
+            <div className="omission-plot-container">
+              <OmissionGraph testId={testId} patientId={patientId} />
+            </div>
+
+          ) : null}
+            </div>
+            </div>
+
+            );
+          }
 
 export default ResultsPage;
