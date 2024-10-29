@@ -9,43 +9,44 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import TestsList from '../../ui-components/test/TestListComponent';
+import MonthlyErrorGraph from './MonthlyErrorGraph';
 
-const StartDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
-  ({ value, onClick }, ref) => {
-    const { t } = useTranslation();
-
-    return (
-      <div className="arrow-wrapper" onClick={onClick}>
-        <input
-          ref={ref}
-          value={value}
-          readOnly
-          className="calendar-input"
-          placeholder={t("start_date")}
-        />
-        <div className="arrow">&#9662;</div>
-      </div>
-    );
-  }
-);
-const EndDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
-  ({ value, onClick }, ref) => {
-    const { t } = useTranslation();
-
-    return (
-      <div className="arrow-wrapper" onClick={onClick}>
-        <input
-          ref={ref}
-          value={value}
-          readOnly
-          className="calendar-input"
-          placeholder={t("end_date")}
-        />
-        <div className="arrow">&#9662;</div>
-      </div>
-    );
-  }
-);
+// const StartDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
+//   ({ value, onClick }, ref) => {
+//     const { t } = useTranslation();
+//
+//     return (
+//       <div className="arrow-wrapper" onClick={onClick}>
+//         <input
+//           ref={ref}
+//           value={value}
+//           readOnly
+//           className="calendar-input"
+//           placeholder={t("start_date")}
+//         />
+//         <div className="arrow">&#9662;</div>
+//       </div>
+//     );
+//   }
+// );
+// const EndDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
+//   ({ value, onClick }, ref) => {
+//     const { t } = useTranslation();
+//
+//     return (
+//       <div className="arrow-wrapper" onClick={onClick}>
+//         <input
+//           ref={ref}
+//           value={value}
+//           readOnly
+//           className="calendar-input"
+//           placeholder={t("end_date")}
+//         />
+//         <div className="arrow">&#9662;</div>
+//       </div>
+//     );
+//   }
+// );
 
 function PatientProfilePage() {
   const { t } = useTranslation();
@@ -60,13 +61,13 @@ function PatientProfilePage() {
     }
   }, [username]);
   const [selectedOption, setSelectedOption] = useState('');
-  const [activeButton, setActiveButton] = useState<'info'  | 'stats' >('info');
+  const [activeButton, setActiveButton] = useState<'info'  | 'stats' | 'result' >('info');
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
   };
 
-  const handleButtonClick = (button: 'info' | 'stats' ) => {
+  const handleButtonClick = (button: 'info' | 'stats' |'result') => {
     setActiveButton(button);
   };
   const [gender, setGender] = useState('');
@@ -181,46 +182,53 @@ function PatientProfilePage() {
 
         <div className="patient-button-container">
           <button
-            onClick={() => handleButtonClick('stats')}
+            onClick={() => handleButtonClick('result')}
             className="patient-button"
             style={{
-              backgroundColor: activeButton === 'stats' ? '#FFC267' : '#FBE3BE'
+              backgroundColor: activeButton === 'result' ? '#FFC267' : '#FBE3BE'
             }}>
             <text className="patient-text-button">{t('results')}:</text>
           </button>
         </div>
+        <div className="patient-button-container">
+          <button
+            className="patient-button"
+            onClick={() => handleButtonClick('stats')}
+            style={{
+              backgroundColor: activeButton === 'stats' ? '#FFC267' : '#FBE3BE'
+            }}>
+            <text className="patient-text-button">{t('stats')}:</text>
+          </button>
+        </div>
 
-        {/*{activeButton === 'stats' && (*/}
-        {/*  <div className="stats-dropdown-container">*/}
-        {/*    <label className="patient-small-text-button" style={{ color: '#2A470C' }}>*/}
-        {/*      {' '}*/}
-        {/*      {t('game_mode')}:*/}
-        {/*      <select*/}
-        {/*        id="gamemode"*/}
-        {/*        value={selectedOption}*/}
-        {/*        onChange={handleSelectChange}*/}
-        {/*        className="stats-dropdown">*/}
-        {/*        <option value="" disabled>*/}
-        {/*          {t('message_game')}*/}
-        {/*        </option>*/}
-        {/*        <option value="mode1">{t('mode1')}</option>*/}
-        {/*        <option value="mode2">{t('mode2')}</option>*/}
-        {/*      </select>*/}
-        {/*    </label>*/}
-        {/*  </div>*/}
-        {/*)}*/}
-
+        {activeButton === 'stats' && (
+          <div className="stats-dropdown-container">
+            <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
+              {' '}
+              {t('test_mode')}:
+              <select
+                id="testmode"
+                value={selectedOption}
+                onChange={handleSelectChange}
+                className="stats-dropdown">
+                <option value="" disabled>
+                  {t('message_test')}
+                </option>
+                <option value="mode1">{t('mode1')}</option>
+                <option value="mode2">{t('mode2')}</option>
+              </select>
+            </label>
+          </div>
+        )}
       </div>
 
       {/*column 2*/}
       {/**/}
       {/**/}
       <div className="patient-profile-second-column">
-        <div className="big-space">
-        </div>
-        {activeButton === 'stats' && (
-          <TestsList tests={summedErrors} />
-        )}
+        <div className="big-space"></div>
+        {activeButton === 'result' && <TestsList tests={summedErrors} />}
+        {activeButton === 'stats' && <MonthlyErrorGraph userId='9FIH8MkmqCW622zo3KnxSfRNWNy2' />}
         {activeButton === 'info' && (
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">
