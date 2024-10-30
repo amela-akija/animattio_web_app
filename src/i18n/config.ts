@@ -134,10 +134,16 @@ i18n
           noDataForMonth: 'No data available for the selected date range',
           startMonth: 'Start month',
           endMonth: 'End month',
+          noDataForDate:'No data available for the selected date range',
+          startDailyDate: 'Start date',
+          endDailyDate: 'End date',
         },
       },
       pl: {
         translation: {
+          startDailyDate: 'Data początkowa',
+          endDailyDate: 'Data końcowa',
+          noDataForDate:'Brak danych dla wybranego zakresu dat',
           startMonth: 'Pierwszy miesiąc',
           endMonth: 'Ostatni miesiąc',
           noDataForMonth: 'Brak danych dla wybranego zakresu dat',

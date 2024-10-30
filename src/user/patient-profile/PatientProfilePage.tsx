@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import TestsList from '../../ui-components/test/TestListComponent';
 import MonthlyErrorGraph from './MonthlyErrorGraph';
+import DailyErrorGraph from './DailyErrorGraph';
 
 // const StartDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
 //   ({ value, onClick }, ref) => {
@@ -228,7 +229,9 @@ function PatientProfilePage() {
       <div className="patient-profile-second-column">
         <div className="big-space"></div>
         {activeButton === 'result' && <TestsList tests={summedErrors} />}
-        {activeButton === 'stats' && <MonthlyErrorGraph userId='9FIH8MkmqCW622zo3KnxSfRNWNy2' />}
+        {/*{activeButton === 'stats' && <MonthlyErrorGraph userId='9FIH8MkmqCW622zo3KnxSfRNWNy2' />}*/}
+        {activeButton === 'stats' && <DailyErrorGraph userId='9FIH8MkmqCW622zo3KnxSfRNWNy2' />}
+
         {activeButton === 'info' && (
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">
