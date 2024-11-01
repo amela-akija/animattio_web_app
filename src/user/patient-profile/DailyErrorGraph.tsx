@@ -7,14 +7,24 @@ import { useTranslation } from 'react-i18next';
 import './DailyErrorGraph.css';
 import { parse, format } from 'date-fns';
 import { pl as polishLocale } from 'date-fns/locale';
-import { Locale } from 'date-fns';
+
 interface ErrorsGraphProps {
   userId: string;
+  selectedMode?: string;
 }
 
 interface ErrorEntry {
   mode: string;
   date: string;
+  commissions: number;
+  omissions: number;
+  targetStimuli: number;
+  nonTargetStimuli: number;
+}
+
+interface ProcessedErrorEntry {
+  date: Date;
+  mode: string;
   commissions: number;
   omissions: number;
   targetStimuli: number;
@@ -27,7 +37,7 @@ interface ModeData {
   omissionPercentages: number[];
 }
 
-const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
+const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode }) => {
   const { t } = useTranslation();
   const [dataByMode, setDataByMode] = useState<Record<string, ModeData>>({});
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -44,14 +54,22 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
         const response = await axios.get<ErrorEntry[]>(`http://localhost:8080/aggregate-errors-daily/${userId}`);
         const rawData = response.data;
 
-        const groupedData = rawData.reduce((acc: Record<string, ModeData>, entry: ErrorEntry) => {
+        const processedData = rawData.map<ProcessedErrorEntry>(entry => {
+          const parsedDate = parse(entry.date, 'd MMMM yyyy', new Date(), { locale: polishLocale });
+          return {
+            ...entry,
+            date: parsedDate,
+          };
+        });
+
+        const groupedData = processedData.reduce((acc: Record<string, ModeData>, entry: ProcessedErrorEntry) => {
           const { mode, date, commissions, omissions, targetStimuli, nonTargetStimuli } = entry;
           const commissionPercentage = parseFloat(((commissions / nonTargetStimuli) * 100).toFixed(2));
           const omissionPercentage = parseFloat(((omissions / targetStimuli) * 100).toFixed(2));
 
           if (!acc[mode]) acc[mode] = { dates: [], commissionPercentages: [], omissionPercentages: [] };
 
-          acc[mode].dates.push(date);
+          acc[mode].dates.push(format(date, 'dd.MM.yyyy'));
           acc[mode].commissionPercentages.push(commissionPercentage);
           acc[mode].omissionPercentages.push(omissionPercentage);
 
@@ -67,21 +85,20 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
     fetchData();
   }, [userId]);
 
-
   const filterDataByDate = (modeData: ModeData) => {
     if (!startDate && !endDate) return modeData;
 
     const filteredData = modeData.dates
       .map((dateString, index) => {
-        const parsedDate = parse(dateString, "d MMMM yyyy", new Date(), { locale: polishLocale as Locale });
+        const parsedDate = parse(dateString, 'dd.MM.yyyy', new Date(), { locale: polishLocale });
 
         const isWithinRange = (!startDate || parsedDate >= startDate) && (!endDate || parsedDate <= endDate);
 
         return isWithinRange
           ? {
-            date: format(parsedDate, 'dd.MM.yyyy'),
+            date: dateString,
             commissionPercentage: modeData.commissionPercentages[index],
-            omissionPercentage: modeData.omissionPercentages[index]
+            omissionPercentage: modeData.omissionPercentages[index],
           }
           : null;
       })
@@ -98,7 +115,6 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
     };
   };
 
-
   const createChartData = (
     dates: string[],
     commissionPercentages: number[],
@@ -111,20 +127,21 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
         data: commissionPercentages,
         backgroundColor: 'rgba(230,199,50,0.9)',
         borderColor: 'rgb(244,219,102)',
-        borderWidth: 1
+        borderWidth: 1,
       },
       {
         label: t('Omission'),
         data: omissionPercentages,
         backgroundColor: 'rgba(9,62,2,0.6)',
         borderColor: 'rgba(17,81,10,0.6)',
-        borderWidth: 1
-      }
-    ]
+        borderWidth: 1,
+      },
+    ],
   });
 
   return (
     <div className="daily-error-graph-container">
+      <h1 className="daily-title">{t('dailyGraph')}</h1>
       <div className="daily-date-picker-container">
         <div className="daily-date-picker-wrapper">
           <DatePicker
@@ -143,6 +160,8 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
       </div>
 
       {Object.keys(dataByMode).map((mode) => {
+        if (selectedMode && selectedMode !== mode) return null;
+
         const filteredData = filterDataByDate(dataByMode[mode]);
 
         return (
@@ -160,8 +179,8 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
                     y: {
                       beginAtZero: true,
                       ticks: { callback: (value) => `${value}%` },
-                      title: { display: true, text: '%' }
-                    }
+                      title: { display: true, text: '%' },
+                    },
                   },
                 }}
               />

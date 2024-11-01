@@ -22,3 +22,9 @@
     display: flex;
     justify-content: center;
 }
+.daily-title{
+    font-family: 'Karla', sans-serif;
+    font-size: 1.2rem;
+    color: #2a470c;
+    text-align: center;
+}

@@ -61,7 +61,7 @@ function PatientProfilePage() {
       console.log("clicked_user", username);
     }
   }, [username]);
-  const [selectedOption, setSelectedOption] = useState('');
+  const [selectedOption, setSelectedOption] = useState('mode1');
   const [activeButton, setActiveButton] = useState<'info'  | 'stats' | 'result' >('info');
 
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -229,8 +229,8 @@ function PatientProfilePage() {
       <div className="patient-profile-second-column">
         <div className="big-space"></div>
         {activeButton === 'result' && <TestsList tests={summedErrors} />}
-        {/*{activeButton === 'stats' && <MonthlyErrorGraph userId='9FIH8MkmqCW622zo3KnxSfRNWNy2' />}*/}
-        {activeButton === 'stats' && <DailyErrorGraph userId='9FIH8MkmqCW622zo3KnxSfRNWNy2' />}
+        {activeButton === 'stats' && <MonthlyErrorGraph userId = {mobileId} selectedMode={selectedOption}/>}
+        {activeButton === 'stats' && <DailyErrorGraph userId= {mobileId} selectedMode={selectedOption}/>}
 
         {activeButton === 'info' && (
           <div className="patient-info-input-container">

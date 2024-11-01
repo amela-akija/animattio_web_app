@@ -134,13 +134,18 @@ i18n
           noDataForMonth: 'No data available for the selected date range',
           startMonth: 'Start month',
           endMonth: 'End month',
+          Commission: "Commission error",
           noDataForDate:'No data available for the selected date range',
           startDailyDate: 'Start date',
           endDailyDate: 'End date',
+          monthlyGraph: "Monthly graph",
+          dailyGraph: 'Daily graph',
         },
       },
       pl: {
         translation: {
+          dailyGraph: 'Wykres dzienny',
+          monthlyGraph: "Wykres miesięczny",
           startDailyDate: 'Data początkowa',
           endDailyDate: 'Data końcowa',
           noDataForDate:'Brak danych dla wybranego zakresu dat',
