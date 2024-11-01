@@ -4,20 +4,20 @@ import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
-import './MonthlyErrorGraph.css'; 
-
+import './MonthlyErrorGraph.css';
 
 interface ErrorsGraphProps {
   userId: string;
+  selectedMode?: string;
 }
 
 interface ErrorEntry {
-  mode: string;
   month: string;
-  commissions: number;
-  omissions: number;
+  mode: string;
   targetStimuli: number;
+  commissions: number;
   nonTargetStimuli: number;
+  omissions: number;
 }
 
 interface ModeData {
@@ -26,7 +26,7 @@ interface ModeData {
   omissionPercentages: number[];
 }
 
-const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
+const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode }) => {
   const { t } = useTranslation();
   const [dataByMode, setDataByMode] = useState<Record<string, ModeData>>({});
   const [startDate, setStartDate] = useState<Date | null>(null);
@@ -47,15 +47,15 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
 
         const groupedData = rawData.reduce((acc: Record<string, ModeData>, entry: ErrorEntry) => {
           const { mode, month, commissions, omissions, targetStimuli, nonTargetStimuli } = entry;
-          const commissionPercentage =
-            parseFloat(((commissions / nonTargetStimuli) * 100).toFixed(2));
-          const omissionPercentage =
-            parseFloat(((omissions / targetStimuli) * 100).toFixed(2));
 
+          const formattedMonth = month;
+
+          const commissionPercentage = parseFloat(((commissions / nonTargetStimuli) * 100).toFixed(2));
+          const omissionPercentage = parseFloat(((omissions / targetStimuli) * 100).toFixed(2));
 
           if (!acc[mode]) acc[mode] = { months: [], commissionPercentages: [], omissionPercentages: [] };
 
-          acc[mode].months.push(month);
+          acc[mode].months.push(formattedMonth);
           acc[mode].commissionPercentages.push(commissionPercentage);
           acc[mode].omissionPercentages.push(omissionPercentage);
 
@@ -123,6 +123,7 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
 
   return (
     <div className="monthly-error-graph-container">
+      <h1 className="monthly-title"> {t('monthlyGraph')}</h1>
       <div className="date-picker-container">
         <div className="date-picker-wrapper">
           <DatePicker
@@ -142,38 +143,39 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId }) => {
         </div>
       </div>
 
-      {Object.keys(dataByMode).map((mode) => {
-        const filteredData = filterDataByDate(dataByMode[mode]);
+      {Object.keys(dataByMode)
+        .filter(mode => !selectedMode || mode === selectedMode)
+        .map((mode) => {
+          const filteredData = filterDataByDate(dataByMode[mode]);
 
-        return (
-          <div key={mode} className="graph-container">
-            {filteredData.months.length > 0 ? (
-              <Bar
-                data={createChartData(
-                  filteredData.months,
-                  filteredData.commissionPercentages,
-                  filteredData.omissionPercentages
-                )}
-                options={{
-                  responsive: true,
-                  scales: {
-                    y: {
-                      beginAtZero: true,
-                      ticks: { callback: (value) => `${value}%` },
-                      title: { display: true, text: '%' }
-                    }
-                  },
-                }}
-              />
-            ) : (
-              <p>{t('noDataForMonth')}</p>
-            )}
-          </div>
-        );
-      })}
+          return (
+            <div key={mode} className="graph-container">
+              {filteredData.months.length > 0 ? (
+                <Bar
+                  data={createChartData(
+                    filteredData.months,
+                    filteredData.commissionPercentages,
+                    filteredData.omissionPercentages
+                  )}
+                  options={{
+                    responsive: true,
+                    scales: {
+                      y: {
+                        beginAtZero: true,
+                        ticks: { callback: (value) => `${value}%` },
+                        title: { display: true, text: '%' }
+                      }
+                    },
+                  }}
+                />
+              ) : (
+                <p>{t('noDataForMonth')}</p>
+              )}
+            </div>
+          );
+        })}
     </div>
   );
+};
 
-      };
-
-      export default MonthlyErrorGraph;
+export default MonthlyErrorGraph;
