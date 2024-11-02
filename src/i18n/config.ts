@@ -140,10 +140,14 @@ i18n
           endDailyDate: 'End date',
           monthlyGraph: "Monthly graph",
           dailyGraph: 'Daily graph',
+          addDoctor: "Add doctor",
+          seeDoctors:"See doctors",
         },
       },
       pl: {
         translation: {
+          seeDoctors:"Lista lekarzy",
+          addDoctor: "Dodaj lekarza",
           dailyGraph: 'Wykres dzienny',
           monthlyGraph: "Wykres miesięczny",
           startDailyDate: 'Data początkowa',
