@@ -204,7 +204,7 @@ function PatientProfilePage() {
 
         {activeButton === 'stats' && (
           <div className="stats-dropdown-container">
-            <label className="patient-small-text-button" style={{ color: '#2A470C' }}>
+            <label className="label-text" style={{ color: '#2A470C', fontSize: '2vh', fontFamily: 'Karla', fontWeight: 'lighter' }}>
               {' '}
               {t('test_mode')}:
               <select
@@ -229,8 +229,8 @@ function PatientProfilePage() {
       <div className="patient-profile-second-column">
         <div className="big-space"></div>
         {activeButton === 'result' && <TestsList tests={summedErrors} />}
-        {activeButton === 'stats' && <MonthlyErrorGraph userId = {mobileId} selectedMode={selectedOption}/>}
-        {activeButton === 'stats' && <DailyErrorGraph userId= {mobileId} selectedMode={selectedOption}/>}
+        {activeButton === 'stats' && <MonthlyErrorGraph userId={mobileId} selectedMode={selectedOption} age={Number(age)} gender={gender as 'male' | 'female'} />}
+        {activeButton === 'stats' && <DailyErrorGraph userId= {mobileId} selectedMode={selectedOption} age={Number(age)} gender={gender as 'male' | 'female'}/>}
 
         {activeButton === 'info' && (
           <div className="patient-info-input-container">
