@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import useResponsive from '../ui-components/useResponsive';
 import { useNavigate } from 'react-router-dom';
 import './SignupPage.css';
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { auth } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { addDoctor } from '../services/dbService';
+import SaveIcon from '@mui/icons-material/Save';
 
 function SignupPage() {
   const { t } = useTranslation();
@@ -65,9 +66,9 @@ function SignupPage() {
 
   return (
     <div className="signup-container">
-      {laptop && <h1 className="signup-title-laptop">{t('signup_page')}</h1>}
-      {mobile && <h1 className="signup-title-mobile">{t('signup_page')}</h1>}
-      {tablet && <h1 className="signup-title-tablet">{t('signup_page')}</h1>}
+      {laptop && <h1 className="signup-title-laptop">{t('addDoctor')}</h1>}
+      {mobile && <h1 className="signup-title-mobile">{t('addDoctor')}</h1>}
+      {tablet && <h1 className="signup-title-tablet">{t('addDoctor')}</h1>}
       <form onSubmit={signUp} className="signup-form">
       <div className="signup-input-container">
         <label className="signup_label"> {t('username')}:</label>
@@ -129,16 +130,18 @@ function SignupPage() {
         {error && <p style={{ color: 'red' }}>{error}</p>}
 
       <div className="signup-button-container">
-        <button className="signup-button">
-          <text className="signup-text-button">{t("sign_up")}</text>
-        </button>
+          <Button
+            type="submit"
+            variant="contained"
+            className="save-patient-button"
+            style={{ backgroundColor: '#2a470c' }}
+            startIcon={<SaveIcon />}
+          >
+            {t('add')}
+          </Button>
       </div>
       </form>
-      <div className="signup-button-container">
-        <button className="signin-button" onClick={goToLogin}>
-          <text className="signup-small-text-button">{t("message_signup")}</text>
-        </button>
-      </div>
+
     </div>
   );
 }

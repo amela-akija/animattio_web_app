@@ -28,6 +28,7 @@ function App() {
         <Route path="/user-account" element={<MainUserPage />} />
         <Route path="/add-patient" element={<AddPatientPage />} />
         <Route path="/see-patients" element={<SeePatientsPage />} />
+        <Route path="/doctor-profile" element={<DoctorProfilePage />} />
         <Route path="/doctor-profile/:username" element={<DoctorProfilePage />} />
         <Route path="/patient-profile/:username" element={<PatientProfilePage />} />
         <Route path="/test-results/:testId" element={<ResultsPage />} />

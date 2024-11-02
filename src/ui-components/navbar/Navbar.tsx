@@ -19,10 +19,18 @@ const Navbar = () => {
     setActiveTab('/add-patient');
     navigate('/add-patient');
   };
+  const handleAddDoctor = () => {
+    setActiveTab('/see-doctors');
+    navigate('/signup');
+  };
 
   const handleSeePatients = () => {
     setActiveTab('/see-patients');
     navigate('/see-patients');
+  };
+  const handleSeeDoctors = () => {
+    setActiveTab('/signup');
+    navigate('/see-doctors');
   };
 
   const handleUserProfile = () => {
@@ -30,7 +38,7 @@ const Navbar = () => {
     navigate('/doctor-profile');
   };
 
-  const isAuthPage = activeTab === '/' || activeTab === '/signup' || activeTab === '/login';
+  const isAuthPage = activeTab === '/' || activeTab === '/login';
 
   const isTestResultsPage = location.pathname.startsWith('/test-results/');
 
@@ -59,7 +67,21 @@ const Navbar = () => {
                 {t('userProfile')}
               </button>
             </>
-          ) : activeTab === '/doctor-profile' ? (
+          ) : activeTab === '/signup' ? (
+            <>
+              <button className="navbar-tab" onClick={handleSeeDoctors}>
+                {t('seeDoctors')}
+              </button>
+
+            </>
+          ): activeTab === '/see-doctors' ? (
+              <>
+                <button className="navbar-tab" onClick={handleAddDoctor}>
+                  {t('addDoctor')}
+                </button>
+              </>
+
+            ) : activeTab === '/doctor-profile' ? (
             <>
               <button className="navbar-tab" onClick={handleAddPatient}>
                 {t('addPatient')}

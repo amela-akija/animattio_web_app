@@ -71,6 +71,8 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode })
     fetchData();
   }, [userId]);
 
+  
+
   const filterDataByDate = (modeData: ModeData) => {
     const formattedStart = formatDate(startDate);
     const formattedEnd = formatDate(endDate);
