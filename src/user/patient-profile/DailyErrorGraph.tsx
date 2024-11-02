@@ -11,6 +11,8 @@ import { pl as polishLocale } from 'date-fns/locale';
 interface ErrorsGraphProps {
   userId: string;
   selectedMode?: string;
+  age: number;
+  gender: 'male' | 'female';
 }
 
 interface ErrorEntry {
@@ -37,11 +39,36 @@ interface ModeData {
   omissionPercentages: number[];
 }
 
-const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode }) => {
+const normativeDataCommission = {
+  '9-11': { female: { mean: 58.2 }, male: { mean: 68.3 } },
+  '12-13': { female: { mean: 52.3 }, male: { mean: 66.3 } },
+  '14-15': { female: { mean: 45.1 }, male: { mean: 59.9 } },
+  '16-18': { female: { mean: 40.5 }, male: { mean: 53.6 } },
+};
+
+const normativeDataOmission = {
+  '9-11': { female: { mean: 6.7 }, male: { mean: 6.5 } },
+  '12-13': { female: { mean: 5.4 }, male: { mean: 3.5 } },
+  '14-15': { female: { mean: 2.3 }, male: { mean: 3.0 } },
+  '16-18': { female: { mean: 2.1 }, male: { mean: 2.9 } },
+};
+
+const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age, gender }) => {
   const { t } = useTranslation();
   const [dataByMode, setDataByMode] = useState<Record<string, ModeData>>({});
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+
+  const getNormativeData = () => {
+    const ageGroup = age < 12 ? '9-11' : age < 14 ? '12-13' : age < 16 ? '14-15' : '16-18';
+
+    const normativeCommission = normativeDataCommission[ageGroup][gender].mean;
+    const normativeOmission = normativeDataOmission[ageGroup][gender].mean;
+
+    return { normativeCommission, normativeOmission };
+  };
+
+  const { normativeCommission, normativeOmission } = getNormativeData();
 
   const formatDate = (date: Date | null) => {
     if (!date) return null;
@@ -118,7 +145,9 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode }) =
   const createChartData = (
     dates: string[],
     commissionPercentages: number[],
-    omissionPercentages: number[]
+    omissionPercentages: number[],
+    normativeCommission: number,
+    normativeOmission: number
   ) => ({
     labels: dates,
     datasets: [
@@ -134,6 +163,20 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode }) =
         data: omissionPercentages,
         backgroundColor: 'rgba(9,62,2,0.6)',
         borderColor: 'rgba(17,81,10,0.6)',
+        borderWidth: 1,
+      },
+      {
+        label: t('Normative Commission'),
+        data: new Array(dates.length).fill(normativeCommission),
+        backgroundColor: 'rgba(241,175,53,0.98)',
+        borderColor: 'rgba(241,175,53,0.98)',
+        borderWidth: 1,
+      },
+      {
+        label: t('Normative Omission'),
+        data: new Array(dates.length).fill(normativeOmission),
+        backgroundColor: 'rgba(74,151,54,0.6)',
+        borderColor: 'rgba(74,151,54,0.6)',
         borderWidth: 1,
       },
     ],
@@ -171,7 +214,9 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode }) =
                 data={createChartData(
                   filteredData.dates,
                   filteredData.commissionPercentages,
-                  filteredData.omissionPercentages
+                  filteredData.omissionPercentages,
+                  normativeCommission,
+                  normativeOmission
                 )}
                 options={{
                   responsive: true,

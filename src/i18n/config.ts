@@ -142,10 +142,14 @@ i18n
           dailyGraph: 'Daily graph',
           addDoctor: "Add doctor",
           seeDoctors:"See doctors",
+          normativeCommission: "Normative commission error",
+          normativeOmission: "Normative omission error",
         },
       },
       pl: {
         translation: {
+          normativeCommission: "Normatywny błąd fałszywego rozpoznania",
+          normativeOmission: "Normatywny błąd pomienięcia",
           seeDoctors:"Lista lekarzy",
           addDoctor: "Dodaj lekarza",
           dailyGraph: 'Wykres dzienny',
