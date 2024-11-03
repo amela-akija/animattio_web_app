@@ -59,8 +59,6 @@ const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
       try {
         const response = await axios.get(`http://localhost:8080/${testId}/omissions`);
         const totalOmissionErrors = response.data.totalOmissionErrors;
-        console.log("omission", totalOmissionErrors);
-        console.log("stimuli", totalStimuliCount);
         const percentageOmission = (totalOmissionErrors / totalStimuliCount) * 100;
         setOmissionData({ percentage: percentageOmission });
       } catch (error) {
@@ -159,28 +157,18 @@ const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
       const sdTopY = yAxis.getPixelForValue(meanValue + sdValue);
       const sdBottomY = yAxis.getPixelForValue(meanValue - sdValue);
 
-      ctx.beginPath();
-      ctx.moveTo(barX + barWidth / 2, sdTopY);
-      ctx.lineTo(barX + barWidth / 2, sdBottomY);
-      ctx.strokeStyle = 'rgb(244,219,102)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
+      ctx.fillStyle = 'rgba(244,219,102,0.2)';
+      ctx.fillRect(barX, sdTopY, barWidth, sdBottomY - sdTopY);
 
-      ctx.beginPath();
-      ctx.moveTo(barX + barWidth / 2 - 4, sdTopY);
-      ctx.lineTo(barX + barWidth / 2 + 4, sdTopY);
-      ctx.moveTo(barX + barWidth / 2 - 4, sdBottomY);
-      ctx.lineTo(barX + barWidth / 2 + 4, sdBottomY);
-      ctx.strokeStyle = 'rgba(230,199,50,0.9)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
+      // ctx.beginPath();
+      // ctx.arc(barX + barWidth / 2, yAxis.getPixelForValue(meanValue), 4, 0, 2 * Math.PI);
+      // ctx.fillStyle = 'rgba(9,62,2,0.8)';
+      // ctx.fill();
 
-      const errorBarMeanPlusSD = (meanValue + sdValue).toFixed(2);
-      const errorBarMeanMinusSD = (meanValue - sdValue).toFixed(2);
-
+      ctx.font = '10px Arial';
       ctx.fillStyle = 'rgba(230,199,50,0.9)';
-      ctx.fillText(`${errorBarMeanPlusSD}`, barX + barWidth / 2 + 10, sdTopY - 10);
-      ctx.fillText(`${errorBarMeanMinusSD}`, barX + barWidth / 2 + 10, sdBottomY + 15);
+      ctx.fillText(`+${(meanValue + sdValue).toFixed(2)}`, barX + barWidth / 2 + 15, sdTopY - 5);
+      ctx.fillText(`-${(meanValue - sdValue).toFixed(2)}`, barX + barWidth / 2 + 15, sdBottomY + 12);
     },
   };
 

@@ -58,6 +58,11 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, a
   const getNormativeData = () => {
     const ageGroup = age < 12 ? '9-11' : age < 14 ? '12-13' : age < 16 ? '14-15' : '16-18';
 
+    if (!normativeDataCommission[ageGroup] || !normativeDataOmission[ageGroup]) {
+      console.error("Normative data not found for age group:", ageGroup);
+      return { normativeCommission: 0, normativeOmission: 0 };
+    }
+
     const normativeCommission = normativeDataCommission[ageGroup][gender].mean;
     const normativeOmission = normativeDataOmission[ageGroup][gender].mean;
 

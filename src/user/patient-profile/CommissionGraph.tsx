@@ -73,8 +73,6 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
         const totalCommissionErrors = response.data.totalCommissionErrors;
         const percentageCommission = (totalCommissionErrors / totalStimuliCount) * 100;
         setCommissionData({ percentage: percentageCommission });
-        console.log("comission", totalCommissionErrors);
-        console.log("stimuli", totalStimuliCount);
       } catch (error) {
         console.error('Error fetching commission data:', error);
       }
@@ -118,7 +116,6 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
   };
 
   const normativeData = getNormativeData();
-
   const mean = normativeData.mean ?? 0;
   const sd = normativeData.sd ?? 0;
 
@@ -138,7 +135,12 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       y: {
         title: {
           display: true,
-          text: t('errorCommission'),
+          text: t('errorOmission'),
+        },
+        min: 0,
+        max: Math.max(mean + sd, 100),
+        ticks: {
+          stepSize: 10,
         },
       },
     },
@@ -153,6 +155,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       },
     },
   };
+
 
   const errorBarPlugin = {
     id: 'errorBarPlugin',
@@ -171,12 +174,13 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       const sdTopY = yAxis.getPixelForValue(meanValue + sdValue);
       const sdBottomY = yAxis.getPixelForValue(meanValue - sdValue);
 
-      ctx.beginPath();
-      ctx.moveTo(barX + barWidth / 2, sdTopY);
-      ctx.lineTo(barX + barWidth / 2, sdBottomY);
-      ctx.strokeStyle = 'rgb(244,219,102)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
+      ctx.fillStyle = 'rgba(244,219,102,0.2)';
+      ctx.fillRect(barX, sdBottomY, barWidth, sdTopY - sdBottomY);
+
+      // ctx.beginPath();
+      // ctx.arc(barX + barWidth / 2, yAxis.getPixelForValue(meanValue), 4, 0, 2 * Math.PI);
+      // ctx.fillStyle = 'rgb(213,4,94)';
+      // ctx.fill();
 
       ctx.beginPath();
       ctx.moveTo(barX + barWidth / 2 - 4, sdTopY);
@@ -187,12 +191,9 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       ctx.lineWidth = 2;
       ctx.stroke();
 
-      const errorBarMeanPlusSD = (meanValue + sdValue).toFixed(2);
-      const errorBarMeanMinusSD = (meanValue - sdValue).toFixed(2);
-
       ctx.fillStyle = 'rgba(230,199,50,0.9)';
-      ctx.fillText(`${errorBarMeanPlusSD}`, barX + barWidth / 2 + 10, sdTopY - 10);
-      ctx.fillText(`${errorBarMeanMinusSD}`, barX + barWidth / 2 + 10, sdBottomY + 15);
+      ctx.fillText(`+${(meanValue + sdValue).toFixed(2)}`, barX + barWidth / 2 + 10, sdTopY - 10);
+      ctx.fillText(`-${(meanValue - sdValue).toFixed(2)}`, barX + barWidth / 2 + 10, sdBottomY + 15);
     },
   };
 
