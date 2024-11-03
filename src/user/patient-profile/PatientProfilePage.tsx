@@ -11,43 +11,8 @@ import BorderColorIcon from '@mui/icons-material/BorderColor';
 import TestsList from '../../ui-components/test/TestListComponent';
 import MonthlyErrorGraph from './MonthlyErrorGraph';
 import DailyErrorGraph from './DailyErrorGraph';
+import Legend from '../../ui-components/legend/Legend';
 
-// const StartDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
-//   ({ value, onClick }, ref) => {
-//     const { t } = useTranslation();
-//
-//     return (
-//       <div className="arrow-wrapper" onClick={onClick}>
-//         <input
-//           ref={ref}
-//           value={value}
-//           readOnly
-//           className="calendar-input"
-//           placeholder={t("start_date")}
-//         />
-//         <div className="arrow">&#9662;</div>
-//       </div>
-//     );
-//   }
-// );
-// const EndDateInput = forwardRef<HTMLInputElement, { value: string; onClick: () => void }>(
-//   ({ value, onClick }, ref) => {
-//     const { t } = useTranslation();
-//
-//     return (
-//       <div className="arrow-wrapper" onClick={onClick}>
-//         <input
-//           ref={ref}
-//           value={value}
-//           readOnly
-//           className="calendar-input"
-//           placeholder={t("end_date")}
-//         />
-//         <div className="arrow">&#9662;</div>
-//       </div>
-//     );
-//   }
-// );
 
 function PatientProfilePage() {
   const { t } = useTranslation();
@@ -77,6 +42,13 @@ function PatientProfilePage() {
   const [documentId, setDocumentId] = useState('');
   const [patientUsername, setPatientUsername] = useState('');
   const [mobileId, setMobileId] = useState('');
+
+  const legendItems = [
+    { color: 'rgba(17,81,10,0.6)', label: t('Omission') },
+    { color: 'rgba(230,199,50,0.9)', label: t('Commission') },
+    { color: 'rgba(243,165,9,0.98)', label: t('normativeCommission') },
+    { color: 'rgba(102,179,90,0.6)', label: t('normativeOmission') }
+  ];
 
 
   useEffect(() => {
@@ -201,7 +173,6 @@ function PatientProfilePage() {
             <text className="patient-text-button">{t('stats')}:</text>
           </button>
         </div>
-
         {activeButton === 'stats' && (
           <div className="stats-dropdown-container">
             <label className="label-text" style={{ color: '#2A470C', fontSize: '2vh', fontFamily: 'Karla', fontWeight: 'lighter' }}>
@@ -220,6 +191,9 @@ function PatientProfilePage() {
               </select>
             </label>
           </div>
+        )}
+        {activeButton==='stats' && (
+          <Legend items={legendItems} />
         )}
       </div>
 
