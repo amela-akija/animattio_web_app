@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './PatientsListPage.css';
-import PatientsList from '../../ui-components/patient/PatientsListComponent'; // Uncomment to use PatientsList
+import PatientsList from '../../ui-components/patient/PatientsListComponent';
 import { useTranslation } from 'react-i18next';
+import apiClient from '../../services/apiClient';
 
 interface Patient {
   patientUsername: string;
@@ -26,18 +27,19 @@ const SeePatientsPage: React.FC = () => {
       url = `http://localhost:8080/patients/get-patients-by-age?doctorId=${doctorId}&age=${searchValue}`;
     } else if (searchType === 'gender' && searchValue) {
       url = `http://localhost:8080/patients/get-patients-by-gender?doctorId=${doctorId}&gender=${searchValue}`;
-    }else if (searchType === 'username' && searchValue) {
+    } else if (searchType === 'username' && searchValue) {
       url = `http://localhost:8080/patients/get-patients-by-username?doctorId=${doctorId}&username=${searchValue}`;
     } else if (searchType === 'type' && searchValue) {
       url = `http://localhost:8080/patients/get-patients-by-type?doctorId=${doctorId}&type=${searchValue}`;
     }
 
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
+      const response = await apiClient.get(url);
+
+      if (response.status !== 200) {
         throw new Error('Network response was not ok');
       }
-      const data: Patient[] = await response.json();
+      const data: Patient[] = response.data;
       setPatients(data);
     } catch (error) {
       console.error('Error fetching patients:', error);
@@ -45,6 +47,7 @@ const SeePatientsPage: React.FC = () => {
       setLoading(false);
     }
   };
+
 
   useEffect(() => {
     fetchPatients();

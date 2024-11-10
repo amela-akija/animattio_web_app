@@ -28,6 +28,7 @@ function LoginPage() {
       const user = doctorCredentials.user;
 
       const idToken = await user.getIdToken();
+      localStorage.setItem('token', idToken)
       console.log('token', idToken);
       const doctorRef = doc(firestore, 'doctors', user.uid);
       const doctorSnapshot = await getDoc(doctorRef);
@@ -41,27 +42,29 @@ function LoginPage() {
           if (doctorUsername) {
             localStorage.setItem('doctorUsername', doctorUsername);
             console.log('Doctor Username:', doctorUsername);
+              navigate('/see-patients');
+
           } else {
             console.error('Username is undefined. Check if it is stored in Firestore.');
           }
 
           console.log(t('doctor_login'));
 
-          const response = await fetch('http://localhost:8080/signin', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${idToken}`,
-            },
-            body: JSON.stringify({ uid: user.uid }),
-          });
-
-          if (response.ok) {
-            navigate('/see-patients');
-          } else {
-            console.log('Failed to authenticate with backend');
-            alert(t('backend_auth_failed'));
-          }
+          // const response = await fetch('http://localhost:8080/signin', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //     'Authorization': `Bearer ${idToken}`,
+          //   },
+          //   body: JSON.stringify({ uid: user.uid }),
+          // });
+          //
+          // if (response.ok) {
+          //   navigate('/see-patients');
+          // } else {
+          //   console.log('Failed to authenticate with backend');
+          //   alert(t('backend_auth_failed'));
+          // }
         } else if(doctorData?.role === "admin"){
           const doctorUsername = doctorData.username;
           if (doctorUsername) {
@@ -73,21 +76,21 @@ function LoginPage() {
 
           console.log(t('doctor_login'));
 
-          const response = await fetch('http://localhost:8080/signin', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${idToken}`,
-            },
-            body: JSON.stringify({ uid: user.uid }),
-          });
-
-          if (response.ok) {
-            navigate('/see-doctors');
-          } else {
-            console.log('Failed to authenticate with backend');
-            alert(t('backend_auth_failed'));
-          }
+          // const response = await fetch('http://localhost:8080/signin', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json',
+          //     'Authorization': `Bearer ${idToken}`,
+          //   },
+          //   body: JSON.stringify({ uid: user.uid }),
+          // });
+          //
+          // if (response.ok) {
+          //   navigate('/see-doctors');
+          // } else {
+          //   console.log('Failed to authenticate with backend');
+          //   alert(t('backend_auth_failed'));
+          // }
         }
         else {
           console.log('Access denied');
