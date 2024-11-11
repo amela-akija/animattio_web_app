@@ -70,6 +70,7 @@ function LoginPage() {
           if (doctorUsername) {
             localStorage.setItem('doctorUsername', doctorUsername);
             console.log('Doctor Username:', doctorUsername);
+            navigate('/see-doctors');
           } else {
             console.error('Username is undefined. Check if it is stored in Firestore.');
           }

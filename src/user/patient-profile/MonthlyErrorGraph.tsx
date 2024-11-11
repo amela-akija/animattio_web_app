@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
 import './MonthlyErrorGraph.css';
+import apiClient from '../../services/apiClient';
 
 interface ErrorsGraphProps {
   userId: string;
@@ -81,7 +82,7 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, a
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ErrorEntry[]>(`http://localhost:8080/aggregate-errors-monthly/${userId}`);
+        const response = await apiClient.get<ErrorEntry[]>(`/tests/aggregate-errors-monthly/${userId}`);
         const rawData = response.data;
 
         const groupedData = rawData.reduce((acc: Record<string, ModeData>, entry: ErrorEntry) => {

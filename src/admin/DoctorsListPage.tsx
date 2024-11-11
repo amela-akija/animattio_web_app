@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './DoctorListPage.css';
 import { useTranslation } from 'react-i18next';
 import DoctorsList from '../ui-components/doctor/DoctorListComponent';
+import apiClient from '../services/apiClient';
 
 interface Doctor {
   username: string;
@@ -15,14 +16,13 @@ const SeeDoctorsPage: React.FC = () => {
 
   const fetchDoctors = async () => {
     setLoading(true);
-    const url = `http://localhost:8080/get-doctor-list`;
 
     try {
-      const response = await fetch(url);
-      if (!response.ok) {
+      const response = await apiClient.get('/doctors/get-doctor-list');
+      if (response.status !== 200) {
         throw new Error('Network response was not ok');
       }
-      const data: Doctor[] = await response.json();
+      const data: Doctor[] = await response.data;
       setDoctors(data);
     } catch (error) {
       console.error('Error fetching doctors:', error);

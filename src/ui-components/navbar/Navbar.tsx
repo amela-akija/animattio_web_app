@@ -21,7 +21,7 @@ const Navbar = () => {
   };
   const handleAddDoctor = () => {
     setActiveTab('/see-doctors');
-    navigate('/signup');
+    navigate('/add-doctor');
   };
 
   const handleSeePatients = () => {
@@ -29,7 +29,7 @@ const Navbar = () => {
     navigate('/see-patients');
   };
   const handleSeeDoctors = () => {
-    setActiveTab('/signup');
+    setActiveTab('/add-doctor');
     navigate('/see-doctors');
   };
 
@@ -67,7 +67,7 @@ const Navbar = () => {
                 {t('userProfile')}
               </button>
             </>
-          ) : activeTab === '/signup' ? (
+          ) : activeTab === '/add-doctor' ? (
             <>
               <button className="navbar-tab" onClick={handleSeeDoctors}>
                 {t('seeDoctors')}

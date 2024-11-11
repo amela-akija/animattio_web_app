@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
 import './DailyErrorGraph.css';
 import { parse, format } from 'date-fns';
 import { pl as polishLocale } from 'date-fns/locale';
+import apiClient from '../../services/apiClient';
 
 interface ErrorsGraphProps {
   userId: string;
@@ -78,7 +78,7 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<ErrorEntry[]>(`http://localhost:8080/aggregate-errors-daily/${userId}`);
+        const response = await apiClient.get<ErrorEntry[]>(`/tests/aggregate-errors-daily/${userId}`);
         const rawData = response.data;
 
         const processedData = rawData.map<ProcessedErrorEntry>(entry => {

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, TooltipItem } from 'chart.js';
 import PropTypes from 'prop-types';
 import { t } from 'i18next';
+import apiClient from '../../services/apiClient';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
@@ -42,7 +42,7 @@ const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
   useEffect(() => {
     const fetchTotalStimuliCount = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/${testId}/stimuli-count`);
+        const response = await apiClient.get(`/tests/${testId}/stimuli-count`);
         setTotalStimuliCount(response.data);
       } catch (error) {
         console.error('Error fetching total stimuli count:', error);
@@ -57,10 +57,11 @@ const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
       if (totalStimuliCount === null) return;
 
       try {
-        const response = await axios.get(`http://localhost:8080/${testId}/omissions`);
+        const response = await apiClient.get(`/tests/${testId}/omissions`);
         const totalOmissionErrors = response.data.totalOmissionErrors;
         const percentageOmission = (totalOmissionErrors / totalStimuliCount) * 100;
         setOmissionData({ percentage: percentageOmission });
+        console.log("omissions", percentageOmission)
       } catch (error) {
         console.error('Error fetching omission data:', error);
       }
@@ -73,10 +74,10 @@ const OmissionGraph: React.FC<OmissionGraphProps> = ({ testId, patientId }) => {
     const fetchPatientInfo = async () => {
       try {
         const [ageResponse, genderResponse] = await Promise.all([
-          axios.get(`http://localhost:8080/patients/${patientId}/age`),
-          axios.get(`http://localhost:8080/patients/${patientId}/gender`),
+          apiClient.get(`/patients/${patientId}/age`),
+          apiClient.get(`/patients/${patientId}/gender`),
         ]);
-        setPatientInfo({ age: ageResponse.data, gender: genderResponse.data as Gender });
+        setPatientInfo({ age: ageResponse.data, gender: genderResponse.data });
       } catch (error) {
         console.error('Error fetching patient info:', error);
       } finally {

@@ -1,9 +1,8 @@
-import React, { forwardRef } from 'react';
+import React from 'react';
 import './PatientProfilePage.css';
 import useResponsive from '../../ui-components/useResponsive';
 import { Button, TextField } from '@mui/material';
 import { useState, useEffect } from 'react';
-import axios from 'axios';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
@@ -12,6 +11,8 @@ import TestsList from '../../ui-components/test/TestListComponent';
 import MonthlyErrorGraph from './MonthlyErrorGraph';
 import DailyErrorGraph from './DailyErrorGraph';
 import Legend from '../../ui-components/legend/Legend';
+import apiClient from '../../services/apiClient';
+import { toast } from 'react-toastify';
 
 
 function PatientProfilePage() {
@@ -59,19 +60,21 @@ function PatientProfilePage() {
       console.log("clicked_user", username);
       const fetchMobileId = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/patients/get-patient-id', {
+          const response = await apiClient.get('/patients/get-patient-id', {
             params: { username },
           });
           if (response.data) {
             const fetchedMobileId = response.data.documentId;
             console.log("Fetched mobileId from API:", fetchedMobileId);
-
             setMobileId(fetchedMobileId);
           } else {
             console.error('No mobile ID returned in the response');
+            toast.error(t('noPermission'))
           }
         } catch (error) {
           console.error('Error fetching patient mobile ID:', error);
+          toast.error(t('noPermission'))
+
         }
       };
 
@@ -81,14 +84,15 @@ function PatientProfilePage() {
   useEffect(() => {
     const fetchPatientData = async () => {
       try {
-        const responseGender = await axios.get(`http://localhost:8080/patients/${username}/gender`);
-        const responseAge = await axios.get(`http://localhost:8080/patients/${username}/age`);
-        const responseType = await axios.get(`http://localhost:8080/patients/${username}/type`);
+        const responseGender = await apiClient.get(`/patients/${username}/gender`);
+        const responseAge = await apiClient.get(`/patients/${username}/age`);
+        const responseType = await apiClient.get(`/patients/${username}/type`);
         setGender(responseGender.data);
         setAge(responseAge.data);
         setType(responseType.data);
       } catch (error) {
         console.error('Error fetching patient data:', error);
+        toast.error(t('noPermission'))
       }
     };
     if (username) {
@@ -100,6 +104,7 @@ function PatientProfilePage() {
   ) => {
     setter(event.target.value);
   };
+  // Inside handleSaveChanges
   const handleSaveChanges = async () => {
     const updatedPatient = {
       patientUsername,
@@ -108,9 +113,9 @@ function PatientProfilePage() {
       type,
     };
     try {
-      console.log("documnetId",documentId);
-      console.log(updatedPatient)
-      await axios.put(`http://localhost:8080/patients/update-patient?documentId=${documentId}`, updatedPatient);
+      console.log("documnetId", documentId);
+      console.log(updatedPatient);
+      await apiClient.put(`/patients/update-patient?documentId=${documentId}`, updatedPatient);
       setDocumentId(patientUsername);
       alert(t('patient_update_success'));
     } catch (error) {
@@ -120,15 +125,17 @@ function PatientProfilePage() {
   };
 
 
+
   useEffect(() => {
     const fetchSummedErrors = async () => {
       if (mobileId) {
         try {
-          const response = await axios.get(`http://localhost:8080/summed-errors/${mobileId}`);
+          const response = await apiClient.get(`/tests/summed-errors/${mobileId}`);
           console.log("Fetched summed errors:", response.data);
           setSummedErrors(response.data);
         } catch (error) {
           console.error('Error fetching summed errors:', error);
+          toast.error(t('noPermission'))
         }
       }
     };
