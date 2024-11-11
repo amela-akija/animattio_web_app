@@ -7,6 +7,7 @@ import SaveIcon from '@mui/icons-material/Save';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import apiClient from '../../services/apiClient';
 
 function AddPatientPage() {
   const { t } = useTranslation();
@@ -54,24 +55,24 @@ function AddPatientPage() {
     };
 
     try {
-      const response = await fetch('http://localhost:8080/patients/create-patient', {
-        method: 'POST',
+      const response = await apiClient.post('/patients/create-patient', patientData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify(patientData)
+        }
       });
 
-      const textResponse = await response.text();
 
-      if (response.ok) {
+      if (response.status >= 200 && response.status < 300) {
         addPatientNotification();
-        console.log('Patient created successfully:', JSON.parse(textResponse));
+        console.log('Patient created successfully');
+        setPatientUsername('');
+        setGender('');
+        setAge('');
+        setChecked(false);
       } else {
         toast.error(t('errorAddPatientMessage'));
         console.error('Error creating patient:', response.statusText);
-        console.error('Server response:', textResponse);
       }
     } catch (error) {
       console.error('Error during fetch:', error);

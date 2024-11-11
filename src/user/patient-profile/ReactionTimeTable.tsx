@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ReactionTimeTable.css';
 import { t } from 'i18next';
+import apiClient from '../../services/apiClient';
 
 interface ReactionTimeTableProps {
   testId: string;
@@ -37,7 +38,7 @@ const ReactionTimeTable: React.FC<ReactionTimeTableProps> = ({ testId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<{ [key in Interval]: number[] }>(`http://localhost:8080/${testId}/processed-games`);
+        const response = await apiClient.get<{ [key in Interval]: number[] }>(`/tests/${testId}/processed-games`);
         setGamesData(response.data);
 
         const stats = Object.keys(response.data).reduce((acc, interval) => {

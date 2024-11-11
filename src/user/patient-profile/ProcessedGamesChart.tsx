@@ -12,6 +12,7 @@ import {
   ReferenceArea
 } from 'recharts';
 import { t } from 'i18next';
+import apiClient from '../../services/apiClient';
 
 interface ProcessedGamesChartProps {
   testId: string;
@@ -31,7 +32,7 @@ const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get<{ [key: string]: number[] }>(`http://localhost:8080/${testId}/processed-games`);
+        const response = await apiClient.get<{ [key: string]: number[] }>(`/tests/${testId}/processed-games`);
         setGamesData(response.data);
 
         const initialActiveIntervals = Object.keys(response.data).reduce((acc, key) => {
@@ -45,6 +46,7 @@ const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => 
         console.error('Error fetching data:', error);
         setLoading(false);
       }
+
     };
 
     fetchData();
@@ -82,7 +84,7 @@ const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => 
         const { stdDev } = intervalStats[interval];
         dataPoint[interval] = value;
         dataPoint[`error_${interval}`] = stdDev;
-        console.log(`Interval: ${interval}, Value: ${value}, StdDev: ${stdDev}`);
+        // console.log(`Interval: ${interval}, Value: ${value}, StdDev: ${stdDev}`);
       }
     });
     return dataPoint;
