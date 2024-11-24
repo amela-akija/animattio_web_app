@@ -65,6 +65,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/react-burger-menu": "^2.8.7",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
