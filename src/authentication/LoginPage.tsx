@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { auth, firestore } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 
 
@@ -49,22 +50,6 @@ function LoginPage() {
           }
 
           console.log(t('doctor_login'));
-
-          // const response = await fetch('http://localhost:8080/signin', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //     'Authorization': `Bearer ${idToken}`,
-          //   },
-          //   body: JSON.stringify({ uid: user.uid }),
-          // });
-          //
-          // if (response.ok) {
-          //   navigate('/see-patients');
-          // } else {
-          //   console.log('Failed to authenticate with backend');
-          //   alert(t('backend_auth_failed'));
-          // }
         } else if(doctorData?.role === "admin"){
           const doctorUsername = doctorData.username;
           if (doctorUsername) {
@@ -76,22 +61,6 @@ function LoginPage() {
           }
 
           console.log(t('doctor_login'));
-
-          // const response = await fetch('http://localhost:8080/signin', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json',
-          //     'Authorization': `Bearer ${idToken}`,
-          //   },
-          //   body: JSON.stringify({ uid: user.uid }),
-          // });
-          //
-          // if (response.ok) {
-          //   navigate('/see-doctors');
-          // } else {
-          //   console.log('Failed to authenticate with backend');
-          //   alert(t('backend_auth_failed'));
-          // }
         }
         else {
           console.log('Access denied');
@@ -103,6 +72,7 @@ function LoginPage() {
         alert(t('access_denied'));
       }
     } catch (error) {
+      toast.error(t('errorLogin'));
       console.error('Error:', error);
     }
   };

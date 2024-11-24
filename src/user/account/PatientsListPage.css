@@ -9,29 +9,50 @@
 .searchContainer {
     display: flex;
     align-items: center;
-    gap: 10px;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 2%;
 }
+
+.ageRange {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.ageInput {
+    width: 25%;
+    margin-top: 8%;
+    padding: 2.5%;
+    font-size: 16px;
+    border-radius: 10px;
+    background-color: #FBFFEA;
+    color: #2a470c;
+    border: 1px solid #2a470c;
+}
+
 
 .patients-container {
     width: 70%;
-    margin: auto;
+    margin-top: 20px;
 }
 
 .searchType {
-    margin-top: 5%;
-    width: fit-content;
-    font-size: 2.5vh;
-    border-radius: 5px;
+    width: 25%;
+    padding: 1%;
+    font-size: 2vh;
+    border-radius: 10px;
     background-color: #FFFBEE;
     color: #2a470c;
-
+    border: 1px solid #2a470c;
 }
 
 .searchInput {
-    margin-top: 5%;
-    flex: 1;
-    font-size: 2.5vh;
-    border-radius: 5px;
+    width: fit-content;
+    padding: 1%;
+    font-size: 1.5vh;
+    border-radius: 10px;
     background-color: #FBFFEA;
     color: #2a470c;
+    border: 1px solid #2a470c;
 }
