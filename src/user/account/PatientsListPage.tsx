@@ -3,6 +3,7 @@ import './PatientsListPage.css';
 import PatientsList from '../../ui-components/patient/PatientsListComponent';
 import { useTranslation } from 'react-i18next';
 import apiClient from '../../services/apiClient';
+import debounce from 'lodash.debounce';
 
 interface Patient {
   patientUsername: string;
@@ -20,7 +21,7 @@ const SeePatientsPage: React.FC = () => {
   const [ageRange, setAgeRange] = useState({ min: '', max: '' });
   const doctorId = localStorage.getItem('doctorUsername');
 
-  const fetchPatients = async () => {
+  const fetchPatients = async (searchValueOverride?: string) => {
     setLoading(true);
     let url = `http://localhost:8080/patients/get-all-patients?doctorId=${doctorId}`;
 
@@ -28,8 +29,9 @@ const SeePatientsPage: React.FC = () => {
       url = `http://localhost:8080/patients/get-patients-by-age-range?doctorId=${doctorId}&minAge=${ageRange.min}&maxAge=${ageRange.max}`;
     } else if (searchType === 'gender' && searchValue) {
       url = `http://localhost:8080/patients/get-patients-by-gender?doctorId=${doctorId}&gender=${searchValue}`;
-    } else if (searchType === 'username' && searchValue) {
-      url = `http://localhost:8080/patients/get-patients-by-username?doctorId=${doctorId}&username=${searchValue}`;
+    } else if (searchType === 'username' && (searchValueOverride || searchValue)) {
+      const usernameToSearch = searchValueOverride || searchValue;
+      url = `http://localhost:8080/patients/get-patients-by-username?doctorId=${doctorId}&username=${usernameToSearch}`;
     } else if (searchType === 'type' && searchValue) {
       url = `http://localhost:8080/patients/get-patients-by-type?doctorId=${doctorId}&type=${searchValue}`;
     }
@@ -44,13 +46,26 @@ const SeePatientsPage: React.FC = () => {
       setPatients(data);
     } catch (error) {
       console.error('Error fetching patients:', error);
+      setPatients([]);
     } finally {
       setLoading(false);
     }
   };
 
+  const debouncedFetchPatients = debounce((value: string) => {
+    fetchPatients(value);
+  }, 300);
+
   useEffect(() => {
-    fetchPatients();
+    if (searchType === 'username' && searchValue) {
+      debouncedFetchPatients(searchValue);
+    } else {
+      fetchPatients();
+    }
+
+    return () => {
+      debouncedFetchPatients.cancel();
+    };
   }, [searchType, searchValue, ageRange]);
 
   return (
