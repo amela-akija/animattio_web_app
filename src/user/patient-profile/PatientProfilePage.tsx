@@ -117,10 +117,10 @@ function PatientProfilePage() {
       console.log(updatedPatient);
       await apiClient.put(`/patients/update-patient?documentId=${documentId}`, updatedPatient);
       setDocumentId(patientUsername);
-      alert(t('patient_update_success'));
+      toast.success(t('patient_update_success'));
     } catch (error) {
       console.error('Error updating patient:', error);
-      alert(t('patient_update_failure'));
+      toast.error(t('patient_update_failure'));
     }
   };
 
@@ -236,53 +236,62 @@ function PatientProfilePage() {
               <label htmlFor="gender" className="patient-input-label">
                 {t('gender')}:
               </label>
-              <TextField
+              <select
                 id="gender"
                 value={gender}
-                variant="standard"
-                name="gender"
-                onChange={handleInputChange(setGender)}
+                onChange={(e) => setGender(e.target.value)}
                 className="info-input"
-                InputProps={{
-                  disableUnderline: true
-                }}
-              />
+              >
+                <option value="" disabled>
+                  {t('selectGender')}
+                </option>
+                <option value="male">{t('male')}</option>
+                <option value="female">{t('female')}</option>
+              </select>
             </div>
+
             <div className="space"></div>
             <div className="patient-input-wrapper">
               <label htmlFor="type" className="patient-input-label">
                 {t('type')}:
               </label>
-              <TextField
+              <select
                 id="type"
-                variant="standard"
-                name="type"
-                onChange={handleInputChange(setType)}
                 value={type}
+                onChange={(e) => setType(e.target.value)}
                 className="info-input"
-                InputProps={{
-                  disableUnderline: true
-                }}
-              />
+              >
+                <option value="" disabled>
+                  {t('selectType')}
+                </option>
+                <option value="epilepsy">{t('epilepsy')}</option>
+                <option value="no epilepsy">{t('noEpilepsy')}</option>
+              </select>
             </div>
+
             <div className="space"></div>
 
             <div className="patient-input-wrapper">
               <label htmlFor="age" className="patient-input-label">
                 {t('age')}:
               </label>
-              <TextField
+              <select
                 id="age"
-                variant="standard"
-                name="age"
-                onChange={handleInputChange(setAge)}
                 value={age}
+                onChange={(e) => setAge(e.target.value)}
                 className="info-input"
-                InputProps={{
-                  disableUnderline: true
-                }}
-              />
+              >
+                <option value="" disabled>
+                  {t('selectAge')}
+                </option>
+                {Array.from({ length: 13 }, (_, i) => i + 6).map((ageOption) => (
+                  <option key={ageOption} value={ageOption}>
+                    {ageOption}
+                  </option>
+                ))}
+              </select>
             </div>
+
 
             <div className="button-container">
               <Button

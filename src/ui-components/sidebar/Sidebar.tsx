@@ -57,9 +57,7 @@ const Sidebar = () => {
             <li>
               <a href="/about">{t('about')}</a>
             </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
-            </li>
+
           </>
         );
       case '/login':
@@ -70,9 +68,6 @@ const Sidebar = () => {
             </Button>
             <li>
               <a href="/about">{t('about')}</a>
-            </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -92,9 +87,7 @@ const Sidebar = () => {
                 {t('log_out')}
               </a>
             </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
-            </li>
+
           </>
         );
       case '/doctor-profile':
@@ -112,9 +105,6 @@ const Sidebar = () => {
                 }}>
                 {t('log_out')}
               </a>
-            </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -135,9 +125,6 @@ const Sidebar = () => {
                 {t('log_out')}
               </a>
             </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
-            </li>
           </>
         );
       case '/add-patient':
@@ -155,9 +142,6 @@ const Sidebar = () => {
                 }}>
                 {t('log_out')}
               </a>
-            </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
@@ -177,9 +161,6 @@ const Sidebar = () => {
                 {t('log_out')}
               </a>
             </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
-            </li>
           </>
         );
       case '/patient-profile':
@@ -198,9 +179,6 @@ const Sidebar = () => {
                 {t('log_out')}
               </a>
             </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
-            </li>
           </>
         );
       default:
@@ -218,9 +196,6 @@ const Sidebar = () => {
                 }}>
                 {t('log_out')}
               </a>
-            </li>
-            <li>
-              <a href="/settings">{t('settings')}</a>
             </li>
           </>
         );
