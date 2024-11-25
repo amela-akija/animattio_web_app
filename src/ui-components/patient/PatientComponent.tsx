@@ -15,6 +15,7 @@ const PatientComponent: React.FC<Patients> = ({ patient }) => {
   const goToPatientProfile = (username: string) => {
     navigate(`/patient-profile/${username}`);
   };
+
   const displayType = () => {
     switch (patient.type) {
       case 'epilepsy':
@@ -26,23 +27,36 @@ const PatientComponent: React.FC<Patients> = ({ patient }) => {
     }
   };
 
+  const displayGender = () => {
+    switch (patient.gender) {
+      case 'male':
+        return t('male');
+      case 'female':
+        return t('female');
+      default:
+        return 'N/A';
+    }
+  };
 
   return (
     <div className="patient-container">
       <p className="patient-details">
-        <strong>{t("username")}:</strong> {patient.patientUsername}
+        <strong>{t('username')}:</strong> {patient.patientUsername}
       </p>
       <p className="patient-details">
-        <strong>{t("gender")}:</strong> {patient.gender}
+        <strong>{t('gender')}:</strong> {displayGender()}
       </p>
       <p className="patient-details">
-        <strong>{t("age")}:</strong> {patient.age}
+        <strong>{t('age')}:</strong> {patient.age}
       </p>
       <p className="patient-details">
-        <strong>{t("type")}:</strong> {patient.type}
+        <strong>{t('type')}:</strong> {displayType()}
       </p>
-      <button className="see-profile-button" onClick={() => goToPatientProfile(patient.patientUsername)}>
-        {t("see_patient_profile")}
+      <button
+        className="see-profile-button"
+        onClick={() => goToPatientProfile(patient.patientUsername)}
+      >
+        {t('see_patient_profile')}
       </button>
     </div>
   );
