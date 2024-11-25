@@ -168,7 +168,7 @@ const SeePatientsPage: React.FC = () => {
           >
             <option value="">{t('choose_type')}</option>
             <option value="epilepsy">{t('epilepsy')}</option>
-            <option value="non-epilepsy">{t('non_epilepsy')}</option>
+            <option value="no epilepsy">{t('noEpilepsy')}</option>
           </select>
         )}
       </div>
