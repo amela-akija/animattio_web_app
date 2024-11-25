@@ -157,11 +157,13 @@ i18n
           errorFetchingPatients: "An error occurred while fetching patients",
           unexpectedError: "An unexpected error occurred",
           selectAge: "Select age",
+          selectType: "Select type",
           errorRequiredFieldsMessage: "Please fill in all the required fields",
         },
       },
       pl: {
         translation: {
+          selectType: "Wybierz typ",
           errorRequiredFieldsMessage: "Proszę wypełnić wszystkie wymagane pola",
           selectAge: "Wybierz wiek",
           unexpectedError: "Wystąpił nieoczekiwany błąd",
