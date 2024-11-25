@@ -4,6 +4,8 @@ import PatientsList from '../../ui-components/patient/PatientsListComponent';
 import { useTranslation } from 'react-i18next';
 import apiClient from '../../services/apiClient';
 import debounce from 'lodash.debounce';
+import { toast } from 'react-toastify';
+import axios from 'axios';
 
 interface Patient {
   patientUsername: string;
@@ -25,8 +27,17 @@ const SeePatientsPage: React.FC = () => {
     setLoading(true);
     let url = `http://localhost:8080/patients/get-all-patients?doctorId=${doctorId}`;
 
-    if (searchType === 'age' && ageRange.min && ageRange.max) {
-      url = `http://localhost:8080/patients/get-patients-by-age-range?doctorId=${doctorId}&minAge=${ageRange.min}&maxAge=${ageRange.max}`;
+    if (searchType === 'age') {
+      const minAge = ageRange.min ? Number(ageRange.min) : 6;
+      const maxAge = ageRange.max ? Number(ageRange.max) : 18;
+
+      if (minAge > maxAge) {
+        toast.error(t('maxMin'));
+        setLoading(false);
+        return;
+      }
+
+      url = `http://localhost:8080/patients/get-patients-by-age?doctorId=${doctorId}&minAge=${minAge}&maxAge=${maxAge}`;
     } else if (searchType === 'gender' && searchValue) {
       url = `http://localhost:8080/patients/get-patients-by-gender?doctorId=${doctorId}&gender=${searchValue}`;
     } else if (searchType === 'username' && (searchValueOverride || searchValue)) {
@@ -40,13 +51,24 @@ const SeePatientsPage: React.FC = () => {
       const response = await apiClient.get(url);
 
       if (response.status !== 200) {
-        throw new Error('Network response was not ok');
+        throw new Error('Unexpected status code');
       }
+
       const data: Patient[] = response.data;
       setPatients(data);
-    } catch (error) {
-      console.error('Error fetching patients:', error);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response && error.response.status === 404) {
+          toast.error(t('noPatientsFound'));
+        } else {
+          toast.error(t('errorFetchingPatients'));
+        }
+      } else {
+        toast.error(t('unexpectedError'));
+        console.error('Unexpected error:', error);
+      }
       setPatients([]);
+      console.error('Error fetching patients:', error);
     } finally {
       setLoading(false);
     }
@@ -67,6 +89,18 @@ const SeePatientsPage: React.FC = () => {
       debouncedFetchPatients.cancel();
     };
   }, [searchType, searchValue, ageRange]);
+
+  const generateAgeOptions = () => {
+    const options = [];
+    for (let i = 6; i <= 18; i++) {
+      options.push(
+        <option key={i} value={i}>
+          {i}
+        </option>
+      );
+    }
+    return options;
+  };
 
   return (
     <div className="patients-list-container">
@@ -107,20 +141,22 @@ const SeePatientsPage: React.FC = () => {
 
         {searchType === 'age' && (
           <div className="ageRange">
-            <input
-              type="number"
+            <select
               className="ageInput"
-              placeholder={t('min_age')}
               value={ageRange.min}
               onChange={(e) => setAgeRange({ ...ageRange, min: e.target.value })}
-            />
-            <input
-              type="number"
+            >
+              <option value="">{t('min_age')}</option>
+              {generateAgeOptions()}
+            </select>
+            <select
               className="ageInput"
-              placeholder={t('max_age')}
               value={ageRange.max}
               onChange={(e) => setAgeRange({ ...ageRange, max: e.target.value })}
-            />
+            >
+              <option value="">{t('max_age')}</option>
+              {generateAgeOptions()}
+            </select>
           </div>
         )}
 
