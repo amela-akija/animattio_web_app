@@ -26,18 +26,34 @@ function AddPatientPage() {
     try {
       console.log(`Checking if patient exists: ${username}`);
       const response = await axios.get('http://localhost:8080/patients/patient-exists', {
-        params: { username }
+        params: { username },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
       });
       console.log(`Patient exists response: ${response.data.exists}`);
       return response.data.exists;
     } catch (error) {
-      console.error("Error checking patient existence:", error);
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error checking patient existence:", error);
+        if (error.response?.status === 403) {
+          toast.error(t('errorUnauthorizedMessage'));
+        }
+      } else {
+        console.error("Unexpected error:", error);
+      }
       return false;
     }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!patientUsername || !gender || !age) {
+      toast.error(t('errorRequiredFieldsMessage'));
+      return;
+    }
 
     const patientExists = await checkIfPatientExists(patientUsername);
     if (patientExists) {
@@ -58,10 +74,9 @@ function AddPatientPage() {
       const response = await apiClient.post('/patients/create-patient', patientData, {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
       });
-
 
       if (response.status >= 200 && response.status < 300) {
         addPatientNotification();
@@ -76,6 +91,7 @@ function AddPatientPage() {
       }
     } catch (error) {
       console.error('Error during fetch:', error);
+      toast.error(t('errorAddPatientMessage'));
     }
   };
 
@@ -121,16 +137,26 @@ function AddPatientPage() {
         </div>
 
         <div className="add-patient-input-container">
-          <label className="add_label">{t('age')}:</label>
-          <TextField
-            id="age"
-            variant="standard"
-            InputProps={{ disableUnderline: true }}
-            name="age"
-            className="add-patient-input"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
+          <FormControl variant="standard" fullWidth>
+            <InputLabel id="age-label">{t('age')}</InputLabel>
+            <Select
+              labelId="age-label"
+              id="age"
+              value={age}
+              onChange={(e) => setAge(e.target.value as string)}
+              className="add-patient-select"
+              disableUnderline
+            >
+              <MenuItem value="" disabled>
+                {t('selectAge')}
+              </MenuItem>
+              {Array.from({ length: 13 }, (_, i) => i + 6).map((ageOption) => (
+                <MenuItem key={ageOption} value={ageOption.toString()}>
+                  {ageOption}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </div>
 
         <label className="checkbox">

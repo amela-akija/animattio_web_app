@@ -156,10 +156,14 @@ i18n
           noPatientsFound: "No patients found",
           errorFetchingPatients: "An error occurred while fetching patients",
           unexpectedError: "An unexpected error occurred",
+          selectAge: "Select age",
+          errorRequiredFieldsMessage: "Please fill in all the required fields",
         },
       },
       pl: {
         translation: {
+          errorRequiredFieldsMessage: "Proszę wypełnić wszystkie wymagane pola",
+          selectAge: "Wybierz wiek",
           unexpectedError: "Wystąpił nieoczekiwany błąd",
           errorFetchingPatients: "Wystąpił błąd podczas pobierania pacjentów",
           noPatientsFound: "Nie znaleziono pacjentów w podanym zakresie",
