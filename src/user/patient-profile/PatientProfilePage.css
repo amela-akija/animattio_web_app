@@ -31,24 +31,36 @@
 }
 
 
+.patient-profile-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5%;
+}
+
 .patient-profile-first-column {
-    flex: 1 1 100%;
+    flex: 1 1 40%;
     order: 1;
 }
 
 .patient-profile-second-column {
-    flex: 1 1 100%;
+    flex: 1 1 60%;
     order: 2;
-
+    display: flex;
+    width: 100%;
+    max-width: 80%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
 }
 
-
-@media (min-width: 1025px) {
-    .patient-profile-first-column,
-    .patient-profile-second-column {
-        flex: 1 1 50%;
-    }
+.graph-container {
+    width: 100%;
+    margin: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 
 @media (min-width: 480px) and (max-width: 1024px) {
     .patient-profile-first-column,
