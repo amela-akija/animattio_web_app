@@ -208,11 +208,30 @@ function PatientProfilePage() {
       {/**/}
       {/**/}
       <div className="patient-profile-second-column">
-        <div className="big-space"></div>
-        {activeButton === 'result' && <TestsList tests={summedErrors} />}
-        {activeButton === 'stats' && <MonthlyErrorGraph userId={mobileId} selectedMode={selectedOption} age={Number(age)} gender={gender as 'male' | 'female'} />}
-        {activeButton === 'stats' && <DailyErrorGraph userId= {mobileId} selectedMode={selectedOption} age={Number(age)} gender={gender as 'male' | 'female'}/>}
-
+        <div className="patient-profile-second-column">
+          <div className="big-space"></div>
+          {activeButton === 'result' && <TestsList tests={summedErrors} />}
+          {activeButton === 'stats' && (
+            <div className="graph-container">
+              <MonthlyErrorGraph
+                userId={mobileId}
+                selectedMode={selectedOption}
+                age={Number(age)}
+                gender={gender as 'male' | 'female'}
+              />
+            </div>
+          )}
+          {activeButton === 'stats' && (
+            <div className="graph-container">
+              <DailyErrorGraph
+                userId={mobileId}
+                selectedMode={selectedOption}
+                age={Number(age)}
+                gender={gender as 'male' | 'female'}
+              />
+            </div>
+          )}
+        </div>
         {activeButton === 'info' && (
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">

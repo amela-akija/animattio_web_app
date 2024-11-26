@@ -220,6 +220,7 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
                 )}
                 options={{
                   responsive: true,
+                  // maintainAspectRatio: false,
                   scales: {
                     y: {
                       beginAtZero: true,
@@ -228,6 +229,8 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
                     },
                   },
                 }}
+                // height={1000}
+                // width={1000}
               />
             ) : (
               <p>{t('noDataForDate')}</p>

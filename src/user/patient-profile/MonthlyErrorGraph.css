@@ -3,6 +3,8 @@
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
+    width: 100%;
+    max-width: 100%;
 }
 
 .date-picker-container {
@@ -17,15 +19,16 @@
 }
 
 .graph-container {
-    width: 600px;
+    width: 100%;
+    max-width: 1000px;
     margin-bottom: 2rem;
     display: flex;
     justify-content: center;
 }
 
-.monthly-title{
+.monthly-title {
     font-family: 'Karla', sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: #2a470c;
     text-align: center;
 }
