@@ -244,7 +244,7 @@ function PatientProfilePage() {
                 name="username"
                 value={patientUsername}
                 onChange={handleInputChange(setPatientUsername)}
-                className="info-input"
+                className="patient-info-input"
                 InputProps={{
                   disableUnderline: true
                 }}
@@ -259,7 +259,7 @@ function PatientProfilePage() {
                 id="gender"
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
-                className="info-input"
+                className="patient-info-input"
               >
                 <option value="" disabled>
                   {t('selectGender')}
@@ -278,7 +278,7 @@ function PatientProfilePage() {
                 id="type"
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="info-input"
+                className="patient-info-input"
               >
                 <option value="" disabled>
                   {t('selectType')}
@@ -298,7 +298,7 @@ function PatientProfilePage() {
                 id="age"
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
-                className="info-input"
+                className="patient-info-input"
               >
                 <option value="" disabled>
                   {t('selectAge')}

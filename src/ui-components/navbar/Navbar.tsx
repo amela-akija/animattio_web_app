@@ -17,14 +17,17 @@ const Navbar = () => {
   }, [location.pathname]);
 
   const handleLogoClick = () => {
-    if (!isAuthPage) {
-      if (userRole === 'admin') {
-        navigate('/see-doctors');
-      } else if (userRole === 'doctor') {
-        navigate('/see-patients');
-      }
+    if (isAuthPage) {
+      return;
+    }
+
+    if (userRole === 'admin') {
+      navigate('/see-doctors');
+    } else if (userRole === 'doctor') {
+      navigate('/see-patients');
     }
   };
+
 
   const handleAddPatient = () => {
     setActiveTab('/add-patient');
