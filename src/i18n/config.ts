@@ -162,10 +162,14 @@ i18n
           logOut: "You have been logged out. Please log in again",
           updateFail: "Failed to update login credentials",
           updateSuccess: "Login credentials updated successfully",
+          addDoctorSuccess: "Doctor added successfully",
+          doctorExists: "Doctor already exists",
         },
       },
       pl: {
         translation: {
+          doctorExists: "Lekarz o podanej nazwie jest w bazie danych",
+          addDoctorSuccess: "Lekarz dodany pomyślnie",
           updateSuccess: "Dane logowania zostały pomyślnie zaktualizowane",
           updateFail: "Nie udało się zaktualizować danych logowania",
           logOut: "Zostałeś wylogowany/a. Zaloguj się ponownie",
