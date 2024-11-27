@@ -108,7 +108,7 @@ function DoctorProfilePage() {
           />
         </div>
       </div>
-      <div className="button-container">
+      <div className="doctor-save-button-container">
         <Button
           variant="contained"
           endIcon={<BorderColorIcon />}
