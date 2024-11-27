@@ -159,10 +159,16 @@ i18n
           selectAge: "Select age",
           selectType: "Select type",
           errorRequiredFieldsMessage: "Please fill in all the required fields",
+          logOut: "You have been logged out. Please log in again",
+          updateFail: "Failed to update login credentials",
+          updateSuccess: "Login credentials updated successfully",
         },
       },
       pl: {
         translation: {
+          updateSuccess: "Dane logowania zostały pomyślnie zaktualizowane",
+          updateFail: "Nie udało się zaktualizować danych logowania",
+          logOut: "Zostałeś wylogowany/a. Zaloguj się ponownie",
           selectType: "Wybierz typ",
           errorRequiredFieldsMessage: "Proszę wypełnić wszystkie wymagane pola",
           selectAge: "Wybierz wiek",

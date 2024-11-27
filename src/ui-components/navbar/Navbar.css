@@ -45,6 +45,18 @@
     cursor: pointer;
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
+
+.navbar-tab-admin {
+    padding: 3%;
+    margin-left: 30%;
+    background-color: transparent;
+    color: #FFFBEE;
+    font-size: medium;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
 .navbar-tab:hover {
     background-color: #FBE3BE;
     border-color: #FBE3BE;
