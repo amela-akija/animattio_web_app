@@ -37,6 +37,7 @@ function LoginPage() {
       if (doctorSnapshot.exists()) {
         const doctorData = doctorSnapshot.data();
         console.log('Doctor data:', doctorData);
+        localStorage.setItem("role", doctorData.role);
 
         if (doctorData?.role === 'doctor') {
           const doctorUsername = doctorData.username;

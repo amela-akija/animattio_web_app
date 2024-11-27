@@ -10,15 +10,27 @@ const Navbar = () => {
   const location = useLocation();
 
   const [activeTab, setActiveTab] = useState(location.pathname);
+  const [userRole, setUserRole] = useState(localStorage.getItem('role') || '');
 
   useEffect(() => {
     setActiveTab(location.pathname);
   }, [location.pathname]);
 
+  const handleLogoClick = () => {
+    if (!isAuthPage) {
+      if (userRole === 'admin') {
+        navigate('/see-doctors');
+      } else if (userRole === 'doctor') {
+        navigate('/see-patients');
+      }
+    }
+  };
+
   const handleAddPatient = () => {
     setActiveTab('/add-patient');
     navigate('/add-patient');
   };
+
   const handleAddDoctor = () => {
     setActiveTab('/see-doctors');
     navigate('/add-doctor');
@@ -28,6 +40,7 @@ const Navbar = () => {
     setActiveTab('/see-patients');
     navigate('/see-patients');
   };
+
   const handleSeeDoctors = () => {
     setActiveTab('/add-doctor');
     navigate('/see-doctors');
@@ -39,12 +52,11 @@ const Navbar = () => {
   };
 
   const isAuthPage = activeTab === '/' || activeTab === '/login';
-
   const isTestResultsPage = location.pathname.startsWith('/test-results/');
 
   return (
     <nav className="navbar">
-      <a href="/">
+      <a href="#" onClick={handleLogoClick}>
         <img src={logo} alt="logo" className="navbar-logo" />
       </a>
       {!isAuthPage && (
@@ -69,19 +81,17 @@ const Navbar = () => {
             </>
           ) : activeTab === '/add-doctor' ? (
             <>
-              <button className="navbar-tab" onClick={handleSeeDoctors}>
+              <button className="navbar-tab-admin" onClick={handleSeeDoctors}>
                 {t('seeDoctors')}
               </button>
-
             </>
-          ): activeTab === '/see-doctors' ? (
-              <>
-                <button className="navbar-tab" onClick={handleAddDoctor}>
-                  {t('addDoctor')}
-                </button>
-              </>
-
-            ) : activeTab === '/doctor-profile' ? (
+          ) : activeTab === '/see-doctors' ? (
+            <>
+              <button className="navbar-tab-admin" onClick={handleAddDoctor}>
+                {t('addDoctor')}
+              </button>
+            </>
+          ) : activeTab === '/doctor-profile' ? (
             <>
               <button className="navbar-tab" onClick={handleAddPatient}>
                 {t('addPatient')}
