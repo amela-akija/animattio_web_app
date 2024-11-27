@@ -1,91 +1,62 @@
-@media (min-width: 1025px) {
-    .game-details {
-        color: #FFFBEE;
-        text-align: left;
-        width: 100%;
-        font-size: 2.5vh;
-        font-family: 'Karla', sans-serif;
-    }
+.test-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 2%;
+    width: 100%;
+    justify-items: center;
+    align-items: stretch;
 }
 
-@media (max-width: 480px) {
-    .game-details {
-        color: #FFFBEE;
-        text-align: left;
-        width: 100%;
-        font-size: 1.1vh;
-        font-family: 'Karla', sans-serif;
-
-    }
+.test-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    background-color: #2A470C;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
 }
 
-@media (min-width: 480px) and (max-width: 1024px) {
-    .game-details {
-        color: #FFFBEE;
-        text-align: left;
-        width: 100%;
-        font-size: 1.5vh;
-        font-family: 'Karla', sans-serif;
-
-    }
-}
-
-@media (min-width: 1025px) {
-    .test-container {
-        padding: 3% 2%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        background-color: #2A470C;
-        margin-bottom: 5%;
-        height: auto;
-        width: 90%;
-        border-radius: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    .test-container {
-        padding: 3% 2%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        background-color: #2A470C;
-        margin-bottom: 10%;
-        height: auto;
-        width: fit-content;
-        border-radius: 15px;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .test-container {
-        padding: 3% 5%;
-        display: flex;
-        margin-bottom: 5%;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        background-color: #2A470C;
-        height: auto;
-        width: fit-content;
-        border-radius: 15px;
-    }
+.game-details {
+    color: #FFFBEE;
+    font-size: 1rem;
+    margin-bottom: 10px;
+    font-family: 'Karla', sans-serif;
 }
 
 .see-more-button {
-    background-color: #2A470C;
-    color: #FFFBEE;
+    background-color: #FFC267;
+    color: #2A470C;
     border: none;
     font-weight: bold;
-    font-size: 1.5vh;
+    font-size: 1rem;
     font-family: 'Karla', sans-serif;
-    align-self: end;
-
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-end;
+    transition: background-color 0.3s ease;
 }
 
-.test-list {
-    padding: 2%;
+.see-more-button:hover {
+    background-color: #FFB347;
+    color: #2A470C;
+}
+
+@media (max-width: 768px) {
+    .test-container {
+        max-width: 90%;
+    }
+
+    .game-details {
+        font-size: 0.9rem;
+    }
+
+    .see-more-button {
+        font-size: 0.9rem;
+    }
 }
