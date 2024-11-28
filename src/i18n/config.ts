@@ -164,10 +164,18 @@ i18n
           updateSuccess: "Login credentials updated successfully",
           addDoctorSuccess: "Doctor added successfully",
           doctorExists: "Doctor already exists",
+          deleteWindow: "Are you sure you want to delete the account?",
+          deleteSuccess: "Account deleted successfully",
+          deleteFail: "Failed to delete account",
+          delete: "Delete",
         },
       },
       pl: {
         translation: {
+          delete: "Usuń",
+          deleteFail: "Nie udało się usunąć konta",
+          deleteSuccess: "Konto usunięte pomyślnie",
+          deleteWindow: "Czy na pewno chcesz usunąć konto?",
           doctorExists: "Lekarz o podanej nazwie jest w bazie danych",
           addDoctorSuccess: "Lekarz dodany pomyślnie",
           updateSuccess: "Dane logowania zostały pomyślnie zaktualizowane",
