@@ -3,8 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import './DoctorProfilePage.css';
 import { TextField, Button } from '@mui/material';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
 import apiClient from '../../services/apiClient';
+import { t } from 'i18next';
 
 function DoctorProfilePage() {
   const { username: routeUsername } = useParams<{ username: string }>();
@@ -37,31 +39,49 @@ function DoctorProfilePage() {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await apiClient.put(`/doctors/update-profile?username=${username}&email=${email}&password=${password}`, null, {
+      await apiClient.put(`/doctors/update-profile?username=${username}&email=${email}&password=${password}`, null, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      toast.success('updateSuccess');
+      toast.success(t('updateSuccess'));
 
       localStorage.clear();
-      toast.info('logOut');
+      toast.info(t('logOut'));
       navigate('/');
     } catch (error) {
       console.error('Error updating profile:', error);
-      toast.error('updateFail');
+      toast.error(t('updateFail'));
     }
   };
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm(t('deleteWindow'));
+    if (!confirmed) return;
 
+    try {
+      const token = localStorage.getItem('token');
+      await apiClient.delete(`/doctors/delete-by-username?username=${username}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      toast.success(t('deleteSuccess'));
+      navigate('/see-doctors');
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      toast.error(t('deleteFail'));
+    }
+  };
 
   return (
     <div className="doctor-profile-container">
       <div className="doctor-info-input-container">
         <div className="doctor-input-wrapper">
           <label htmlFor="username" className="doctor-input-label">
-            Username:
+            {t('username')}:
           </label>
           <TextField
             id="username"
@@ -77,7 +97,7 @@ function DoctorProfilePage() {
         <div className="space"></div>
         <div className="doctor-input-wrapper">
           <label htmlFor="email" className="doctor-input-label">
-            Email:
+            {t('email')}:
           </label>
           <TextField
             id="email"
@@ -93,7 +113,7 @@ function DoctorProfilePage() {
         <div className="space"></div>
         <div className="doctor-input-wrapper">
           <label htmlFor="password" className="doctor-input-label">
-            Password:
+            {t('password')}:
           </label>
           <TextField
             id="password"
@@ -115,8 +135,18 @@ function DoctorProfilePage() {
           onClick={handleSaveChanges}
           style={{ color: '#2a470c', backgroundColor: '#FFFBEE' }}
         >
-          Save
+          {t('save')}
         </Button>
+        {role === 'admin' && (
+          <Button
+            variant="contained"
+            endIcon={<DeleteIcon />}
+            onClick={handleDelete}
+            style={{ color: '#2a470c', backgroundColor: '#FFFBEE', marginLeft:'2%' }}
+          >
+            {t('delete')}
+          </Button>
+        )}
       </div>
     </div>
   );
