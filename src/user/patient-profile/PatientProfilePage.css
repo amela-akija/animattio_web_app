@@ -60,7 +60,7 @@
 .patient-profile-tablet {
     font-family: 'Karla', sans-serif;
     padding-bottom: 5%;
-    padding-left: 10%;
+    padding-left: 3%;
     font-size: 5vh;
     color: #2A470C;
     text-shadow: #2A350D 1px 1px 4px;
@@ -194,10 +194,23 @@
     align-items: stretch;
     justify-content: center;
 }
+@media (min-width: 1025px) {
 .button-container{
-    margin-left:35%;
+    margin-left:30%;
     padding-top: 2%;
-}
+}}
+@media (min-width: 480px) and (max-width: 1024px) {
+    .button-container{
+        margin-left:25%;
+        padding-top: 2%;
+    }}
+
+@media (max-width: 480px) {
+    .button-container{
+        margin-left:20%;
+        padding-top: 2%;
+    }}
+
 
 @media (min-width: 1025px) {
     .patient-input-label {
@@ -234,7 +247,7 @@
 
 @media (min-width: 480px) and (max-width: 1024px) {
     .patient-input-label {
-        padding: 1vh 1vh;
+        padding: 0.4vh 0.5vh;
         width: 50%;
         font-size: 1.5vh;
         border-top-left-radius: 10px;
@@ -300,12 +313,12 @@
 
 @media (min-width: 480px) and (max-width: 1024px) {
     .patient-info-input-container {
-        width: 85%;
+        width: 90%;
         padding-top: 5%;
         padding-bottom: 5%;
         padding-left: 5%;
-        margin-left: 5%;
-        margin-top: 10%;
+        margin-left: 2%;
+        margin-top: 50%;
         background-color: #2a470c;
         display: flex;
         flex-direction: column;

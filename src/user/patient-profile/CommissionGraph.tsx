@@ -203,12 +203,13 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
     <div>
       <table
         style={{
-          marginLeft: '10%',
+          // marginLeft: '10%',
           border: '1px solid #2A470C',
           borderCollapse: 'collapse',
-          width: '50%',
+          width: 'fit-content',
           color: '#2A470C',
           textAlign: 'right',
+          fontFamily: 'Karla'
         }}>
         <thead>
         <tr>

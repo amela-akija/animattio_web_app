@@ -103,7 +103,7 @@ function AddPatientPage() {
         {tablet && <h1 className="add-patient-tablet">{t('add_patient')}</h1>}
 
         <div className="add-patient-input-container">
-          <label className="add_label">{t('username')}:</label>
+          <label className="add_label" style={{ color: '#2A470C' }}>{t('username')}:</label>
           <TextField
             id="username"
             variant="standard"
@@ -117,7 +117,7 @@ function AddPatientPage() {
 
         <div className="add-patient-input-container">
           <FormControl variant="standard" fullWidth>
-            <InputLabel id="gender-label">{t('gender')} </InputLabel>
+            <InputLabel id="gender-label" style={{ color: '#2A470C' }}>{t('gender')} </InputLabel>
             <Select
               labelId="gender-label"
               id="gender"
@@ -138,7 +138,7 @@ function AddPatientPage() {
 
         <div className="add-patient-input-container">
           <FormControl variant="standard" fullWidth>
-            <InputLabel id="age-label">{t('age')}</InputLabel>
+            <InputLabel id="age-label" style={{ color: '#2A470C' }}>{t('age')}</InputLabel>
             <Select
               labelId="age-label"
               id="age"
@@ -146,6 +146,7 @@ function AddPatientPage() {
               onChange={(e) => setAge(e.target.value as string)}
               className="add-patient-select"
               disableUnderline
+              displayEmpty
             >
               <MenuItem value="" disabled>
                 {t('selectAge')}
@@ -158,6 +159,7 @@ function AddPatientPage() {
             </Select>
           </FormControl>
         </div>
+
 
         <label className="checkbox">
           <input type="checkbox" checked={checked} onChange={handleCheckboxChange} />
