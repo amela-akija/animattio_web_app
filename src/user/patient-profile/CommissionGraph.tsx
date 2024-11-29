@@ -46,7 +46,10 @@ interface CommissionGraphProps {
 }
 
 const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) => {
-  const [commissionData, setCommissionData] = useState<{ percentage: number }>({ percentage: 0 });
+  const [commissionData, setCommissionData] = useState<{ totalCommissionErrors: number; percentage: number }>({
+    totalCommissionErrors: 0,
+    percentage: 0,
+  });
   const [patientInfo, setPatientInfo] = useState<{ age: number; gender: Gender }>({ age: 0, gender: 'female' });
   const [loading, setLoading] = useState(true);
   const [totalStimuliCount, setTotalStimuliCount] = useState<number | null>(null);
@@ -72,8 +75,11 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
         const response = await apiClient.get(`/tests/${testId}/commissions`);
         const totalCommissionErrors = response.data.totalCommissionErrors;
         const percentageCommission = (totalCommissionErrors / totalStimuliCount) * 100;
-        setCommissionData({ percentage: percentageCommission });
-        console.log("comissions", percentageCommission)
+
+        setCommissionData({
+          totalCommissionErrors,
+          percentage: percentageCommission,
+        });
       } catch (error) {
         console.error('Error fetching commission data:', error);
       }
@@ -100,7 +106,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
     fetchPatientInfo();
   }, [patientId]);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading || totalStimuliCount === null) return <div>Loading...</div>;
 
   const getNormativeData = () => {
     let ageGroup: keyof typeof NormativeData = '9-11';
@@ -124,7 +130,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
     labels: [t('patientResult'), t('normative')],
     datasets: [
       {
-        label: 'Commission Errors (%)',
+        label: 'Omission Errors (%)',
         data: [commissionData.percentage, mean],
         backgroundColor: ['rgba(9,62,2,0.6)', 'rgb(248,232,159)'],
       },
@@ -136,13 +142,16 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       y: {
         title: {
           display: true,
-          text: t('errorOmission'),
+          text: t('errorCommission'),
         },
         min: 0,
-        max: Math.max(mean + sd, 100),
-        ticks: {
-          stepSize: 10,
-        },
+        max: (() => {
+          const maxCommissionValue = commissionData.percentage;
+          const maxNormativeValue = mean + sd;
+          const maxDataValue = Math.max(maxCommissionValue, maxNormativeValue);
+          const buffer = maxDataValue * 0.1;
+          return Math.ceil(maxDataValue + buffer);
+        })(),
       },
     },
     plugins: {
@@ -156,6 +165,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       },
     },
   };
+
 
 
   const errorBarPlugin = {
@@ -172,39 +182,58 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
 
       const barWidth = xAxis.width / dataset.data.length;
       const barX = xAxis.getPixelForValue(dataIndex) - barWidth / 2;
+
       const sdTopY = yAxis.getPixelForValue(meanValue + sdValue);
-      const sdBottomY = yAxis.getPixelForValue(meanValue - sdValue);
+      const sdBottomY = yAxis.getPixelForValue(Math.max(meanValue - sdValue, 0));
 
       ctx.fillStyle = 'rgba(244,219,102,0.2)';
-      ctx.fillRect(barX, sdBottomY, barWidth, sdTopY - sdBottomY);
+      ctx.fillRect(barX, sdTopY, barWidth, sdBottomY - sdTopY);
 
-      // ctx.beginPath();
-      // ctx.arc(barX + barWidth / 2, yAxis.getPixelForValue(meanValue), 4, 0, 2 * Math.PI);
-      // ctx.fillStyle = 'rgb(213,4,94)';
-      // ctx.fill();
-
-      ctx.beginPath();
-      ctx.moveTo(barX + barWidth / 2 - 4, sdTopY);
-      ctx.lineTo(barX + barWidth / 2 + 4, sdTopY);
-      ctx.moveTo(barX + barWidth / 2 - 4, sdBottomY);
-      ctx.lineTo(barX + barWidth / 2 + 4, sdBottomY);
-      ctx.strokeStyle = 'rgba(230,199,50,0.9)';
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
+      ctx.font = '10px Arial';
       ctx.fillStyle = 'rgba(230,199,50,0.9)';
-      ctx.fillText(`+${(meanValue + sdValue).toFixed(2)}`, barX + barWidth / 2 + 10, sdTopY - 10);
-      ctx.fillText(`-${(meanValue - sdValue).toFixed(2)}`, barX + barWidth / 2 + 10, sdBottomY + 15);
+      ctx.fillText(`+${(meanValue + sdValue).toFixed(2)}`, barX + barWidth / 2 + 15, sdTopY - 5);
+      if (meanValue - sdValue >= 0) {
+        ctx.fillText(`-${(meanValue - sdValue).toFixed(2)}`, barX + barWidth / 2 + 15, sdBottomY + 12);
+      }
     },
   };
 
+
   return (
     <div>
-      <Bar
-        data={chartData}
-        options={chartOptions}
-        plugins={[errorBarPlugin]}
-      />
+      <table
+        style={{
+          marginLeft: '10%',
+          border: '1px solid #2A470C',
+          borderCollapse: 'collapse',
+          width: '50%',
+          color: '#2A470C',
+          textAlign: 'right',
+        }}>
+        <thead>
+        <tr>
+          <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('stimuliCount')}</th>
+          <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('commissionCount')}</th>
+          <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('commissionPercentage')}</th>
+          <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('normative')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td style={{ border: '1px solid #ccc', padding: '8px' }}>{totalStimuliCount}</td>
+          <td style={{ border: '1px solid #ccc', padding: '8px' }}>
+            {commissionData.totalCommissionErrors}
+          </td>
+          <td style={{ border: '1px solid #ccc', padding: '8px' }}>
+            {commissionData.percentage.toFixed(2)}%
+          </td>
+          <td style={{ border: '1px solid #ccc', padding: '8px' }}>
+            {mean.toFixed(2)}%
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <Bar data={chartData} options={chartOptions} plugins={[errorBarPlugin]} />
     </div>
   );
 };
