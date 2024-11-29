@@ -1,151 +1,102 @@
 .add-patient-container {
-    flex-direction: column;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: 100vh;
-    padding-top: 0;
-    margin-top: -5%;
+    padding-top: 3%;
+}
+
+.add-patient-laptop,
+.add-patient-mobile,
+.add-patient-tablet {
+    font-family: 'Karla', sans-serif;
+    color: #2A470C;
+    text-shadow: #2A350D 1px 1px 4px;
+    white-space: nowrap;
+    text-align: center;
+    margin-bottom: 15%;
 }
 
 .add-patient-laptop {
-    font-family: 'Karla', sans-serif;
-    padding-bottom: 5%;
     font-size: 7vh;
-    color: #2A470C;
-    text-shadow: #2A350D 1px 1px 4px;
-    white-space: nowrap;
 }
 
 .add-patient-mobile {
-    font-family: 'Karla', sans-serif;
-    padding-bottom: 3%;
     font-size: 2.5vh;
-    padding-left: 10%;
-    color: #2A470C;
-    text-shadow: #2A350D 1px 1px 4px;
-    white-space: nowrap;
 }
 
 .add-patient-tablet {
-    font-family: 'Karla', sans-serif;
-    padding-bottom: 10%;
-    padding-left: 10%;
     font-size: 5vh;
-    color: #2A470C;
-    text-shadow: #2A350D 1px 1px 4px;
-    white-space: nowrap;
 }
 
-.add-patient-input {
-    height: 50%;
+.add-patient-input-container {
     width: 100%;
-    font-size: large;
-    border-radius: 5px;
-    background-color: #FBE3BE;
-    color: #2A470C;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
 }
+
+.add_label {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2A470C;
+    margin-bottom: 0.5rem;
+}
+
+.add-patient-input,
 .add-patient-select {
     width: 100%;
-    height: 50%;
-    font-size: large;
-    text-color: #2A470C;
+    height: 50px;
+    font-size: 1rem;
     border-radius: 5px;
+    border: 1px solid #FBE3BE;
     background-color: #FBE3BE;
     color: #2A470C;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-    display: flex;
+    padding: 0 10px;
 }
 
-.add-patient-select .MuiSelect-select {
+.add-patient-select .MuiInputBase-root {
+    background-color: #FBE3BE;
+    color: #2A470C;
+}
+
+.MuiInputLabel-root {
+    color: #2A470C;
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.MuiSelect-select {
+    color: #2A470C;
     padding: 10px;
-}
-.add-patient-additional-input {
-    width: 95%;
-    font-size: small;
-    border-radius: 5px;
-    background-color: #FBE3BE;
-    color: #2A470C;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.add-patient-input .MuiInputLabel-root,
-.add-patient-additional-input .MuiInputLabel-root {
-    padding-left: 10px;
-}
-
-@media (min-width: 1025px) {
-    .add-patient-input-container {
-        width: 100%;
-        max-width: 100%;
-        padding-top: 1rem;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 480px) {
-    .add-patient-input-container {
-        width: 100%;
-        padding-top: 1%;
-        padding-bottom: 8%;
-        padding-left: 5%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-    }
-}
-
-@media (min-width: 480px) and (max-width: 1024px) {
-    .add-patient-input-container {
-        width: 95%;
-        padding-top: 1%;
-        padding-bottom: 7%;
-        padding-left: 10%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-    }
-}
-
-.info-dropdown {
-    height: 100%;
-    width: 100%;
-    font-size: medium;
-    padding: 2%;
-    border-radius: 10px;
-    border: 1px #FBE3BE;
-    background-color: #FBE3BE;
-    color: #2A470C;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-.space{
-    padding-top: 5%;
-}
-.checkbox {
-    color: #2A470C;
-    padding-top: 1rem;
-    width: 100%;
-    max-width: 400px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-.save-button-container {
-    display: flex;
-    justify-content: center;
-    padding-top: 2rem;
-    width: 100%;
 }
 
 .save-patient-button {
-    width: 40%;
+    width: 100%;
+    max-width: 100%;
     background-color: #2A470C;
     color: #FFFBEE;
-    border-radius: 10px;
+    height: fit-content;
+    border-radius: 5px;
+    font-size: 1rem;
 }
+
+.checkbox {
+    color: #2A470C;
+    margin-top: 1rem;
+    margin-bottom: 2rem; 
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.save-button-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+

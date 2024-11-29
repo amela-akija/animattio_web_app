@@ -1,6 +1,6 @@
 .test-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
     gap: 20px;
     padding: 2%;
     width: 100%;
@@ -47,7 +47,7 @@
     color: #2A470C;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 1025px) {
     .test-container {
         max-width: 90%;
     }
@@ -60,3 +60,33 @@
         font-size: 0.9rem;
     }
 }
+
+@media (min-width: 480px) and (max-width: 1024px) {
+    .test-container {
+        max-width: 60%;
+    }
+
+    .game-details {
+        font-size: 0.8rem;
+    }
+
+    .see-more-button {
+        font-size: 0.7rem;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .test-container {
+        max-width: 40%;
+    }
+
+    .game-details {
+        font-size: 0.4rem;
+    }
+
+    .see-more-button {
+        font-size: 0.4rem;
+    }
+}
+
