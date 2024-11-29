@@ -104,7 +104,6 @@ function PatientProfilePage() {
   ) => {
     setter(event.target.value);
   };
-  // Inside handleSaveChanges
   const handleSaveChanges = async () => {
     const updatedPatient = {
       patientUsername,
@@ -246,7 +245,16 @@ function PatientProfilePage() {
                 onChange={handleInputChange(setPatientUsername)}
                 className="patient-info-input"
                 InputProps={{
-                  disableUnderline: true
+                  disableUnderline: true,
+                  style: {
+                    color: '#2a470c',
+                    padding: '0.5% 2%',
+                    height: 'fit-content',
+                    fontSize:'1.8vh',
+                    fontWeight: 'bold',
+                    display: 'flex',
+                    alignItems: 'center',
+                  },
                 }}
               />
             </div>
