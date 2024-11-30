@@ -41,7 +41,7 @@ const PatientComponent: React.FC<Patients> = ({ patient }) => {
   return (
     <div className="patient-container">
       <p className="patient-details">
-        <strong>{t('username')}:</strong> {patient.patientUsername}
+        <strong>{t('patientUsername')}:</strong> {patient.patientUsername}
       </p>
       <p className="patient-details">
         <strong>{t('gender')}:</strong> {displayGender()}

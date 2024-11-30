@@ -88,8 +88,8 @@ const ReactionTimeTable: React.FC<ReactionTimeTableProps> = ({ testId }) => {
           {intervals.map(interval => (
             <tr key={interval}>
               <td>{interval === "1250" ? '1s' : interval === "2250" ? '2s' : '4s'}</td>
-              <td>{intervalStats[interval]?.mean?.toFixed(2) || '-'}</td>
-              <td>{intervalStats[interval]?.stdDev?.toFixed(2) || '-'}</td>
+              <td>{intervalStats[interval]?.mean?.toFixed(0) || '-'}</td>
+              <td>{intervalStats[interval]?.stdDev?.toFixed(0) || '-'}</td>
               <td>{intervalStats[interval]?.zScore?.toFixed(2) || '-'}</td>
             </tr>
           ))}

@@ -161,8 +161,8 @@ function SignupPage() {
           <Button
             type="submit"
             variant="contained"
-            className="save-patient-button"
-            style={{ backgroundColor: '#2a470c' }}
+            // className="signuo-patient-button"
+            style={{ backgroundColor: '#2a470c', width:"24%" }}
             startIcon={<SaveIcon />}
           >
             {t('add')}

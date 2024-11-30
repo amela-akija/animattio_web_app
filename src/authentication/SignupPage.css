@@ -102,9 +102,10 @@
         align-items: center;
         justify-content: center;
         height: 100%;
-        width: 60%;
+        width: 100%;
     }
 }
+
 
 @media (max-width: 480px) {
     .signup-button-container {

@@ -67,7 +67,7 @@ const Navbar = () => {
           {activeTab === '/add-patient' || isTestResultsPage ? (
             <>
               <button className="navbar-tab" onClick={handleUserProfile}>
-                {t('userProfile')}
+                {t('doctorProfile')}
               </button>
               <button className="navbar-tab" onClick={handleSeePatients}>
                 {t('seePatients')}
@@ -79,7 +79,7 @@ const Navbar = () => {
                 {t('addPatient')}
               </button>
               <button className="navbar-tab" onClick={handleUserProfile}>
-                {t('userProfile')}
+                {t('doctorProfile')}
               </button>
             </>
           ) : activeTab === '/add-doctor' ? (
