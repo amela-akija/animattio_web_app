@@ -78,6 +78,7 @@ function DoctorProfilePage() {
 
   return (
     <div className="doctor-profile-container">
+      <h1 className="title-doctor">{t('doctorProfile')}</h1>
       <div className="doctor-info-input-container">
         <div className="doctor-input-wrapper">
           <label htmlFor="username" className="doctor-input-label">
@@ -90,6 +91,10 @@ function DoctorProfilePage() {
             InputProps={{
               readOnly: true,
               disableUnderline: true,
+              sx: {
+                textAlign: 'left',
+                paddingLeft: '10px',
+              },
             }}
             className="info-input"
           />

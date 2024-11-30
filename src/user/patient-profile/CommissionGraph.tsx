@@ -213,7 +213,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
         }}>
         <thead>
         <tr>
-          <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('stimuliCount')}</th>
+          <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('nonStimuliCount')}</th>
           <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('commissionCount')}</th>
           <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('commissionPercentage')}</th>
           <th style={{ border: '1px solid #ccc', padding: '8px', backgroundColor: '#2A470C', color: '#FFFBEE', textAlign:"center" }}>{t('normative')}</th>

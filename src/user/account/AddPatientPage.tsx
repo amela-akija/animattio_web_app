@@ -128,7 +128,7 @@ function AddPatientPage() {
               displayEmpty
             >
               <MenuItem value="" disabled>
-                {t('selectGender')}
+                {t('choose_gender')}
               </MenuItem>
               <MenuItem value="male">{t('male')}</MenuItem>
               <MenuItem value="female">{t('female')}</MenuItem>

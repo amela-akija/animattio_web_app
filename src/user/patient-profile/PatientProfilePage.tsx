@@ -235,7 +235,7 @@ function PatientProfilePage() {
           <div className="patient-info-input-container">
             <div className="patient-input-wrapper">
               <label htmlFor="username" className="patient-input-label">
-                {t('username')}:
+                {t('patientUsername')}:
               </label>
               <TextField
                 id="username"

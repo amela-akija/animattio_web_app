@@ -20,7 +20,7 @@ const DoctorComponent: React.FC<Doctors> = ({ doctor }) => {
   return (
     <div className="doctor-container">
       <p className="doctor-details">
-        <strong>{t("username")}:</strong> {doctor.username}
+        <strong>{t("doctor")}:</strong> {doctor.username}
       </p>
       <button className="see-profile-button" onClick={() => goToDoctorProfile(doctor.username)}>
         {t("seeDoctorProfile")}
