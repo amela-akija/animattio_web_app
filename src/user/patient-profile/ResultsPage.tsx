@@ -25,7 +25,7 @@ function ResultsPage() {
   const { testId } = useParams<{ testId: string }>();
   const location = useLocation();
   const navigate = useNavigate();
-  const { tests } = (location.state as LocationState) || { tests: [] }; // Default to an empty array if no tests are passed
+  const { tests } = (location.state as LocationState) || { tests: [] };
 
   const [activeButton, setActiveButton] = useState<'reactionTime' | 'commission' | 'omission'>('reactionTime');
   const patientId = localStorage.getItem('patientUsername');
@@ -41,6 +41,11 @@ function ResultsPage() {
   const navigateToTest = (testId: string) => {
     navigate(`/test-results/${testId}`, { state: { tests } });
   };
+  console.log('OmissionGraph props:', { testId, patientId });
+  console.log('CommissionGraph props:', { testId, patientId });
+  console.log('Active button:', activeButton);
+  console.log('Device Type:', { isMobile, isTablet, isLaptop });
+
 
   return (
     <div>
@@ -95,6 +100,7 @@ function ResultsPage() {
         {activeButton === 'commission' && testId && patientId ? (
           <div className="omission-plot-container">
             <CommissionGraph testId={testId} patientId={patientId} />
+
           </div>
           ) : null}
       </div>
