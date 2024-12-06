@@ -181,12 +181,13 @@ i18n
           confirm_delete_title: "Confirm Deletion",
           confirm_delete_message: "Are you sure you want to delete the patient?",
           patient_delete_success: "Patient deleted successfully",
-          patient_delete_failure: "Failed to delete patient"
-
+          patient_delete_failure: "Failed to delete patient",
+          doctor: "Doctor",
         },
       },
       pl: {
         translation: {
+          doctor: "Lekarz",
           confirm_delete_title: "Potwierdź usunięcie",
           confirm_delete_message: "Czy na pewno chcesz usunąć pacjenta?",
           patient_delete_success: "Poprawnie usunięto pacjenta",
