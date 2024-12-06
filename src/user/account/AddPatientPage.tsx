@@ -1,7 +1,19 @@
 import React, { useState } from 'react';
 import useResponsive from '../../ui-components/useResponsive';
-import './AddPatientPage.css';
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import {
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Checkbox,
+  FormControlLabel,
+  Typography,
+  Container,
+  Box,
+  Paper,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import SaveIcon from '@mui/icons-material/Save';
 import { ToastContainer, toast } from 'react-toastify';
@@ -12,6 +24,7 @@ import apiClient from '../../services/apiClient';
 function AddPatientPage() {
   const { t } = useTranslation();
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
+
   const addPatientNotification = () => toast.success(t('addPatientMessage'));
   const [patientUsername, setPatientUsername] = useState<string>('');
   const [gender, setGender] = useState<string>('');
@@ -24,7 +37,6 @@ function AddPatientPage() {
 
   const checkIfPatientExists = async (username: string): Promise<boolean> => {
     try {
-      console.log(`Checking if patient exists: ${username}`);
       const response = await axios.get('https://backend-animattio-59a791d90bc1.herokuapp.com/patients/patient-exists', {
         params: { username },
         headers: {
@@ -32,11 +44,9 @@ function AddPatientPage() {
           'Content-Type': 'application/json',
         },
       });
-      console.log(`Patient exists response: ${response.data.exists}`);
       return response.data.exists;
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error("Axios error checking patient existence:", error);
         if (error.response?.status === 403) {
           toast.error(t('errorUnauthorizedMessage'));
         }
@@ -63,7 +73,7 @@ function AddPatientPage() {
 
     const DoctorUsername = localStorage.getItem('doctorUsername');
     const patientData = {
-      patientUsername: patientUsername,
+      patientUsername,
       doctorUsername: DoctorUsername,
       gender,
       age: parseInt(age),
@@ -80,52 +90,68 @@ function AddPatientPage() {
 
       if (response.status >= 200 && response.status < 300) {
         addPatientNotification();
-        console.log('Patient created successfully');
         setPatientUsername('');
         setGender('');
         setAge('');
         setChecked(false);
       } else {
         toast.error(t('errorAddPatientMessage'));
-        console.error('Error creating patient:', response.statusText);
       }
     } catch (error) {
-      console.error('Error during fetch:', error);
       toast.error(t('errorAddPatientMessage'));
     }
   };
 
   return (
-    <div className="add-patient-container">
-      <form onSubmit={handleSubmit}>
-        {laptop && <h1 className="add-patient-laptop">{t('add_patient')}</h1>}
-        {mobile && <h1 className="add-patient-mobile">{t('add_patient')}</h1>}
-        {tablet && <h1 className="add-patient-tablet">{t('add_patient')}</h1>}
-
-        <div className="add-patient-input-container">
-          <label className="add_label" style={{ color: '#2A470C' }}>{t('username')}:</label>
+    <Container maxWidth="sm">
+      <Paper
+        elevation={3}
+        sx={{
+          p: 4,
+          mt: 8,
+          backgroundColor: '#FFFBEE',
+          borderRadius: '10px',
+        }}
+      >
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          sx={{ color: '#2A470C', textShadow: '1px 1px 4px #2A350D' }}
+        >
+          {t('add_patient')}
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={handleSubmit}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 5,
+            mt: 5,
+          }}
+        >
           <TextField
-            id="username"
-            variant="standard"
-            InputProps={{ disableUnderline: true }}
-            name="username"
-            className="add-patient-input"
+            label={t('username')}
+            variant="outlined"
             value={patientUsername}
             onChange={(e) => setPatientUsername(e.target.value)}
+            fullWidth
+            sx={{
+              backgroundColor: '#FFFBEE',
+              borderRadius: '10px',
+            }}
           />
-        </div>
-
-        <div className="add-patient-input-container">
-          <FormControl variant="standard" fullWidth>
-            <InputLabel id="gender-label" style={{ color: '#2A470C' }}>{t('gender')} </InputLabel>
+          <FormControl fullWidth>
+            <InputLabel id="gender-label">{t('gender')}</InputLabel>
             <Select
               labelId="gender-label"
-              id="gender"
               value={gender}
               onChange={(e) => setGender(e.target.value as string)}
-              className="add-patient-select"
-              disableUnderline
-              displayEmpty
+              sx={{
+                backgroundColor: '#FFFBEE',
+                borderRadius: '10px',
+              }}
             >
               <MenuItem value="" disabled>
                 {t('choose_gender')}
@@ -134,19 +160,16 @@ function AddPatientPage() {
               <MenuItem value="female">{t('female')}</MenuItem>
             </Select>
           </FormControl>
-        </div>
-
-        <div className="add-patient-input-container">
-          <FormControl variant="standard" fullWidth>
-            <InputLabel id="age-label" style={{ color: '#2A470C' }}>{t('age')}</InputLabel>
+          <FormControl fullWidth>
+            <InputLabel id="age-label">{t('age')}</InputLabel>
             <Select
               labelId="age-label"
-              id="age"
               value={age}
               onChange={(e) => setAge(e.target.value as string)}
-              className="add-patient-select"
-              disableUnderline
-              displayEmpty
+              sx={{
+                backgroundColor: '#FFFBEE',
+                borderRadius: '10px',
+              }}
             >
               <MenuItem value="" disabled>
                 {t('selectAge')}
@@ -158,28 +181,36 @@ function AddPatientPage() {
               ))}
             </Select>
           </FormControl>
-        </div>
-
-
-        <label className="checkbox">
-          <input type="checkbox" checked={checked} onChange={handleCheckboxChange} />
-          {t('epilepsy')}
-        </label>
-
-        <div className="save-button-container">
-          <Button
-            type="submit"
-            variant="contained"
-            className="save-patient-button"
-            style={{ backgroundColor: '#2a470c' }}
-            startIcon={<SaveIcon />}
-          >
-            {t('add')}
-          </Button>
-        </div>
-      </form>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={checked}
+                onChange={handleCheckboxChange}
+                sx={{ color: '#2A470C' }}
+              />
+            }
+            label={t('epilepsy')}
+          />
+          <Box sx={{ textAlign: 'center', mt: 3 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              startIcon={<SaveIcon />}
+              sx={{
+                color: '#FFFBEE',
+                backgroundColor: '#2A470C',
+                '&:hover': {
+                  backgroundColor: '#24530B',
+                },
+              }}
+            >
+              {t('add')}
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
       <ToastContainer />
-    </div>
+    </Container>
   );
 }
 

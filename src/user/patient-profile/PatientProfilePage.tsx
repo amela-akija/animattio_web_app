@@ -239,21 +239,18 @@ function PatientProfilePage() {
               </label>
               <TextField
                 id="username"
-                variant="standard"
+                variant="outlined"
                 name="username"
                 value={patientUsername}
                 onChange={handleInputChange(setPatientUsername)}
-                className="patient-info-input"
-                InputProps={{
-                  disableUnderline: true,
-                  style: {
-                    color: '#2a470c',
-                    padding: '0.5% 2%',
-                    height: 'fit-content',
-                    fontSize:'1.8vh',
+                fullWidth
+                sx={{
+                  backgroundColor: '#FFFBEE',
+                  borderRadius: '10px',
+                  '& .MuiInputBase-input': {
+                    color: '#2A470C',
+                    fontSize: '1rem',
                     fontWeight: 'bold',
-                    display: 'flex',
-                    alignItems: 'center',
                   },
                 }}
               />
@@ -263,18 +260,29 @@ function PatientProfilePage() {
               <label htmlFor="gender" className="patient-input-label">
                 {t('gender')}:
               </label>
-              <select
+              <TextField
                 id="gender"
+                select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
-                className="patient-info-input"
+                fullWidth
+                SelectProps={{
+                  native: true,
+                }}
+                sx={{
+                  backgroundColor: '#FFFBEE',
+                  borderRadius: '10px',
+                  '& .MuiInputBase-input': {
+                    color: '#2A470C',
+                  },
+                }}
               >
                 <option value="" disabled>
                   {t('selectGender')}
                 </option>
                 <option value="male">{t('male')}</option>
                 <option value="female">{t('female')}</option>
-              </select>
+              </TextField>
             </div>
 
             <div className="space"></div>
@@ -282,18 +290,29 @@ function PatientProfilePage() {
               <label htmlFor="type" className="patient-input-label">
                 {t('type')}:
               </label>
-              <select
+              <TextField
                 id="type"
+                select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="patient-info-input"
+                fullWidth
+                SelectProps={{
+                  native: true,
+                }}
+                sx={{
+                  backgroundColor: '#FFFBEE',
+                  borderRadius: '10px',
+                  '& .MuiInputBase-input': {
+                    color: '#2A470C',
+                  },
+                }}
               >
                 <option value="" disabled>
                   {t('selectType')}
                 </option>
                 <option value="epilepsy">{t('epilepsy')}</option>
                 <option value="no epilepsy">{t('noEpilepsy')}</option>
-              </select>
+              </TextField>
             </div>
 
             <div className="space"></div>
@@ -302,11 +321,22 @@ function PatientProfilePage() {
               <label htmlFor="age" className="patient-input-label">
                 {t('age')}:
               </label>
-              <select
+              <TextField
                 id="age"
+                select
                 value={age}
                 onChange={(e) => setAge(e.target.value)}
-                className="patient-info-input"
+                fullWidth
+                SelectProps={{
+                  native: true,
+                }}
+                sx={{
+                  backgroundColor: '#FFFBEE',
+                  borderRadius: '10px',
+                  '& .MuiInputBase-input': {
+                    color: '#2A470C',
+                  },
+                }}
               >
                 <option value="" disabled>
                   {t('selectAge')}
@@ -316,16 +346,22 @@ function PatientProfilePage() {
                     {ageOption}
                   </option>
                 ))}
-              </select>
+              </TextField>
             </div>
-
 
             <div className="button-container">
               <Button
                 variant="contained"
                 endIcon={<BorderColorIcon />}
                 onClick={handleSaveChanges}
-                style={{ color: '#2a470c', backgroundColor: '#FFFBEE' }}>
+                sx={{
+                  color: '#2A470C',
+                  backgroundColor: '#FFFBEE',
+                  '&:hover': {
+                    backgroundColor: '#EADAC3',
+                  },
+                }}
+              >
                 {t('save')}
               </Button>
             </div>
