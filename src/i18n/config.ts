@@ -178,11 +178,19 @@ i18n
           omissionPercentage: "Percentage of omission error",
           commissionPercentage: "Percentage of commission error",
           patientUsername: "Patient",
+          confirm_delete_title: "Confirm Deletion",
+          confirm_delete_message: "Are you sure you want to delete the patient?",
+          patient_delete_success: "Patient deleted successfully",
+          patient_delete_failure: "Failed to delete patient"
 
         },
       },
       pl: {
         translation: {
+          confirm_delete_title: "Potwierdź usunięcie",
+          confirm_delete_message: "Czy na pewno chcesz usunąć pacjenta?",
+          patient_delete_success: "Poprawnie usunięto pacjenta",
+          patient_delete_failure: "Nie udało się usunąć pacjenta",
           add: "Dodaj",
           omissionsCount: "Liczba błędów pominięcia",
           commissionCount: "Liczba błędów fałszywego rozpoznania",
