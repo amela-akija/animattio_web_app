@@ -78,7 +78,7 @@
 
 @media (max-width: 480px) {
     .test-container {
-        max-width: 40%;
+        max-width: 45%;
     }
 
     .game-details {
@@ -86,7 +86,7 @@
     }
 
     .see-more-button {
-        font-size: 0.4rem;
+        font-size: 0.2rem;
     }
 }
 

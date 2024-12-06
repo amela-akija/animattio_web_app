@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import useResponsive from '../ui-components/useResponsive';
 import { useNavigate } from 'react-router-dom';
-import './SignupPage.css';
-import { Button, TextField } from '@mui/material';
+import {
+  Button,
+  TextField,
+  Typography,
+  Container,
+  Box,
+  Paper,
+} from '@mui/material';
+import SaveIcon from '@mui/icons-material/Save';
 import { useTranslation } from 'react-i18next';
 import { auth } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { addDoctor } from '../services/dbService';
-import SaveIcon from '@mui/icons-material/Save';
 import { toast } from 'react-toastify';
 import apiClient from '../services/apiClient';
 
@@ -16,27 +22,11 @@ function SignupPage() {
   const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const navigate = useNavigate();
 
-  const goToLogin = () => {
-    navigate('/login');
-  };
-
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [error] = useState<string | null>(null);
-
-  const checkIfDoctorExists = async (username: string): Promise<boolean> => {
-    try {
-      const response = await fetch(`/doctor-exists?username=${encodeURIComponent(username)}`);
-      const data = await response.json();
-      return data.exists;
-    } catch (err) {
-      console.error('Error checking doctor existence:', err);
-      toast.error(t('error_checking_doctor'));
-      return false;
-    }
-  };
 
   const signUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,6 +43,7 @@ function SignupPage() {
       toast.error(t('password_length'));
       return;
     }
+
     const hasUpperCase = /[A-Z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
 
@@ -75,7 +66,6 @@ function SignupPage() {
         return;
       }
     } catch (error) {
-      console.error('Error checking doctor existence:', error);
       toast.error(t('error_checking_doctor_existence'));
       return;
     }
@@ -87,89 +77,113 @@ function SignupPage() {
       toast.success(t('addDoctorSuccess'));
       navigate('/see-doctors');
     } catch (error) {
-      console.error('Error signing up:', error);
       toast.error(t('error'));
     }
   };
 
-
   return (
-    <div className="signup-container">
-      {laptop && <h1 className="signup-title-laptop">{t('addDoctor')}</h1>}
-      {mobile && <h1 className="signup-title-mobile">{t('addDoctor')}</h1>}
-      {tablet && <h1 className="signup-title-tablet">{t('addDoctor')}</h1>}
-      <form onSubmit={signUp} className="signup-form">
-        <div className="signup-input-container">
-          <label className="signup_label"> {t('username')}:</label>
+    <Container maxWidth="sm">
+      <Paper
+        elevation={3}
+        sx={{
+          p: 6,
+          mt: 20,
+          backgroundColor: '#FFFBEE',
+          borderRadius: '10px',
+        }}
+      >
+        <Typography
+          variant="h4"
+          align="center"
+          gutterBottom
+          sx={{
+            color: '#2A470C',
+            textShadow: '1px 1px 4px #2A350D',
+            fontWeight: 'bold',
+          }}
+        >
+          {t('addDoctor')}
+        </Typography>
+        <Box
+          component="form"
+          onSubmit={signUp}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 5,
+            mt: 5,
+          }}
+        >
           <TextField
-            id="username"
-            variant="standard"
-            name="username"
-            InputProps={{
-              disableUnderline: true
-            }}
+            label={t('username')}
+            variant="outlined"
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="signup-input"
-          />
-        </div>
-
-        <div className="signup-input-container">
-          <label className="signup_label"> {t('email')}:</label>
-          <TextField
-            id="email"
-            variant="standard"
-            name="email"
-            InputProps={{
-              disableUnderline: true
+            fullWidth
+            sx={{
+              backgroundColor: '#FFFBEE',
+              borderRadius: '10px',
             }}
+          />
+          <TextField
+            label={t('email')}
+            variant="outlined"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="signup-input"
-          />
-        </div>
-
-        <div className="signup-input-container">
-          <label className="signup_label"> {t('password')}:</label>
-          <TextField
-            id="password"
-            type="password"
-            name="password"
-            variant="standard"
-            InputProps={{
-              disableUnderline: true
+            fullWidth
+            sx={{
+              backgroundColor: '#FFFBEE',
+              borderRadius: '10px',
             }}
+          />
+          <TextField
+            label={t('password')}
+            type="password"
+            variant="outlined"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="signup-input"
-          />
-        </div>
-        <div className="signup-input-container">
-          <label className="signup_label"> {t('repeat_password')}:</label>
-          <TextField
-            id="passwordRepeat"
-            type="password"
-            name="passwordRepeat"
-            variant="standard"
-            InputProps={{
-              disableUnderline: true
+            fullWidth
+            sx={{
+              backgroundColor: '#FFFBEE',
+              borderRadius: '10px',
             }}
-            onChange={(e) => setRepeatPassword(e.target.value)}
-            className="signup-input"
           />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-
-        <div className="signup-button-container">
-          <Button
-            type="submit"
-            variant="contained"
-            // className="signuo-patient-button"
-            style={{ backgroundColor: '#2a470c', width:"24%" }}
-            startIcon={<SaveIcon />}
-          >
-            {t('add')}
-          </Button>
-        </div>
-      </form>
-    </div>
+          <TextField
+            label={t('repeat_password')}
+            type="password"
+            variant="outlined"
+            value={repeatPassword}
+            onChange={(e) => setRepeatPassword(e.target.value)}
+            fullWidth
+            sx={{
+              backgroundColor: '#FFFBEE',
+              borderRadius: '10px',
+            }}
+          />
+          {error && (
+            <Typography variant="body2" sx={{ color: 'red' }}>
+              {error}
+            </Typography>
+          )}
+          <Box sx={{ textAlign: 'center', mt: 3 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              startIcon={<SaveIcon />}
+              sx={{
+                color: '#FFFBEE',
+                backgroundColor: '#2A470C',
+                '&:hover': {
+                  backgroundColor: '#24530B',
+                },
+              }}
+            >
+              {t('add')}
+            </Button>
+          </Box>
+        </Box>
+      </Paper>
+    </Container>
   );
 }
 

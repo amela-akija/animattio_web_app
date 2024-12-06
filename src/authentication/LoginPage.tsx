@@ -1,27 +1,33 @@
 import React, { useState } from 'react';
-import useResponsive from '../ui-components/useResponsive';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.css';
-import { TextField } from '@mui/material';
+import { Box, Button, TextField, Typography, Container, Paper } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { auth, firestore } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-
-
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#2A470C',
+    },
+    secondary: {
+      main: '#FBE3BE',
+    },
+  },
+  typography: {
+    fontFamily: `'Karla', sans-serif`,
+  },
+});
 
 function LoginPage() {
   const { t } = useTranslation();
-  const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const navigate = useNavigate();
-  // const goToSignup = () => {
-  //   navigate('/signup');
-  // };
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const signIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
@@ -29,107 +35,121 @@ function LoginPage() {
       const user = doctorCredentials.user;
 
       const idToken = await user.getIdToken();
-      localStorage.setItem('token', idToken)
-      console.log('token', idToken);
+      localStorage.setItem('token', idToken);
+
       const doctorRef = doc(firestore, 'doctors', user.uid);
       const doctorSnapshot = await getDoc(doctorRef);
 
       if (doctorSnapshot.exists()) {
         const doctorData = doctorSnapshot.data();
-        console.log('Doctor data:', doctorData);
-        localStorage.setItem("role", doctorData.role);
+        localStorage.setItem('role', doctorData.role);
 
         if (doctorData?.role === 'doctor') {
-          const doctorUsername = doctorData.username;
-          if (doctorUsername) {
-            localStorage.setItem('doctorUsername', doctorUsername);
-            console.log('Doctor Username:', doctorUsername);
-              navigate('/see-patients');
-
-          } else {
-            console.error('Username is undefined. Check if it is stored in Firestore.');
-          }
-
-          console.log(t('doctor_login'));
-        } else if(doctorData?.role === "admin"){
-          const doctorUsername = doctorData.username;
-          if (doctorUsername) {
-            localStorage.setItem('doctorUsername', doctorUsername);
-            console.log('Doctor Username:', doctorUsername);
-            navigate('/see-doctors');
-          } else {
-            console.error('Username is undefined. Check if it is stored in Firestore.');
-          }
-
-          console.log(t('doctor_login'));
-        }
-        else {
-          console.log('Access denied');
+          localStorage.setItem('doctorUsername', doctorData.username || '');
+          navigate('/see-patients');
+        } else if (doctorData?.role === 'admin') {
+          localStorage.setItem('doctorUsername', doctorData.username || '');
+          navigate('/see-doctors');
+        } else {
           await auth.signOut();
-          alert(t('access_denied'));
+          toast.error(t('access_denied'));
         }
       } else {
-        console.log('No document');
-        alert(t('access_denied'));
+        toast.error(t('access_denied'));
       }
     } catch (error) {
       toast.error(t('errorLogin'));
-      console.error('Error:', error);
     }
   };
 
-
   return (
-    <div className="login-container">
-      {laptop && <h1 className="login-title-laptop">{t('login_page')}</h1>}
-      {mobile && <h1 className="login-title-mobile">{t('login_page')}</h1>}
-      {tablet && <h1 className="login-title-tablet">{t('login_page')}</h1>}
-  <form onSubmit={signIn} className="signin-form">
-      <div className="login-input-container">
-        <label className="login_label"> {t('email')}:</label>
-        <TextField
-          id="email"
-          variant="standard"
-          name="email"
-          value={email}
-          onChange={(e)=>setEmail(e.target.value)}
-          InputProps={{
-            disableUnderline: true
+    <ThemeProvider theme={theme}>
+      <Container maxWidth="sm">
+        <Paper
+          elevation={3}
+          sx={{
+            p: 4,
+            mt: 20,
+            backgroundColor: '#FBE3BE',
+            borderRadius: '10px',
           }}
-          className="login-input"
-        />
-      </div>
-
-      <div className="login-input-container">
-        <label className="login_label"> {t('password')}:</label>
-
-        <TextField
-          id="password"
-          type="password"
-          name="password"
-          variant="standard"
-          value={password}
-          onChange={(e)=>setPassword(e.target.value)}
-
-          InputProps={{
-            disableUnderline: true
-          }}
-          className="login-input"
-        />
-      </div>
-      <div className="login-button-container">
-        <button className="login-button" type="submit">
-          <text className="login-text-button"> {t("sign_in")}</text>
-        </button>
-      </div>
-  </form>
-      <div className="login-button-container">
-        {/*<button className="registration-button" onClick={goToSignup}>*/}
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          {/*<text className="login-small-text-button"> {t("message_login")}</text>*/}
-        {/*</button>*/}
-      </div>
-    </div>
+        >
+          <Typography
+            variant="h4"
+            align="center"
+            gutterBottom
+            sx={{ color: '#2A470C', textShadow: '1px 1px 4px #2A350D' }}
+          >
+            {t('login_page')}
+          </Typography>
+          <Box component="form" onSubmit={signIn} noValidate  sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 5,
+            mt: 5,
+          }}>
+            <TextField
+              fullWidth
+              label={t('email')}
+              variant="outlined"
+              margin="normal"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              InputProps={{
+                style: {
+                  backgroundColor: '#FBE3BE',
+                  borderRadius: '10px',
+                },
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: '#2A470C' },
+                  '&:hover fieldset': { borderColor: '#2A350D' },
+                },
+              }}
+            />
+            <TextField
+              fullWidth
+              label={t('password')}
+              variant="outlined"
+              margin="normal"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              InputProps={{
+                style: {
+                  backgroundColor: '#FBE3BE',
+                  borderRadius: '10px',
+                },
+              }}
+              sx={{
+                '& .MuiOutlinedInput-root': {
+                  '& fieldset': { borderColor: '#2A470C' },
+                  '&:hover fieldset': { borderColor: '#2A350D' },
+                },
+              }}
+            />
+            <Box sx={{ mt: 5, textAlign: 'center' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                type="submit"
+                sx={{
+                  width: '50%',
+                  borderRadius: '10px',
+                  textTransform: 'none',
+                  fontFamily: 'Karla, sans-serif',
+                  fontSize: '1rem',
+                }}
+              >
+                {t('sign_in')}
+              </Button>
+            </Box>
+          </Box>
+        </Paper>
+      </Container>
+    </ThemeProvider>
   );
 }
 
