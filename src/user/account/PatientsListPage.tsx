@@ -25,7 +25,7 @@ const SeePatientsPage: React.FC = () => {
 
   const fetchPatients = async (searchValueOverride?: string) => {
     setLoading(true);
-    let url = `http://localhost:8080/patients/get-all-patients?doctorId=${doctorId}`;
+    let url = `https://backend-animattio-59a791d90bc1.herokuapp.com/patients/get-all-patients?doctorId=${doctorId}`;
 
     if (searchType === 'age') {
       const minAge = ageRange.min ? Number(ageRange.min) : 6;
@@ -37,14 +37,14 @@ const SeePatientsPage: React.FC = () => {
         return;
       }
 
-      url = `http://localhost:8080/patients/get-patients-by-age?doctorId=${doctorId}&minAge=${minAge}&maxAge=${maxAge}`;
+      url = `https://backend-animattio-59a791d90bc1.herokuapp.com/patients/get-patients-by-age?doctorId=${doctorId}&minAge=${minAge}&maxAge=${maxAge}`;
     } else if (searchType === 'gender' && searchValue) {
-      url = `http://localhost:8080/patients/get-patients-by-gender?doctorId=${doctorId}&gender=${searchValue}`;
+      url = `https://backend-animattio-59a791d90bc1.herokuapp.com/patients/get-patients-by-gender?doctorId=${doctorId}&gender=${searchValue}`;
     } else if (searchType === 'username' && (searchValueOverride || searchValue)) {
       const usernameToSearch = searchValueOverride || searchValue;
-      url = `http://localhost:8080/patients/get-patients-by-username?doctorId=${doctorId}&username=${usernameToSearch}`;
+      url = `https://backend-animattio-59a791d90bc1.herokuapp.com/patients/get-patients-by-username?doctorId=${doctorId}&username=${usernameToSearch}`;
     } else if (searchType === 'type' && searchValue) {
-      url = `http://localhost:8080/patients/get-patients-by-type?doctorId=${doctorId}&type=${searchValue}`;
+      url = `https://backend-animattio-59a791d90bc1.herokuapp.com/patients/get-patients-by-type?doctorId=${doctorId}&type=${searchValue}`;
     }
 
     try {
@@ -92,7 +92,7 @@ const SeePatientsPage: React.FC = () => {
 
   const generateAgeOptions = () => {
     const options = [];
-    for (let i = 6; i <= 18; i++) {
+    for (let i = 9; i <= 18; i++) {
       options.push(
         <option key={i} value={i}>
           {i}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: 'https://backend-animattio-59a791d90bc1.herokuapp.com',
   headers: {
     'Content-Type': 'application/json',
   },
