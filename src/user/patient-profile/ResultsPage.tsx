@@ -28,7 +28,7 @@ function ResultsPage() {
   const { tests } = (location.state as LocationState) || { tests: [] };
 
   const [activeButton, setActiveButton] = useState<'reactionTime' | 'commission' | 'omission'>('reactionTime');
-  const patientId = localStorage.getItem('patientUsername');
+  const patientId = localStorage.getItem('clicked_user');
 
   const handleButtonClick = (button: 'reactionTime' | 'commission' | 'omission') => {
     setActiveButton(button);
