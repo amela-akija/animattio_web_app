@@ -87,7 +87,7 @@ function SignupPage() {
         elevation={3}
         sx={{
           p: 6,
-          mt: 20,
+          mt: 15,
           backgroundColor: '#FFFBEE',
           borderRadius: '10px',
         }}
