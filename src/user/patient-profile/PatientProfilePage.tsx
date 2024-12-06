@@ -27,6 +27,7 @@ function PatientProfilePage() {
 
   const [activeButton, setActiveButton] = useState<'info' | 'stats' | 'result'>('info');
   const [summedErrors, setSummedErrors] = useState([]);
+  // const [tests, setTests] = useState([]);
   const [selectedOption, setSelectedOption] = useState('mode1');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
@@ -59,6 +60,19 @@ function PatientProfilePage() {
       fetchMobileId();
     }
   }, [username]);
+  useEffect(() => {
+    const fetchSummedErrors = async () => {
+      if (mobileId) {
+        try {
+          const response = await apiClient.get(`/tests/summed-errors/${mobileId}`);
+          setSummedErrors(response.data);
+        } catch (error) {
+          toast.error(t('noPermission'));
+        }
+      }
+    };
+    fetchSummedErrors();
+  }, [mobileId]);
 
   useEffect(() => {
     const fetchPatientData = async () => {
