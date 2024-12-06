@@ -25,7 +25,7 @@ function AddPatientPage() {
   const checkIfPatientExists = async (username: string): Promise<boolean> => {
     try {
       console.log(`Checking if patient exists: ${username}`);
-      const response = await axios.get('http://localhost:8080/patients/patient-exists', {
+      const response = await axios.get('https://backend-animattio-59a791d90bc1.herokuapp.com/patients/patient-exists', {
         params: { username },
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -151,7 +151,7 @@ function AddPatientPage() {
               <MenuItem value="" disabled>
                 {t('selectAge')}
               </MenuItem>
-              {Array.from({ length: 13 }, (_, i) => i + 6).map((ageOption) => (
+              {Array.from({ length: 10 }, (_, i) => i + 9).map((ageOption) => (
                 <MenuItem key={ageOption} value={ageOption.toString()}>
                   {ageOption}
                 </MenuItem>
