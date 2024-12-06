@@ -1,5 +1,5 @@
 import React from 'react';
-import './TestComponent.css';
+import { Card, CardContent, Typography, Button, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
@@ -34,17 +34,38 @@ const TestComponent: React.FC<TestComponentProps> = ({ test, tests }) => {
   };
 
   return (
-    <div className="test-container">
-      <p className="game-details">
-        <strong>{t("endDate")}:</strong> {test.endDate}
-      </p>
-      <p className="game-details">
-        <strong>{t("mode")}:</strong> {displayMode()}
-      </p>
-      <button className="see-more-button" onClick={() => goToResultPage(test.testId)}>
-        {t("see_more")}
-      </button>
-    </div>
+    <Card
+      elevation={2}
+      sx={{
+        backgroundColor: '#FFFBEE',
+        borderRadius: '10px',
+        overflow: 'hidden',
+      }}
+    >
+      <CardContent>
+        <Box display="flex" flexDirection="column" gap={1}>
+          <Typography variant="body1" color="#2A470C">
+            <strong>{t('endDate')}:</strong> {test.endDate}
+          </Typography>
+          <Typography variant="body1" color="#2A470C">
+            <strong>{t('mode')}:</strong> {displayMode()}
+          </Typography>
+          <Button
+            variant="contained"
+            onClick={() => goToResultPage(test.testId)}
+            sx={{
+              backgroundColor: '#FFC267',
+              color: '#2A470C',
+              '&:hover': {
+                backgroundColor: '#EADAC3',
+              },
+            }}
+          >
+            {t('see_more')}
+          </Button>
+        </Box>
+      </CardContent>
+    </Card>
   );
 };
 

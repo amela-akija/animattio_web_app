@@ -1,6 +1,6 @@
 import React from 'react';
 import TestComponent from './TestComponent';
-import './TestComponent.css';
+import { Box, Typography } from '@mui/material';
 
 interface Test {
   testId: string;
@@ -14,11 +14,16 @@ interface TestsListProps {
 
 const TestsList: React.FC<TestsListProps> = ({ tests }) => {
   return (
-    <div className="test-list">
+    <Box display="flex" flexDirection="column" gap={2}>
       {tests.map((test) => (
         <TestComponent key={test.testId} test={test} tests={tests} />
       ))}
-    </div>
+      {tests.length === 0 && (
+        <Typography variant="h6" color="textSecondary" textAlign="center">
+          No tests available.
+        </Typography>
+      )}
+    </Box>
   );
 };
 
