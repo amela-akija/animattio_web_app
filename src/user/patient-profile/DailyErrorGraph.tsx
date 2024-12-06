@@ -96,6 +96,7 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
 
           if (!acc[mode]) acc[mode] = { dates: [], commissionPercentages: [], omissionPercentages: [] };
 
+          console.log("date: " + date)
           acc[mode].dates.push(format(date, 'dd.MM.yyyy'));
           acc[mode].commissionPercentages.push(commissionPercentage);
           acc[mode].omissionPercentages.push(omissionPercentage);
