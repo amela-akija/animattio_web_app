@@ -9,10 +9,10 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
-  Paper,
+  Paper, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import TestsList from '../../ui-components/test/TestListComponent';
 import MonthlyErrorGraph from './MonthlyErrorGraph';
@@ -24,10 +24,11 @@ import { toast } from 'react-toastify';
 function PatientProfilePage() {
   const { t } = useTranslation();
   const { username } = useParams<{ username: string }>();
-
+  const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState<'info' | 'stats' | 'result'>('info');
   const [summedErrors, setSummedErrors] = useState([]);
   // const [tests, setTests] = useState([]);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('mode1');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
@@ -35,6 +36,16 @@ function PatientProfilePage() {
   const [documentId, setDocumentId] = useState('');
   const [patientUsername, setPatientUsername] = useState(username || '');
   const [mobileId, setMobileId] = useState('');
+  const handleDeletePatient = async () => {
+    try {
+      await apiClient.delete(`/patients/delete-by-username?username=${username}`);
+      toast.success(t('patient_delete_success'));
+      setDeleteDialogOpen(false);
+      navigate('/see-patients');
+    } catch (error) {
+      toast.error(t('patient_delete_failure'));
+    }
+  };
 
   useEffect(() => {
     if (username) {
@@ -145,6 +156,19 @@ function PatientProfilePage() {
           >
             {t('stats')}
           </Button>
+          <Button
+            variant="contained"
+            color="error"
+            onClick={() => setDeleteDialogOpen(true)}
+            sx={{
+              backgroundColor: '#FF5F5F',
+              color: '#FFFFFF',
+              '&:hover': { backgroundColor: '#FF4C4C' },
+            }}
+          >
+            {t('delete')}
+          </Button>
+
         </Box>
 
         {activeButton === 'info' && (
@@ -259,6 +283,30 @@ function PatientProfilePage() {
           </>
         )}
       </Paper>
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={() => setDeleteDialogOpen(false)}
+      >
+        <DialogTitle>{t('confirm_delete_title')}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {t('confirm_delete_message', { username })}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteDialogOpen(false)} color="primary">
+            {t('cancel')}
+          </Button>
+          <Button
+            onClick={handleDeletePatient}
+            color="error"
+            autoFocus
+          >
+            {t('delete')}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </Container>
   );
 }
