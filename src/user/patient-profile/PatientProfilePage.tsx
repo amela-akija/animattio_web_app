@@ -184,7 +184,7 @@ function PatientProfilePage() {
                 <MenuItem value="" disabled>
                   {t('selectAge')}
                 </MenuItem>
-                {Array.from({ length: 13 }, (_, i) => i + 6).map((ageOption) => (
+                {Array.from({ length: 10 }, (_, i) => i + 9).map((ageOption) => (
                   <MenuItem key={ageOption} value={ageOption}>
                     {ageOption}
                   </MenuItem>
