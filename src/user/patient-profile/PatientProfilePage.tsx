@@ -1,9 +1,16 @@
-import React from 'react';
-import './PatientProfilePage.css';
-import useResponsive from '../../ui-components/useResponsive';
-import { Button, TextField } from '@mui/material';
-import { useState, useEffect } from 'react';
-import 'react-datepicker/dist/react-datepicker.css';
+import React, { useState, useEffect } from 'react';
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  Paper,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
@@ -14,73 +21,45 @@ import Legend from '../../ui-components/legend/Legend';
 import apiClient from '../../services/apiClient';
 import { toast } from 'react-toastify';
 
-
 function PatientProfilePage() {
   const { t } = useTranslation();
-  const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
   const { username } = useParams<{ username: string }>();
-  localStorage.setItem("patientUsername", username as string);
+
+  const [activeButton, setActiveButton] = useState<'info' | 'stats' | 'result'>('info');
   const [summedErrors, setSummedErrors] = useState([]);
-  useEffect(() => {
-    if (username) {
-      localStorage.setItem("clicked_user", username);
-      console.log("clicked_user", username);
-    }
-  }, [username]);
   const [selectedOption, setSelectedOption] = useState('mode1');
-  const [activeButton, setActiveButton] = useState<'info'  | 'stats' | 'result' >('info');
-
-  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedOption(event.target.value);
-  };
-
-  const handleButtonClick = (button: 'info' | 'stats' |'result') => {
-    setActiveButton(button);
-  };
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const [type, setType] = useState('');
   const [documentId, setDocumentId] = useState('');
-  const [patientUsername, setPatientUsername] = useState('');
+  const [patientUsername, setPatientUsername] = useState(username || '');
   const [mobileId, setMobileId] = useState('');
-
-  const legendItems = [
-    { color: 'rgba(17,81,10,0.6)', label: t('Omission') },
-    { color: 'rgba(230,199,50,0.9)', label: t('Commission') },
-    { color: 'rgba(243,165,9,0.98)', label: t('normativeCommission') },
-    { color: 'rgba(102,179,90,0.6)', label: t('normativeOmission') }
-  ];
-
 
   useEffect(() => {
     if (username) {
-      localStorage.setItem("clicked_user", username);
+      localStorage.setItem('clicked_user', username);
       setDocumentId(username);
-      setPatientUsername(username)
-      console.log("clicked_user", username);
+      setPatientUsername(username);
+
       const fetchMobileId = async () => {
         try {
           const response = await apiClient.get('/patients/get-patient-id', {
             params: { username },
           });
           if (response.data) {
-            const fetchedMobileId = response.data.documentId;
-            console.log("Fetched mobileId from API:", fetchedMobileId);
-            setMobileId(fetchedMobileId);
+            setMobileId(response.data.documentId);
           } else {
-            console.error('No mobile ID returned in the response');
-            toast.error(t('noPermission'))
+            toast.error(t('noPermission'));
           }
         } catch (error) {
-          console.error('Error fetching patient mobile ID:', error);
-          toast.error(t('noPermission'))
-
+          toast.error(t('noPermission'));
         }
       };
 
       fetchMobileId();
     }
   }, [username]);
+
   useEffect(() => {
     const fetchPatientData = async () => {
       try {
@@ -91,284 +70,182 @@ function PatientProfilePage() {
         setAge(responseAge.data);
         setType(responseType.data);
       } catch (error) {
-        console.error('Error fetching patient data:', error);
-        toast.error(t('noPermission'))
+        toast.error(t('noPermission'));
       }
     };
     if (username) {
       fetchPatientData();
     }
   }, [username]);
-  const handleInputChange = (setter: React.Dispatch<React.SetStateAction<string>>) => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setter(event.target.value);
-  };
+
   const handleSaveChanges = async () => {
-    const updatedPatient = {
-      patientUsername,
-      gender,
-      age,
-      type,
-    };
+    const updatedPatient = { patientUsername, gender, age, type };
     try {
-      console.log("documnetId", documentId);
-      console.log(updatedPatient);
       await apiClient.put(`/patients/update-patient?documentId=${documentId}`, updatedPatient);
       setDocumentId(patientUsername);
       toast.success(t('patient_update_success'));
     } catch (error) {
-      console.error('Error updating patient:', error);
       toast.error(t('patient_update_failure'));
     }
   };
 
-
-
-  useEffect(() => {
-    const fetchSummedErrors = async () => {
-      if (mobileId) {
-        try {
-          const response = await apiClient.get(`/tests/summed-errors/${mobileId}`);
-          console.log("Fetched summed errors:", response.data);
-          setSummedErrors(response.data);
-        } catch (error) {
-          console.error('Error fetching summed errors:', error);
-          toast.error(t('noPermission'))
-        }
-      }
-    };
-
-    fetchSummedErrors();
-  }, [mobileId]);
+  const handleButtonClick = (button: 'info' | 'stats' | 'result') => {
+    setActiveButton(button);
+  };
 
   return (
-    <div className="patient-profile-container">
-      <div className="patient-profile-first-column">
-        {laptop && <h1 className="patient-profile-laptop">{t('patient_profile')}:</h1>}
-        {mobile && <h1 className="patient-profile-mobile">{t('patient_profile')}:</h1>}
-        {tablet && <h1 className="patient-profile-tablet">{t('patient_profile')}:</h1>}
-        <div className="patient-button-container">
-          <button
-            className="patient-button"
+    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 3 }}>
+        <Typography variant="h4" sx={{ color: '#2A470C', fontWeight: 'bold', mb: 3 }}>
+          {t('patient_profile')}:
+        </Typography>
+
+        <Box display="flex" gap={2} mb={3}>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: activeButton === 'info' ? '#FFC267' : '#FBE3BE',
+              color: '#2A470C',
+            }}
             onClick={() => handleButtonClick('info')}
-            style={{
-              backgroundColor: activeButton === 'info' ? '#FFC267' : '#FBE3BE'
-            }}>
-            <text className="patient-text-button">{t('patient_info')}:</text>
-          </button>
-        </div>
-
-        <div className="patient-button-container">
-          <button
+          >
+            {t('patient_info')}
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: activeButton === 'result' ? '#FFC267' : '#FBE3BE',
+              color: '#2A470C',
+            }}
             onClick={() => handleButtonClick('result')}
-            className="patient-button"
-            style={{
-              backgroundColor: activeButton === 'result' ? '#FFC267' : '#FBE3BE'
-            }}>
-            <text className="patient-text-button">{t('results')}:</text>
-          </button>
-        </div>
-        <div className="patient-button-container">
-          <button
-            className="patient-button"
+          >
+            {t('results')}
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              backgroundColor: activeButton === 'stats' ? '#FFC267' : '#FBE3BE',
+              color: '#2A470C',
+            }}
             onClick={() => handleButtonClick('stats')}
-            style={{
-              backgroundColor: activeButton === 'stats' ? '#FFC267' : '#FBE3BE'
-            }}>
-            <text className="patient-text-button">{t('stats')}:</text>
-          </button>
-        </div>
-        {activeButton === 'stats' && (
-          <div className="stats-dropdown-container">
-            <label className="label-text" style={{ color: '#2A470C', fontSize: '2vh', fontFamily: 'Karla', fontWeight: 'lighter' }}>
-              {' '}
-              {t('test_mode')}:
-              <select
-                id="testmode"
-                value={selectedOption}
-                onChange={handleSelectChange}
-                className="stats-dropdown">
-                <option value="" disabled>
-                  {t('message_test')}
-                </option>
-                <option value="mode1">{t('mode1')}</option>
-                <option value="mode2">{t('mode2')}</option>
-              </select>
-            </label>
-          </div>
-        )}
-        {activeButton==='stats' && (
-          <Legend items={legendItems} />
-        )}
-      </div>
+          >
+            {t('stats')}
+          </Button>
+        </Box>
 
-      {/*column 2*/}
-      {/**/}
-      {/**/}
-      <div className="patient-profile-second-column">
-        <div className="patient-profile-second-column">
-          <div className="big-space"></div>
-          {activeButton === 'result' && <TestsList tests={summedErrors} />}
-          {activeButton === 'stats' && (
-            <div className="graph-container">
+        {activeButton === 'info' && (
+          <Box display="flex" flexDirection="column" gap={3}>
+            <TextField
+              label={t('patientUsername')}
+              variant="outlined"
+              value={patientUsername}
+              onChange={(e) => setPatientUsername(e.target.value)}
+              fullWidth
+              sx={{
+                backgroundColor: '#FFFBEE',
+                borderRadius: '10px',
+              }}
+            />
+            <FormControl fullWidth>
+              <InputLabel>{t('gender')}</InputLabel>
+              <Select
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                sx={{ backgroundColor: '#FFFBEE', borderRadius: '10px' }}
+              >
+                <MenuItem value="" disabled>
+                  {t('selectGender')}
+                </MenuItem>
+                <MenuItem value="male">{t('male')}</MenuItem>
+                <MenuItem value="female">{t('female')}</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel>{t('type')}</InputLabel>
+              <Select
+                value={type}
+                onChange={(e) => setType(e.target.value)}
+                sx={{ backgroundColor: '#FFFBEE', borderRadius: '10px' }}
+              >
+                <MenuItem value="" disabled>
+                  {t('selectType')}
+                </MenuItem>
+                <MenuItem value="epilepsy">{t('epilepsy')}</MenuItem>
+                <MenuItem value="no epilepsy">{t('noEpilepsy')}</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth>
+              <InputLabel>{t('age')}</InputLabel>
+              <Select
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                sx={{ backgroundColor: '#FFFBEE', borderRadius: '10px' }}
+              >
+                <MenuItem value="" disabled>
+                  {t('selectAge')}
+                </MenuItem>
+                {Array.from({ length: 13 }, (_, i) => i + 6).map((ageOption) => (
+                  <MenuItem key={ageOption} value={ageOption}>
+                    {ageOption}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <Button
+              variant="contained"
+              endIcon={<BorderColorIcon />}
+              onClick={handleSaveChanges}
+              sx={{
+                color: '#2A470C',
+                backgroundColor: '#FFC267',
+                '&:hover': { backgroundColor: '#EADAC3' },
+              }}
+            >
+              {t('save')}
+            </Button>
+          </Box>
+        )}
+
+        {activeButton === 'result' && <TestsList tests={summedErrors} />}
+        {activeButton === 'stats' && (
+          <>
+            <Box display="flex" flexDirection="column" gap={2} mb={3}>
+              <FormControl fullWidth>
+                <InputLabel>{t('test_mode')}</InputLabel>
+                <Select
+                  value={selectedOption}
+                  onChange={(e) => setSelectedOption(e.target.value)}
+                  sx={{ backgroundColor: '#FFFBEE', borderRadius: '10px' }}
+                >
+                  <MenuItem value="mode1">{t('mode1')}</MenuItem>
+                  <MenuItem value="mode2">{t('mode2')}</MenuItem>
+                </Select>
+              </FormControl>
+            </Box>
+            <Legend items={[
+              { color: 'rgba(17,81,10,0.6)', label: t('Omission') },
+              { color: 'rgba(230,199,50,0.9)', label: t('Commission') },
+              { color: 'rgba(243,165,9,0.98)', label: t('normativeCommission') },
+              { color: 'rgba(102,179,90,0.6)', label: t('normativeOmission') },
+            ]} />
+            <Box mb={3}>
               <MonthlyErrorGraph
                 userId={mobileId}
                 selectedMode={selectedOption}
                 age={Number(age)}
                 gender={gender as 'male' | 'female'}
               />
-            </div>
-          )}
-          {activeButton === 'stats' && (
-            <div className="graph-container">
-              <DailyErrorGraph
-                userId={mobileId}
-                selectedMode={selectedOption}
-                age={Number(age)}
-                gender={gender as 'male' | 'female'}
-              />
-            </div>
-          )}
-        </div>
-        {activeButton === 'info' && (
-          <div className="patient-info-input-container">
-            <div className="patient-input-wrapper">
-              <label htmlFor="username" className="patient-input-label">
-                {t('patientUsername')}:
-              </label>
-              <TextField
-                id="username"
-                variant="outlined"
-                name="username"
-                value={patientUsername}
-                onChange={handleInputChange(setPatientUsername)}
-                fullWidth
-                sx={{
-                  backgroundColor: '#FFFBEE',
-                  borderRadius: '10px',
-                  '& .MuiInputBase-input': {
-                    color: '#2A470C',
-                    fontSize: '1rem',
-                    fontWeight: 'bold',
-                  },
-                }}
-              />
-            </div>
-            <div className="space"></div>
-            <div className="patient-input-wrapper">
-              <label htmlFor="gender" className="patient-input-label">
-                {t('gender')}:
-              </label>
-              <TextField
-                id="gender"
-                select
-                value={gender}
-                onChange={(e) => setGender(e.target.value)}
-                fullWidth
-                SelectProps={{
-                  native: true,
-                }}
-                sx={{
-                  backgroundColor: '#FFFBEE',
-                  borderRadius: '10px',
-                  '& .MuiInputBase-input': {
-                    color: '#2A470C',
-                  },
-                }}
-              >
-                <option value="" disabled>
-                  {t('selectGender')}
-                </option>
-                <option value="male">{t('male')}</option>
-                <option value="female">{t('female')}</option>
-              </TextField>
-            </div>
-
-            <div className="space"></div>
-            <div className="patient-input-wrapper">
-              <label htmlFor="type" className="patient-input-label">
-                {t('type')}:
-              </label>
-              <TextField
-                id="type"
-                select
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-                fullWidth
-                SelectProps={{
-                  native: true,
-                }}
-                sx={{
-                  backgroundColor: '#FFFBEE',
-                  borderRadius: '10px',
-                  '& .MuiInputBase-input': {
-                    color: '#2A470C',
-                  },
-                }}
-              >
-                <option value="" disabled>
-                  {t('selectType')}
-                </option>
-                <option value="epilepsy">{t('epilepsy')}</option>
-                <option value="no epilepsy">{t('noEpilepsy')}</option>
-              </TextField>
-            </div>
-
-            <div className="space"></div>
-
-            <div className="patient-input-wrapper">
-              <label htmlFor="age" className="patient-input-label">
-                {t('age')}:
-              </label>
-              <TextField
-                id="age"
-                select
-                value={age}
-                onChange={(e) => setAge(e.target.value)}
-                fullWidth
-                SelectProps={{
-                  native: true,
-                }}
-                sx={{
-                  backgroundColor: '#FFFBEE',
-                  borderRadius: '10px',
-                  '& .MuiInputBase-input': {
-                    color: '#2A470C',
-                  },
-                }}
-              >
-                <option value="" disabled>
-                  {t('selectAge')}
-                </option>
-                {Array.from({ length: 13 }, (_, i) => i + 6).map((ageOption) => (
-                  <option key={ageOption} value={ageOption}>
-                    {ageOption}
-                  </option>
-                ))}
-              </TextField>
-            </div>
-
-            <div className="button-container">
-              <Button
-                variant="contained"
-                endIcon={<BorderColorIcon />}
-                onClick={handleSaveChanges}
-                sx={{
-                  color: '#2A470C',
-                  backgroundColor: '#FFFBEE',
-                  '&:hover': {
-                    backgroundColor: '#EADAC3',
-                  },
-                }}
-              >
-                {t('save')}
-              </Button>
-            </div>
-          </div>
+            </Box>
+            <DailyErrorGraph
+              userId={mobileId}
+              selectedMode={selectedOption}
+              age={Number(age)}
+              gender={gender as 'male' | 'female'}
+            />
+          </>
         )}
-      </div>
-    </div>
+      </Paper>
+    </Container>
   );
 }
 
