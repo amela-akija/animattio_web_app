@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
 import './DailyErrorGraph.css';
 import { parse, format } from 'date-fns';
-import { pl as polishLocale } from 'date-fns/locale';
+import {enGB as polishLocale} from 'date-fns/locale';
 import apiClient from '../../services/apiClient';
 
 interface ErrorsGraphProps {
@@ -96,7 +96,6 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
 
           if (!acc[mode]) acc[mode] = { dates: [], commissionPercentages: [], omissionPercentages: [] };
 
-          console.log("date: " + date)
           acc[mode].dates.push(format(date, 'dd.MM.yyyy'));
           acc[mode].commissionPercentages.push(commissionPercentage);
           acc[mode].omissionPercentages.push(omissionPercentage);
