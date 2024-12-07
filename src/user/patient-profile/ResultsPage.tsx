@@ -44,7 +44,7 @@ function ResultsPage() {
   console.log('OmissionGraph props:', { testId, patientId });
   console.log('CommissionGraph props:', { testId, patientId });
   console.log('Active button:', activeButton);
-  console.log('Device Type:', { isMobile, isTablet, isLaptop });
+  // console.log('Device Type:', { isMobile, isTablet, isLaptop });
 
 
   return (
