@@ -27,7 +27,6 @@ function PatientProfilePage() {
   const navigate = useNavigate();
   const [activeButton, setActiveButton] = useState<'info' | 'stats' | 'result'>('info');
   const [summedErrors, setSummedErrors] = useState([]);
-  // const [tests, setTests] = useState([]);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState('mode1');
   const [gender, setGender] = useState('');
