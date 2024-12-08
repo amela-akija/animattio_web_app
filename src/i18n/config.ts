@@ -244,7 +244,7 @@ i18n
           meanReactionTime: "Średni czas reakcji (ms)",
           SD: "Odchylenie standardowe (ms)",
           male:"męska",
-          female:"damska",
+          female:"żeńska",
           selectGender: "wybierz płeć",
           errorPatientExistsMessage: "Pacjent o podanej nazwie użytkownika już istnieje",
           errorAddPatientMessage: "Nie udało się dodać pacjenta",
