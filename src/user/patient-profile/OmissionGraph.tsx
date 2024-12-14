@@ -23,9 +23,9 @@ interface NormativeDataType {
 
 const NormativeData: NormativeDataType = {
   '9-11': { female: { mean: 6.7, sd: 6.4 }, male: { mean: 6.5, sd: 5.1 } },
-  '12-13': { female: { mean: 5.4, sd: 6.4 }, male: { mean: 3.5, sd: 5.1 } },
-  '14-15': { female: { mean: 2.3, sd: 6.4 }, male: { mean: 3.0, sd: 5.1 } },
-  '16-18': { female: { mean: 2.1, sd: 6.4 }, male: { mean: 2.9, sd: 5.1 } },
+  '12-13': { female: { mean: 3.5, sd: 3.1 }, male: { mean: 5.4, sd: 4.7 } },
+  '14-15': { female: { mean: 2.3, sd: 3.8 }, male: { mean: 3.0, sd: 5.0 } },
+  '16-18': { female: { mean: 2.1, sd: 3.4 }, male: { mean: 2.9, sd: 3.0 } },
 };
 
 interface OmissionGraphProps {
