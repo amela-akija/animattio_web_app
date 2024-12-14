@@ -166,14 +166,14 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
         borderWidth: 1,
       },
       {
-        label: t('Normative Commission'),
+        label: t('normativeCommission'),
         data: new Array(dates.length).fill(normativeCommission),
         backgroundColor: 'rgba(241,175,53,0.98)',
         borderColor: 'rgba(241,175,53,0.98)',
         borderWidth: 1,
       },
       {
-        label: t('Normative Omission'),
+        label: t('normativeOmission'),
         data: new Array(dates.length).fill(normativeOmission),
         backgroundColor: 'rgba(74,151,54,0.6)',
         borderColor: 'rgba(74,151,54,0.6)',
