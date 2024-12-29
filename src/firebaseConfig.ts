@@ -4,7 +4,7 @@ import { getAuth} from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBULdNY8vxe9--waLWEgRxHL-H_iophzz0",
+  apiKey: "AIzaSyDxGjb4Opd8sV7L1LdQzu6RSq1avCqJTpA",
   authDomain: "animattio-mobile-app.firebaseapp.com",
   projectId: "animattio-mobile-app",
   storageBucket: "animattio-mobile-app.appspot.com",
