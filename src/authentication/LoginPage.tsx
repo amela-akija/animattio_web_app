@@ -23,27 +23,32 @@ const theme = createTheme({
 });
 
 function LoginPage() {
-  const { t } = useTranslation();
-  const navigate = useNavigate();
+  const { t } = useTranslation(); // Translation hook for internationalization
+  const navigate = useNavigate(); // React Router hook for navigation
+  // Variables to store email and password input
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // Function for sign in
   const signIn = async (e: React.FormEvent) => {
-    e.preventDefault();
+    // e is a form event triggered in a React application, in this case by submitting a form
+    e.preventDefault(); // ensures that the page doesn't reload or navigate away
     try {
       const doctorCredentials = await signInWithEmailAndPassword(auth, email, password);
       const user = doctorCredentials.user;
 
+      // Firebase ID token for the signed-in user
       const idToken = await user.getIdToken();
       localStorage.setItem('token', idToken);
 
+      // Firestore document for the signed-in user
       const doctorRef = doc(firestore, 'doctors', user.uid);
       const doctorSnapshot = await getDoc(doctorRef);
 
       if (doctorSnapshot.exists()) {
         const doctorData = doctorSnapshot.data();
         localStorage.setItem('role', doctorData.role);
-
+        // Navigation based on role
         if (doctorData?.role === 'doctor') {
           localStorage.setItem('doctorUsername', doctorData.username || '');
           navigate('/see-patients');
@@ -51,14 +56,15 @@ function LoginPage() {
           localStorage.setItem('doctorUsername', doctorData.username || '');
           navigate('/see-doctors');
         } else {
+          // Sign out if role is invalid
           await auth.signOut();
           toast.error(t('access_denied'));
         }
       } else {
-        toast.error(t('access_denied'));
+        toast.error(t('access_denied')); // No document
       }
     } catch (error) {
-      toast.error(t('errorLogin'));
+      toast.error(t('errorLogin')); // Authentication error
     }
   };
 

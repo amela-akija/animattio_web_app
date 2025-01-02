@@ -4,7 +4,7 @@ import Patient from './Patient';
 import PatientComponent from './PatientComponent';
 
 interface Patients {
-  patients: Patient[];
+  patients: Patient[]; // Array of patient objects
 }
 
 const PatientsList: React.FC<Patients> = ({ patients }) => {

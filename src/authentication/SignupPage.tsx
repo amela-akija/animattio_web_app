@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useResponsive from '../ui-components/useResponsive';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
@@ -16,21 +15,22 @@ import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { addDoctor } from '../services/dbService';
 import { toast } from 'react-toastify';
 import apiClient from '../services/apiClient';
-
+// Page for registering doctors
 function SignupPage() {
-  const { t } = useTranslation();
-  const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
-  const navigate = useNavigate();
+  const { t } = useTranslation(); // Translation hook for internationalization
+  const navigate = useNavigate(); // React Router hook for navigation
 
+  // Variables to store email, username and password input
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [repeatPassword, setRepeatPassword] = useState('');
   const [error] = useState<string | null>(null);
 
+  // Function for sign up
   const signUp = async (e: React.FormEvent) => {
-    e.preventDefault();
-
+    e.preventDefault(); // ensures that the page doesn't reload or navigate away
+    // validation rules
     if (!username || !password || !repeatPassword) {
       toast.error(t('all_fields'));
       return;
@@ -56,7 +56,7 @@ function SignupPage() {
       toast.error(t('password_number'));
       return;
     }
-
+    // Checks if doctor with provided username already exists
     try {
       const response = await apiClient.get(`/doctors/doctor-exists`, {
         params: { username },
@@ -71,6 +71,7 @@ function SignupPage() {
     }
 
     try {
+      // Creates doctor and adds him to the database
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const uid = userCredential.user.uid;
       await addDoctor(username, 'doctor', uid);

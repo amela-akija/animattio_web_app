@@ -1,3 +1,4 @@
+// Doctor object
 interface Doctor {
   username: string;
 }

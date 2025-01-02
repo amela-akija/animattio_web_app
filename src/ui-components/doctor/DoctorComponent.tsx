@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 interface Doctors {
-  doctor: Doctor;
+  doctor: Doctor; // Doctor object with relevant details
 }
 
-const DoctorComponent: React.FC<Doctors> = ({ doctor }) => {
+const DoctorComponent: React.FC<Doctors> = ({ doctor }) => {// Specifies the type of the component using TypeScript with doctor as prop
   const navigate = useNavigate();
   const { t } = useTranslation();
 

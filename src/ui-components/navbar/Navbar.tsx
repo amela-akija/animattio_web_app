@@ -9,14 +9,14 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [activeTab, setActiveTab] = useState(location.pathname);
+  const [activeTab, setActiveTab] = useState(location.pathname); // Tracks the current active tab
   const [userRole, setUserRole] = useState(localStorage.getItem('role') || '');
 
   useEffect(() => {
-    setActiveTab(location.pathname);
+    setActiveTab(location.pathname); // Updates the active tab whenever the route changes (when a state changes)
   }, [location.pathname]);
 
-  const handleLogoClick = () => {
+  const handleLogoClick = () => { // Handles the click on the logo and navigates based on the user's role
     if (isAuthPage) {
       return;
     }

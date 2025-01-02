@@ -16,7 +16,7 @@ const PatientComponent: React.FC<Patients> = ({ patient }) => {
     navigate(`/patient-profile/${username}`);
   };
 
-  const displayType = () => {
+  const displayType = () => { // Displays values based on patients type
     switch (patient.type) {
       case 'epilepsy':
         return t('epilepsy');
@@ -27,7 +27,7 @@ const PatientComponent: React.FC<Patients> = ({ patient }) => {
     }
   };
 
-  const displayGender = () => {
+  const displayGender = () => { // Displays values based on patients gender
     switch (patient.gender) {
       case 'male':
         return t('male');

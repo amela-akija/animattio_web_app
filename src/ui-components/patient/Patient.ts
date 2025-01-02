@@ -1,3 +1,4 @@
+// Patient object
 interface Patient {
   patientUsername: string;
   gender: string;

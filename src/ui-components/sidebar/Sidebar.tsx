@@ -14,25 +14,25 @@ const Sidebar = () => {
   const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
 
   useEffect(() => {
-    i18n.changeLanguage(language);
+    i18n.changeLanguage(language); // Updates the language state and localStorage when the language is toggled
     localStorage.setItem('language', language);
   }, [i18n, language]);
 
   const navigate = useNavigate();
   const toggleLanguage = () => {
-    const newLanguage = language === 'pl' ? 'en' : 'pl';
+    const newLanguage = language === 'pl' ? 'en' : 'pl'; // Toggles the application language between English and Polish
     setLanguage(newLanguage);
   };
 
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
   const toggleSidebar = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(!isOpen); // Toggles the sidebar open or closed
   };
 
   const logOutNotification = () => toast.success(t('logOutMessage'));
 
-  const logOut = async () => {
+  const logOut = async () => { // Logs out the current user by signing out from Firebase and clearing localStorage
     try {
       await signOut(auth);
       localStorage.removeItem("doctorUsername");

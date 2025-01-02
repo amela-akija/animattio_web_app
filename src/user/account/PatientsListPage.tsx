@@ -6,7 +6,7 @@ import apiClient from '../../services/apiClient';
 import debounce from 'lodash.debounce';
 import { toast } from 'react-toastify';
 import axios from 'axios';
-
+// Patient object
 interface Patient {
   patientUsername: string;
   gender: string;
@@ -18,12 +18,12 @@ const SeePatientsPage: React.FC = () => {
   const { t } = useTranslation();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchType, setSearchType] = useState('');
+  const [searchType, setSearchType] = useState(''); // Selected search filter type
   const [searchValue, setSearchValue] = useState('');
   const [ageRange, setAgeRange] = useState({ min: '', max: '' });
   const doctorId = localStorage.getItem('doctorUsername');
 
-  const fetchPatients = async (searchValueOverride?: string) => {
+  const fetchPatients = async (searchValueOverride?: string) => {// Fetch patients based on the selected search filter
     setLoading(true);
     let url = `https://backend-animattio-59a791d90bc1.herokuapp.com/patients/get-all-patients?doctorId=${doctorId}`;
 

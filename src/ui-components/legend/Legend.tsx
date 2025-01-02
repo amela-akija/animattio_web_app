@@ -7,7 +7,7 @@ interface LegendItem {
 }
 
 interface LegendProps {
-  items: LegendItem[];
+  items: LegendItem[]; // Array of legend items to display
 }
 
 const Legend: React.FC<LegendProps> = ({ items }) => {

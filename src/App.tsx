@@ -4,14 +4,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Navbar from './ui-components/navbar/Navbar';
 import LoginPage from './authentication/LoginPage';
 import SignupPage from './authentication/SignupPage';
-import MainUserPage from './user/account/MainUserPage';
 import AddPatientPage from './user/account/AddPatientPage';
 import SeePatientsPage from './user/account/PatientsListPage';
 import DoctorProfilePage from './user/doctor-profile/DoctorProfilePage';
 import PatientProfilePage from './user/patient-profile/PatientProfilePage';
 import { I18nextProvider } from 'react-i18next';
 import i18n from 'i18next';
-import SeeNotesPage from './user/doctor-profile/NotesListPage';
 import ResultsPage from './user/patient-profile/ResultsPage';
 import DoctorsListPage from './admin/DoctorsListPage';
 function App() {
@@ -25,14 +23,12 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/add-doctor" element={<SignupPage />} />
         <Route path="/see-doctors" element={<DoctorsListPage />} />
-        <Route path="/user-account" element={<MainUserPage />} />
         <Route path="/add-patient" element={<AddPatientPage />} />
         <Route path="/see-patients" element={<SeePatientsPage />} />
         <Route path="/doctor-profile" element={<DoctorProfilePage />} />
         <Route path="/doctor-profile/:username" element={<DoctorProfilePage />} />
         <Route path="/patient-profile/:username" element={<PatientProfilePage />} />
         <Route path="/test-results/:testId" element={<ResultsPage />} />
-        <Route path="/see-notes" element={<SeeNotesPage />} />
 
 
 

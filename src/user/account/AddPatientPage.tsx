@@ -23,19 +23,19 @@ import apiClient from '../../services/apiClient';
 
 function AddPatientPage() {
   const { t } = useTranslation();
-  const { isMobile: mobile, isTablet: tablet, isLaptop: laptop } = useResponsive();
-
   const addPatientNotification = () => toast.success(t('addPatientMessage'));
+  // State variables for form inputs
   const [patientUsername, setPatientUsername] = useState<string>('');
   const [gender, setGender] = useState<string>('');
   const [age, setAge] = useState<string>('');
   const [checked, setChecked] = useState<boolean>(false);
 
+  // Handle changes to the epilepsy checkbox
   const handleCheckboxChange = () => {
     setChecked(!checked);
   };
 
-  const checkIfPatientExists = async (username: string): Promise<boolean> => {
+  const checkIfPatientExists = async (username: string): Promise<boolean> => { // Checks if a patient with the given username already exists
     try {
       const response = await axios.get('https://backend-animattio-59a791d90bc1.herokuapp.com/patients/patient-exists', {
         params: { username },
@@ -57,14 +57,14 @@ function AddPatientPage() {
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => { // Handles form submission for adding a new patient
     event.preventDefault();
-
+    // Validation
     if (!patientUsername || !gender || !age) {
       toast.error(t('errorRequiredFieldsMessage'));
       return;
     }
-
+    // Checks if the patient already exists
     const patientExists = await checkIfPatientExists(patientUsername);
     if (patientExists) {
       toast.error(t('errorPatientExistsMessage'));
@@ -72,6 +72,7 @@ function AddPatientPage() {
     }
 
     const DoctorUsername = localStorage.getItem('doctorUsername');
+    // Patient data for submission
     const patientData = {
       patientUsername,
       doctorUsername: DoctorUsername,
@@ -81,13 +82,14 @@ function AddPatientPage() {
     };
 
     try {
+      // Sends the patient data to the backend
       const response = await apiClient.post('/patients/create-patient', patientData, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-
+      // Successfull response
       if (response.status >= 200 && response.status < 300) {
         addPatientNotification();
         setPatientUsername('');

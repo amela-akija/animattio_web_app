@@ -5,12 +5,12 @@ i18n
   .use(initReactI18next)
   .init({
 
-    lng: savedLanguage,
-    fallbackLng: "en",
+    lng: savedLanguage, // Sets the initial language for the application
+    fallbackLng: "en", // Default language
 
-    debug: true,
+    debug: true, // logs helpful information to the console (missing translation keys)
     interpolation: {
-      escapeValue: false,
+      escapeValue: false, //  prevents escaping of characters like < and > in translations
     },
     resources: {
       en: {

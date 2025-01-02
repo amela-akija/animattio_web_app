@@ -1,3 +1,4 @@
+// Test object
 interface Test {
   testId: string;
   gameMode: string;
