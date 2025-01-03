@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
@@ -13,7 +12,7 @@ interface ErrorsGraphProps {
   age: number;
   gender: 'male' | 'female';
 }
-
+// Interface data fetched from the API
 interface ErrorEntry {
   month: string;
   mode: string;
@@ -71,7 +70,7 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, a
   };
 
   const { normativeCommission, normativeOmission } = getNormativeData();
-
+  // Formats date to month and year
   const formatDate = (date: Date | null) => {
     if (!date) return null;
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
@@ -92,9 +91,9 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, a
 
           const commissionPercentage = parseFloat(((commissions / nonTargetStimuli) * 100).toFixed(2));
           const omissionPercentage = parseFloat(((omissions / targetStimuli) * 100).toFixed(2));
-
+          // Groups data by mode
           if (!acc[mode]) acc[mode] = { months: [], commissionPercentages: [], omissionPercentages: [] };
-
+          // Adds month and parameters the arrays of accumulator
           acc[mode].months.push(formattedMonth);
           acc[mode].commissionPercentages.push(commissionPercentage);
           acc[mode].omissionPercentages.push(omissionPercentage);
@@ -110,17 +109,19 @@ const MonthlyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, a
 
     fetchData();
   }, [userId]);
-
+  // Filter data by date range
   const filterDataByDate = (modeData: ModeData) => {
     const formattedStart = formatDate(startDate);
     const formattedEnd = formatDate(endDate);
-
+    // Excludes any months that fall outside the formattedStart and formattedEnd range
     const filteredMonths = modeData.months
       .filter((month) => {
         if (formattedStart && month < formattedStart) return false;
         if (formattedEnd && month > formattedEnd) return false;
         return true;
       })
+      // Splits month and year
+      // Compares years first, then months within the same year and sort chronologically
       .sort((a, b) => {
         const [monthA, yearA] = a.split('.').map(Number);
         const [monthB, yearB] = b.split('.').map(Number);

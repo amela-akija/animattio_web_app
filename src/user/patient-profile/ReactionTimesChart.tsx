@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import {
   LineChart,
   Line,
@@ -14,13 +13,15 @@ import {
 import { t } from 'i18next';
 import apiClient from '../../services/apiClient';
 
-interface ProcessedGamesChartProps {
+interface ReactionTimesProps {
   testId: string;
 }
 
-const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => {
+const ReactionTimesChart: React.FC<ReactionTimesProps> = ({ testId }) => {
+  // State for holding the data for each interval
   const [gamesData, setGamesData] = useState<{ [key: string]: number[] }>({});
   const [loading, setLoading] = useState<boolean>(true);
+  // State to track what interval data is visible
   const [activeIntervals, setActiveIntervals] = useState<{ [key: string]: boolean }>({});
 
   const normativeData = {
@@ -34,11 +35,11 @@ const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => 
       try {
         const response = await apiClient.get<{ [key: string]: number[] }>(`/tests/${testId}/processed-games`);
         setGamesData(response.data);
-
+        // Loops over all the interval keys in the response
         const initialActiveIntervals = Object.keys(response.data).reduce((acc, key) => {
           acc[key] = true;
           return acc;
-        }, {} as { [key: string]: boolean });
+        }, {} as { [key: string]: boolean }); // All intervals visible
 
         setActiveIntervals(initialActiveIntervals);
         setLoading(false);
@@ -55,36 +56,37 @@ const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => 
   if (loading) {
     return <div>Loading...</div>;
   }
-
+// Extracts the interval keys from the gamesData
   const intervals = Object.keys(gamesData) as Array<"1250" | "2250" | "4250">;
-
+  // Handles toggling the visibility of intervals when legend items are clicked
   const handleLegendClick = (interval: string) => {
     setActiveIntervals((prev) => ({
       ...prev,
       [interval]: !prev[interval],
     }));
   };
-
+// Calculates mean and standard deviation for each interval
   const intervalStats = intervals.reduce((acc, interval) => {
-    const values = gamesData[interval];
-    const mean = values.reduce((sum, value) => sum + value, 0) / values.length;
+    // Iterates over all interval keys (1250, 2250, 4250) from the intervals array
+    // Builds an accumulator object that will store the calculated mean and SD for each interval
+    const values = gamesData[interval]; // Retrieves the array of reaction times for the current interval
+    const mean = values.reduce((sum, value) => sum + value, 0) / values.length; // Sums up all reaction time values for the interval using reduce and divides to calculate mean
     const variance = values.reduce((sum, value) => sum + Math.pow(value - mean, 2), 0) / (values.length - 1);
     const stdDev = Math.sqrt(variance);
     acc[interval] = { mean, stdDev };
     return acc;
   }, {} as { [key: string]: { mean: number; stdDev: number } });
-
+// Determines the maximum number of data points across intervals
   const maxDataPoints = Math.max(...intervals.map(interval => gamesData[interval].length));
-
-  const chartData = Array.from({ length: maxDataPoints }, (_, i) => {
-    const dataPoint: { index: number; [key: string]: number | undefined; error?: number } = { index: i + 1 };
+  // Aligns data points and adds error bars for each interval
+  const chartData = Array.from({ length: maxDataPoints }, (_, i) => { // Creates an array with maxDataPoints elements corresponding to indexes
+    const dataPoint: { index: number; [key: string]: number | undefined; error?: number } = { index: i + 1 }; // Creates a data point object for the current index
     intervals.forEach(interval => {
-      if (i < gamesData[interval].length) {
+      if (i < gamesData[interval].length) { // Current index exists in the data for the current interval
         const value = gamesData[interval][i];
-        const { stdDev } = intervalStats[interval];
-        dataPoint[interval] = value;
-        dataPoint[`error_${interval}`] = stdDev;
-        // console.log(`Interval: ${interval}, Value: ${value}, StdDev: ${stdDev}`);
+        const { stdDev } = intervalStats[interval]; // Fetches the standard deviation for the current interval from intervalStats
+        dataPoint[interval] = value; // Adds the interval value to the dataPoint object under interval key
+        dataPoint[`error_${interval}`] = stdDev; // Adds the standard deviation for the interval to the dataPoint object under interval key
       }
     });
     return dataPoint;
@@ -152,4 +154,4 @@ const ProcessedGamesChart: React.FC<ProcessedGamesChartProps> = ({ testId }) => 
   );
 };
 
-export default ProcessedGamesChart;
+export default ReactionTimesChart;

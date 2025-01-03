@@ -274,7 +274,7 @@ function PatientProfilePage() {
               />
             </Box>
             <DailyErrorGraph
-              userId={mobileId}
+              id={mobileId}
               selectedMode={selectedOption}
               age={Number(age)}
               gender={gender as 'male' | 'female'}

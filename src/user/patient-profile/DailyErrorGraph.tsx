@@ -9,13 +9,13 @@ import {enGB as polishLocale} from 'date-fns/locale';
 import apiClient from '../../services/apiClient';
 
 interface ErrorsGraphProps {
-  userId: string;
+  id: string;
   selectedMode?: string;
   age: number;
   gender: 'male' | 'female';
 }
-
-interface ErrorEntry {
+// Interface data fetched from the API
+interface ErrorData {
   mode: string;
   date: string;
   commissions: number;
@@ -23,7 +23,7 @@ interface ErrorEntry {
   targetStimuli: number;
   nonTargetStimuli: number;
 }
-
+// Data with date object
 interface ProcessedErrorEntry {
   date: Date;
   mode: string;
@@ -32,7 +32,7 @@ interface ProcessedErrorEntry {
   targetStimuli: number;
   nonTargetStimuli: number;
 }
-
+// Interface for storing processed data by mode
 interface ModeData {
   dates: string[];
   commissionPercentages: number[];
@@ -53,12 +53,12 @@ const normativeDataOmission = {
   '16-18': { female: { mean: 2.1 }, male: { mean: 2.9 } },
 };
 
-const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age, gender }) => {
+const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ id, selectedMode, age, gender }) => {
   const { t } = useTranslation();
-  const [dataByMode, setDataByMode] = useState<Record<string, ModeData>>({});
+  const [dataByMode, setDataByMode] = useState<Record<string, ModeData>>({}); // // State to store data grouped by mode
   const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-
+  const [endDate, setEndDate] = useState<Date | null>(null); // Dates for fitering
+// Normative data for the patients age and gender
   const getNormativeData = () => {
     const ageGroup = age < 12 ? '9-11' : age < 14 ? '12-13' : age < 16 ? '14-15' : '16-18';
 
@@ -70,17 +70,13 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
 
   const { normativeCommission, normativeOmission } = getNormativeData();
 
-  const formatDate = (date: Date | null) => {
-    if (!date) return null;
-    return date.toISOString().split('T')[0];
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiClient.get<ErrorEntry[]>(`/tests/aggregate-errors-daily/${userId}`);
+        const response = await apiClient.get<ErrorData[]>(`/tests/aggregate-errors-daily/${id}`);
         const rawData = response.data;
-
+        // Parses dates to a specified format
         const processedData = rawData.map<ProcessedErrorEntry>(entry => {
           const parsedDate = parse(entry.date, 'd MMMM yyyy', new Date(), { locale: polishLocale });
           return {
@@ -88,14 +84,15 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
             date: parsedDate,
           };
         });
-
+        // Groups data by mode and calculates percentages
+        //  Groups the processed data by mode and calculates percentages for commissions and omissions
         const groupedData = processedData.reduce((acc: Record<string, ModeData>, entry: ProcessedErrorEntry) => {
           const { mode, date, commissions, omissions, targetStimuli, nonTargetStimuli } = entry;
           const commissionPercentage = parseFloat(((commissions / nonTargetStimuli) * 100).toFixed(2));
           const omissionPercentage = parseFloat(((omissions / targetStimuli) * 100).toFixed(2));
-
+          //Creates an entry in the accumulator object for each mode, if it doesn't exist
           if (!acc[mode]) acc[mode] = { dates: [], commissionPercentages: [], omissionPercentages: [] };
-
+          // Adds the formatted date and calculated percentages to arrays in accumulator
           acc[mode].dates.push(format(date, 'dd.MM.yyyy'));
           acc[mode].commissionPercentages.push(commissionPercentage);
           acc[mode].omissionPercentages.push(omissionPercentage);
@@ -110,32 +107,32 @@ const DailyErrorGraph: React.FC<ErrorsGraphProps> = ({ userId, selectedMode, age
     };
 
     fetchData();
-  }, [userId]);
-
+  }, [id]); // fetches when userId changes
+  // Filters data by date range
   const filterDataByDate = (modeData: ModeData) => {
-    if (!startDate && !endDate) return modeData;
+    if (!startDate && !endDate) return modeData; // If neither startDate nor endDate is specified, return the unfiltered data
 
     const filteredData = modeData.dates
-      .map((dateString, index) => {
+      .map((dateString, index) => { // Iterates through the array of date strings and converts to specified format
         const parsedDate = parse(dateString, 'dd.MM.yyyy', new Date(), { locale: polishLocale });
 
         const isWithinRange = (!startDate || parsedDate >= startDate) && (!endDate || parsedDate <= endDate);
-
+        // Determines if the parsedDate is within the specified range
         return isWithinRange
           ? {
             date: dateString,
             commissionPercentage: modeData.commissionPercentages[index],
             omissionPercentage: modeData.omissionPercentages[index],
-          }
+          } // If the date is within range it creates an object with the date, commission percentage, and omission percentage
           : null;
       })
-      .filter((entry) => entry !== null) as {
+      .filter((entry) => entry !== null) as { // Removes all null entries from the array
       date: string;
       commissionPercentage: number;
       omissionPercentage: number;
     }[];
 
-    return {
+    return { // Returns and extracts dates and parameters
       dates: filteredData.map((entry) => entry.date),
       commissionPercentages: filteredData.map((entry) => entry.commissionPercentage),
       omissionPercentages: filteredData.map((entry) => entry.omissionPercentage),

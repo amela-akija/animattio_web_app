@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './ResultsPage.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
-import ProcessedGamesChart from './ProcessedGamesChart';
+import ReactionTimesChart from './ReactionTimesChart';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import OmissionGraph from './OmissionGraph';
 import ReactionTimeTable from './ReactionTimeTable';
@@ -76,7 +76,7 @@ function ResultsPage() {
             <div className="plot-container">
           <>
             <ReactionTimeTable testId={testId} />
-            <ProcessedGamesChart testId={testId} />
+            <ReactionTimesChart testId={testId} />
           </>
             </div>
 
