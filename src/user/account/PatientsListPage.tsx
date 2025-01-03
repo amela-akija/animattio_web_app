@@ -20,17 +20,17 @@ const SeePatientsPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [searchType, setSearchType] = useState(''); // Selected search filter type
   const [searchValue, setSearchValue] = useState('');
-  const [ageRange, setAgeRange] = useState({ min: '', max: '' });
+  const [ageRange, setAgeRange] = useState({ min: '', max: '' }); // // Default min and max age range
   const doctorId = localStorage.getItem('doctorUsername');
 
   const fetchPatients = async (searchValueOverride?: string) => {// Fetch patients based on the selected search filter
     setLoading(true);
     let url = `https://backend-animattio-59a791d90bc1.herokuapp.com/patients/get-all-patients?doctorId=${doctorId}`;
-
+    // Sets endpoint parameters or uses default values
     if (searchType === 'age') {
       const minAge = ageRange.min ? Number(ageRange.min) : 6;
       const maxAge = ageRange.max ? Number(ageRange.max) : 18;
-
+      // Min age should be lower than max age
       if (minAge > maxAge) {
         toast.error(t('maxMin'));
         setLoading(false);
@@ -54,7 +54,7 @@ const SeePatientsPage: React.FC = () => {
         throw new Error('Unexpected status code');
       }
 
-      const data: Patient[] = response.data;
+      const data: Patient[] = response.data; // // Parses response data
       setPatients(data);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -74,12 +74,13 @@ const SeePatientsPage: React.FC = () => {
     }
   };
 
-  const debouncedFetchPatients = debounce((value: string) => {
+  const debouncedFetchPatients = debounce((value: string) => { // Debouncing is to ensure function is only executed after a specific delay,
+    // and only if no new event occurs during that delay
     fetchPatients(value);
   }, 300);
 
   useEffect(() => {
-    if (searchType === 'username' && searchValue) {
+    if (searchType === 'username' && searchValue) { // Debouncing for username search where user types constantly
       debouncedFetchPatients(searchValue);
     } else {
       fetchPatients();
@@ -89,7 +90,7 @@ const SeePatientsPage: React.FC = () => {
       debouncedFetchPatients.cancel();
     };
   }, [searchType, searchValue, ageRange]);
-
+  // Dropdown for age selection
   const generateAgeOptions = () => {
     const options = [];
     for (let i = 9; i <= 18; i++) {

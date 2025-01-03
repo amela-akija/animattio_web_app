@@ -23,6 +23,7 @@ const theme = createTheme({
 });
 
 function DoctorProfilePage() {
+  // Extracts the username parameter from the route
   const { username: routeUsername } = useParams<{ username: string }>();
   const navigate = useNavigate();
   const [role, setRole] = useState('');
@@ -41,7 +42,7 @@ function DoctorProfilePage() {
       setUsername(routeUsername);
     }
   }, [routeUsername]);
-
+  // Handles saving login data changes
   const handleSaveChanges = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -52,7 +53,7 @@ function DoctorProfilePage() {
       });
 
       toast.success(t('updateSuccess'));
-      localStorage.clear();
+      localStorage.clear(); // Clears local storage to log in again
       toast.info(t('logOut'));
       navigate('/');
     } catch (error) {
@@ -60,9 +61,9 @@ function DoctorProfilePage() {
       toast.error(t('updateFail'));
     }
   };
-
+// Handles deleting doctor
   const handleDelete = async () => {
-    const confirmed = window.confirm(t('deleteWindow'));
+    const confirmed = window.confirm(t('deleteWindow')); // True if the user clicks "OK" and false if the user clicks "Cancel"
     if (!confirmed) return;
 
     try {

@@ -89,7 +89,7 @@ function AddPatientPage() {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
       });
-      // Successfull response
+      // Clears inputs after successful response
       if (response.status >= 200 && response.status < 300) {
         addPatientNotification();
         setPatientUsername('');
