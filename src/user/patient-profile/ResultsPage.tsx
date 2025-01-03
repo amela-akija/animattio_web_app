@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './ResultsPage.css';
-import useResponsive from '../../ui-components/useResponsive';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useTranslation } from 'react-i18next';
 import ProcessedGamesChart from './ProcessedGamesChart';
