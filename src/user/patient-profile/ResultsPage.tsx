@@ -8,36 +8,35 @@ import { useParams, useLocation, useNavigate } from 'react-router-dom';
 import OmissionGraph from './OmissionGraph';
 import ReactionTimeTable from './ReactionTimeTable';
 import CommissionGraph from './CommissionGraph';
-
+// Interface for test details
 interface Test {
   testId: string;
   endDate: string;
   gameMode: string;
 }
 
-interface LocationState {
-  tests: Test[];
+interface TestListProps {
+  tests: Test[]; // List of tests
 }
 
 function ResultsPage() {
   const { t } = useTranslation();
-  const { isMobile, isTablet, isLaptop } = useResponsive();
-  const { testId } = useParams<{ testId: string }>();
+  const { testId } = useParams<{ testId: string }>(); // Retrieves the test ID from the URL parameters
   const location = useLocation();
   const navigate = useNavigate();
-  const { tests } = (location.state as LocationState) || { tests: [] };
-
+  const { tests } = (location.state as TestListProps) || { tests: [] };
+// State to track the active button
   const [activeButton, setActiveButton] = useState<'reactionTime' | 'commission' | 'omission'>('reactionTime');
   const patientId = localStorage.getItem('clicked_user');
-
+  // Handles button clicks to switch between different parameters
   const handleButtonClick = (button: 'reactionTime' | 'commission' | 'omission') => {
     setActiveButton(button);
   };
-
+// Index of the current test in the tests array to track between tests
   const currentTestIndex = tests.findIndex(test => test.testId === testId);
   const previousTest = tests[currentTestIndex - 1];
   const nextTest = tests[currentTestIndex + 1];
-
+// Navigates to a specified test
   const navigateToTest = (testId: string) => {
     navigate(`/test-results/${testId}`, { state: { tests } });
   };

@@ -8,12 +8,12 @@ import apiClient from '../../services/apiClient';
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
 type Gender = 'female' | 'male';
-
+// Normative data interface
 interface NormativeDataValue {
   mean: number;
   sd: number;
 }
-
+// Normative data grouped by age and gender interface
 interface NormativeDataType {
   [ageGroup: string]: {
     female: NormativeDataValue;
@@ -39,7 +39,7 @@ const NormativeData: NormativeDataType = {
     male: { mean: 53.6, sd: 18.9 },
   },
 };
-
+// Props interface for the CommissionGraph of specified user and specified test
 interface CommissionGraphProps {
   testId: string;
   patientId: string;
@@ -53,7 +53,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
   const [patientInfo, setPatientInfo] = useState<{ age: number; gender: Gender }>({ age: 0, gender: 'female' });
   const [loading, setLoading] = useState(true);
   const [totalStimuliCount, setTotalStimuliCount] = useState<number | null>(null);
-
+  // Fetches the total count of non-stimuli for the specified test
   useEffect(() => {
     const fetchTotalStimuliCount = async () => {
       try {
@@ -65,8 +65,8 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
     };
 
     fetchTotalStimuliCount();
-  }, [testId]);
-
+  }, [testId]); // User can navigate between all patient's tests
+// Fetch commissions amount
   useEffect(() => {
     const fetchCommissionData = async () => {
       if (totalStimuliCount === null) return;
@@ -74,7 +74,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       try {
         const response = await apiClient.get(`/tests/${testId}/commissions`);
         const totalCommissionErrors = response.data.totalCommissionErrors;
-        const percentageCommission = (totalCommissionErrors / totalStimuliCount) * 100;
+        const percentageCommission = (totalCommissionErrors / totalStimuliCount) * 100; // Calculates percentage
 
         setCommissionData({
           totalCommissionErrors,
@@ -87,7 +87,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
 
     fetchCommissionData();
   }, [testId, totalStimuliCount]);
-
+// Fetches patient info for normative data
   useEffect(() => {
     const fetchPatientInfo = async () => {
       try {
@@ -104,10 +104,10 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
     };
 
     fetchPatientInfo();
-  }, [patientId]);
+  }, [patientId]); // Ensures that the effect runs only when patientId changes
 
   if (loading || totalStimuliCount === null) return <div>Loading...</div>;
-
+  // Determines normative data based on patient age and gender
   const getNormativeData = () => {
     let ageGroup: keyof typeof NormativeData = '9-11';
     if (patientInfo.age >= 12 && patientInfo.age <= 13) {
@@ -121,11 +121,11 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
 
     return NormativeData[ageGroup][gender];
   };
-
+  // Values of normative data - mean and SD
   const normativeData = getNormativeData();
   const mean = normativeData.mean ?? 0;
   const sd = normativeData.sd ?? 0;
-
+  // Data for the Commission graph
   const chartData = {
     labels: [t('patientResult'), t('normative')],
     datasets: [
@@ -136,7 +136,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
       },
     ],
   };
-
+  // Graph formatting
   const chartOptions = {
     scales: {
       y: {
@@ -148,9 +148,9 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
         max: (() => {
           const maxCommissionValue = commissionData.percentage;
           const maxNormativeValue = mean + sd;
-          const maxDataValue = Math.max(maxCommissionValue, maxNormativeValue);
-          const buffer = maxDataValue * 0.1;
-          return Math.ceil(maxDataValue + buffer);
+          const maxDataValue = Math.max(maxCommissionValue, maxNormativeValue); // Determines the larger number between the result and normative data
+          const buffer = maxDataValue * 0.1; // Adds a 10% buffer to the max value so it has some space above until top of chart
+          return Math.ceil(maxDataValue + buffer); // Rounds the result up to the nearest whole number for y-axis
         })(),
       },
     },
@@ -159,7 +159,7 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
         callbacks: {
           label: (context: TooltipItem<'bar'>) => {
             const value = context.parsed.y;
-            return `${value.toFixed(2)}%`;
+            return `${value.toFixed(2)}%`; // Tooltip formatting when user hover over the graph
           },
         },
       },
@@ -167,28 +167,28 @@ const CommissionGraph: React.FC<CommissionGraphProps> = ({ testId, patientId }) 
   };
 
 
-
+// Error bar formatting
   const errorBarPlugin = {
     id: 'errorBarPlugin',
-    afterDraw: (chart: Chart) => {
-      const ctx = chart.ctx;
+    afterDraw: (chart: Chart) => { // afterDraw: a method executed after the chart has been drawn, allowing to draw custom graphics on chart
+      const ctx = chart.ctx; // Canvas rendering context used for drawing
       const xAxis = chart.scales.x;
       const yAxis = chart.scales.y;
-      const dataset = chart.data.datasets[0];
-      const dataIndex = dataset.data.length - 1;
+      const dataset = chart.data.datasets[0]; // Patient data and normative data
+      const dataIndex = dataset.data.length - 1; // Normativa data values
 
-      const meanValue = dataset.data[dataIndex] as number;
-      const sdValue = normativeData.sd ?? 0;
+      const meanValue = dataset.data[dataIndex] as number; // Retrieves mean normative value
+      const sdValue = normativeData.sd ?? 0; // Retrieves SD normative value
 
       const barWidth = xAxis.width / dataset.data.length;
       const barX = xAxis.getPixelForValue(dataIndex) - barWidth / 2;
-
+      // Calculates the Y-coordinates for the top and bottom of the error bar, ensuring the bottom doesn't go below 0
       const sdTopY = yAxis.getPixelForValue(meanValue + sdValue);
       const sdBottomY = yAxis.getPixelForValue(Math.max(meanValue - sdValue, 0));
-
+      // Formatting
       ctx.fillStyle = 'rgba(244,219,102,0.2)';
-      ctx.fillRect(barX, sdTopY, barWidth, sdBottomY - sdTopY);
-
+      ctx.fillRect(barX, sdTopY, barWidth, sdBottomY - sdTopY); // Rectangle symbolizing SD
+      // Labels
       ctx.font = '10px Arial';
       ctx.fillStyle = 'rgba(230,199,50,0.9)';
       ctx.fillText(`+${(meanValue + sdValue).toFixed(2)}`, barX + barWidth / 2 + 15, sdTopY - 5);
